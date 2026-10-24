@@ -1,0 +1,250 @@
+/* NorthernStays responsive premium footer */
+.ns-footer {
+    background: #10382e;
+    color: #f6f7f3;
+    padding: 72px 0 0;
+    width: 100%;
+}
+
+.ns-footer * {
+    box-sizing: border-box;
+}
+
+.ns-footer-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, .75fr) minmax(0, .9fr) minmax(0, 1.2fr);
+    gap: 50px;
+    padding-bottom: 58px;
+}
+
+.ns-footer-brand {
+    max-width: 340px;
+}
+
+.ns-footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 750;
+}
+
+.ns-footer-logo svg,
+.ns-footer-logo strong {
+    color: #c69a5c;
+}
+
+.ns-footer-brand>p {
+    color: #b8ccc3;
+    font-size: 14px;
+    line-height: 1.9;
+    margin: 21px 0;
+}
+
+.ns-footer-tagline {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: #d4e2db;
+}
+
+.ns-footer-tagline svg {
+    color: #c69a5c;
+}
+
+.ns-footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    min-width: 0;
+}
+
+.ns-footer-column h4 {
+    color: #fff;
+    font-size: 15px;
+    margin: 5px 0 10px;
+}
+
+.ns-footer-column>a:not(.ns-footer-explore):not(.ns-footer-admin-btn) {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #b8ccc3;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.ns-footer-column>a:hover {
+    color: #e4ba7f;
+}
+
+.ns-footer-contact>p {
+    margin: 0 0 6px;
+    font-size: 13px;
+    line-height: 1.85;
+    color: #b8ccc3;
+}
+
+.ns-footer-contact-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    color: #b8ccc3;
+    font-size: 13px;
+}
+
+.ns-footer-contact-item svg {
+    color: #c69a5c;
+    flex-shrink: 0;
+}
+
+.ns-footer-explore {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    margin-top: 7px;
+    border: 1px solid #c69a5c;
+    border-radius: 7px;
+    color: #e8c38b;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.ns-footer-explore:hover {
+    background: #c69a5c;
+    color: #10382e;
+}
+
+.ns-footer-divider {
+    height: 1px;
+    background: #31594d;
+}
+
+.ns-footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 82px;
+}
+
+.ns-footer-bottom p {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #b8ccc3;
+    font-size: 12px;
+    margin: 0;
+}
+
+.ns-footer-bottom p svg {
+    color: #c69a5c;
+}
+
+.ns-footer-top {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid #41685c;
+    border-radius: 8px;
+    background: #1b4b3e;
+    color: white;
+    cursor: pointer;
+}
+
+.ns-footer-top:hover {
+    background: #c69a5c;
+    color: #10382e;
+}
+
+@media(max-width:1100px) {
+    .ns-footer-main {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 40px;
+    }
+}
+
+@media(max-width:650px) {
+    .ns-footer {
+        padding-top: 45px;
+    }
+
+    .ns-footer-main {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 32px 20px;
+        padding-bottom: 40px;
+    }
+
+    .ns-footer-brand,
+    .ns-footer-contact {
+        grid-column: 1/-1;
+    }
+
+    .ns-footer-bottom {
+        min-height: 0;
+        padding-top: 22px;
+        padding-bottom: 22px;
+        flex-wrap: wrap;
+    }
+}
+
+@media(max-width:380px) {
+    .ns-footer-main {
+        grid-template-columns: 1fr;
+    }
+
+    .ns-footer-brand,
+    .ns-footer-contact {
+        grid-column: auto;
+    }
+}
+
+/* Footer action buttons */
+.ns-footer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 7px;
+}
+
+.ns-footer-actions .ns-footer-explore {
+    margin-top: 0;
+}
+
+.ns-footer-admin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 12px 16px;
+    border: 1px solid #496d60;
+    border-radius: 7px;
+    background: #1c493c;
+    color: #e9f0eb;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+    transition: background .2s, color .2s, border-color .2s;
+}
+
+.ns-footer-admin-btn:hover {
+    background: #c69a5c;
+    border-color: #c69a5c;
+    color: #10382e;
+}
+
+.ns-footer-admin-btn:focus-visible,
+.ns-footer-explore:focus-visible {
+    outline: 2px solid #e8c38b;
+    outline-offset: 3px;
+}

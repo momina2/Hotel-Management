@@ -1,0 +1,426 @@
+
+/* NORTHERNSTAYS HOTEL ADMIN LOGIN */
+
+.hotel-login {
+  min-height: 100vh;
+  display: flex;
+  background: #f7f9f8;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+/* LEFT PANEL */
+
+.hotel-login-brand {
+  width: 48%;
+  min-height: 100vh;
+  background: #153e35;
+  color: #fff;
+  padding: 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.hotel-login-brand::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 50%;
+  right: -190px;
+  top: -160px;
+}
+
+.hotel-login-brand::after {
+  content: "";
+  position: absolute;
+  width: 550px;
+  height: 550px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 50%;
+  left: -230px;
+  bottom: -300px;
+}
+
+.hotel-login-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.hotel-login-logo-icon {
+  width: 52px;
+  height: 52px;
+  background: #d8b57b;
+  color: #153e35;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+}
+
+.hotel-login-logo h1 {
+  font-size: 26px;
+  margin: 0;
+  color: #fff;
+}
+
+.hotel-login-logo p {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.6);
+  margin: 5px 0 0;
+}
+
+.hotel-login-brand-content {
+  position: relative;
+  z-index: 1;
+  max-width: 520px;
+}
+
+.hotel-login-tag {
+  display: inline-block;
+  padding: 10px 17px;
+  border: 1px solid rgba(216,181,123,.45);
+  border-radius: 30px;
+  color: #e7c996;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+}
+
+.hotel-login-brand-content h2 {
+  font-size: clamp(38px, 4vw, 64px);
+  line-height: 1.15;
+  letter-spacing: -1.5px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.hotel-login-brand-content h2 span {
+  color: #d8b57b;
+}
+
+.hotel-login-brand-content > p {
+  color: rgba(255,255,255,.68);
+  font-size: 16px;
+  line-height: 1.9;
+  margin-top: 28px;
+}
+
+.hotel-login-security {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255,255,255,.8);
+  font-size: 13px;
+  margin-top: 38px;
+}
+
+.hotel-login-security svg {
+  color: #d8b57b;
+  flex-shrink: 0;
+}
+
+.hotel-login-copyright {
+  position: relative;
+  z-index: 1;
+  font-size: 12px;
+  color: rgba(255,255,255,.4);
+}
+
+/* RIGHT PANEL */
+
+.hotel-login-right {
+  width: 52%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+}
+
+.hotel-login-form-container {
+  width: 100%;
+  max-width: 430px;
+}
+
+.hotel-login-heading {
+  margin-bottom: 35px;
+}
+
+.hotel-login-eyebrow {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #b38a50;
+  font-weight: 700;
+}
+
+.hotel-login-heading h2,
+.hotel-otp-heading {
+  font-size: clamp(29px, 3vw, 40px);
+  color: #173e35;
+  font-weight: 650;
+  margin: 13px 0;
+}
+
+.hotel-login-heading p,
+.hotel-otp-description {
+  font-size: 14px;
+  color: #777f7c;
+  line-height: 1.8;
+}
+
+.hotel-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.hotel-login-field label {
+  display: block;
+  color: #3c4743;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.hotel-login-input-wrap {
+  position: relative;
+}
+
+.hotel-login-input-wrap > svg {
+  position: absolute;
+  top: 50%;
+  left: 17px;
+  transform: translateY(-50%);
+  color: #9ba5a0;
+  pointer-events: none;
+}
+
+.hotel-login-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #e0e6e2;
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px 17px 15px 50px;
+  min-height: 54px;
+  outline: none;
+  font-size: 14px;
+  color: #173e35;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.hotel-login-input:focus,
+.hotel-otp-input:focus {
+  border-color: #2c6656;
+  box-shadow: 0 0 0 3px rgba(44,102,86,.1);
+}
+
+.hotel-login-input::placeholder {
+  color: #a6afaa;
+}
+
+.hotel-login-password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: #8b9690;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 5px;
+}
+
+.hotel-login-password-toggle:hover {
+  color: #153e35;
+}
+
+.hotel-login-input.has-toggle {
+  padding-right: 52px;
+}
+
+.hotel-login-submit {
+  width: 100%;
+  min-height: 56px;
+  border: none;
+  background: #153e35;
+  color: #fff;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 650;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+
+.hotel-login-submit:hover:not(:disabled) {
+  background: #245849;
+  transform: translateY(-1px);
+}
+
+.hotel-login-submit:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+.hotel-login-error {
+  color: #b42318;
+  background: #fff0ee;
+  border: 1px solid #ffd6d1;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+}
+
+.hotel-login-success {
+  color: #17624c;
+  background: #e8f5ee;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+}
+
+.hotel-login-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  margin-top: 40px;
+  font-size: 12px;
+  color: #939d98;
+}
+
+/* OTP SCREEN */
+
+.hotel-otp-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: none;
+  background: none;
+  color: #65716b;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  margin-bottom: 38px;
+}
+
+.hotel-otp-back:hover {
+  color: #153e35;
+}
+
+.hotel-otp-icon {
+  width: 66px;
+  height: 66px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: #e7f0ec;
+  color: #17624c;
+  margin-bottom: 28px;
+}
+
+.hotel-otp-description {
+  margin-bottom: 30px;
+}
+
+.hotel-otp-description strong {
+  color: #153e35;
+  overflow-wrap: anywhere;
+}
+
+.hotel-otp-input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 64px;
+  padding: 14px;
+  text-align: center;
+  font-size: 25px;
+  letter-spacing: 12px;
+  font-weight: 650;
+  color: #153e35;
+  border: 1px solid #e0e6e2;
+  border-radius: 12px;
+  outline: none;
+  background: #fff;
+}
+
+.hotel-login-spinner {
+  animation: hotel-spin 1s linear infinite;
+}
+
+@keyframes hotel-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* MOBILE */
+
+.hotel-login-mobile-logo {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .hotel-login-brand {
+    display: none;
+  }
+
+  .hotel-login-right {
+    width: 100%;
+    padding: 36px 24px;
+  }
+
+  .hotel-login-mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 55px;
+  }
+
+  .hotel-login-mobile-logo h1 {
+    font-size: 22px;
+    color: #153e35;
+    margin: 0;
+  }
+
+  .hotel-login-mobile-logo p {
+    font-size: 12px;
+    color: #7a8680;
+    margin: 3px 0 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .hotel-login-right {
+    align-items: flex-start;
+    padding: 28px 20px;
+  }
+
+  .hotel-login-heading h2,
+  .hotel-otp-heading {
+    font-size: 30px;
+  }
+
+  .hotel-login-mobile-logo {
+    margin-bottom: 65px;
+  }
+
+  .hotel-otp-input {
+    letter-spacing: 9px;
+    font-size: 23px;
+  }
+}

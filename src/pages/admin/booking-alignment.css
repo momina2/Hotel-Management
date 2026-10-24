@@ -1,0 +1,111 @@
+/* Booking Management: equal-height, aligned search and status filter */
+.ns-admin .ns-booking-table-actions.ns-booking-filters {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.ns-admin .ns-booking-filters>input.ns-search,
+.ns-admin .ns-booking-filters>select {
+  display: block;
+  height: 46px;
+  min-height: 46px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 14px;
+  border: 1px solid #dce5df;
+  border-radius: 8px;
+  background: #fff;
+  color: #173d34;
+  font: inherit;
+  line-height: normal;
+  align-self: stretch;
+}
+
+.ns-admin .ns-booking-filters>input.ns-search {
+  flex: 0 1 380px;
+  width: 380px;
+  min-width: 180px;
+}
+
+.ns-admin .ns-booking-filters>select {
+  flex: 0 0 160px;
+  width: 160px;
+}
+
+@media (max-width: 600px) {
+
+  .ns-admin .ns-booking-filters>input.ns-search,
+  .ns-admin .ns-booking-filters>select {
+    flex: 1 1 100%;
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+
+/* Booking Management - Status Dropdown */
+
+.ns-booking-table-actions select,
+.ns-booking-filters select {
+  min-height: 44px;
+  padding: 10px 36px 10px 14px;
+  border: 1px solid #dce6e1;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #123e32;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+}
+
+.ns-booking-table-actions select:focus,
+.ns-booking-filters select:focus {
+  border-color: #236c56;
+  box-shadow: 0 0 0 3px rgba(35, 108, 86, 0.12);
+}
+
+/* Status dropdown inside booking table */
+.ns-table tbody td select[aria-label^="Status for"] {
+  width: 145px;
+  min-height: 40px;
+  padding: 9px 32px 9px 12px;
+  border: 1px solid #d9e5df;
+  border-radius: 8px;
+  background-color: #f5faf7;
+  color: #164d3c;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ns-table tbody td select[aria-label^="Status for"]:hover {
+  border-color: #6fa28b;
+}
+
+.ns-table tbody td select[aria-label^="Status for"]:focus {
+  border-color: #236c56;
+  box-shadow: 0 0 0 3px rgba(35, 108, 86, 0.12);
+}
+
+.ns-table tbody td select[aria-label^="Status for"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ns-table tbody td select[aria-label^="Status for"] option {
+  background: #ffffff;
+  color: #123e32;
+}
+
+@media (max-width: 768px) {
+  .ns-table tbody td select[aria-label^="Status for"] {
+    min-width: 130px;
+  }
+}

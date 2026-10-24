@@ -1,0 +1,175 @@
+.hotel-reg-page {
+    min-height: 75vh;
+    background: #f7f8f5;
+    padding: 72px 20px 100px;
+    color: #143a30
+}
+
+.hotel-reg-intro {
+    text-align: center;
+    max-width: 690px;
+    margin: 0 auto 36px
+}
+
+.hotel-reg-eyebrow {
+    color: #b88b4b;
+    letter-spacing: 2.5px;
+    font-size: 11px;
+    font-weight: 800
+}
+
+.hotel-reg-intro h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(32px, 4.2vw, 54px);
+    margin: 15px 0
+}
+
+.hotel-reg-intro p {
+    color: #6d7d76;
+    line-height: 1.8
+}
+
+.hotel-reg-card {
+    max-width: 600px;
+    margin: auto;
+    background: #fff;
+    border: 1px solid #e4e9e4;
+    border-radius: 18px;
+    box-shadow: 0 16px 45px rgba(14, 55, 42, .07);
+    padding: 38px
+}
+
+.hotel-reg-card-heading {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    margin-bottom: 28px
+}
+
+.hotel-reg-card-heading>svg {
+    color: #b88b4b;
+    flex-shrink: 0
+}
+
+.hotel-reg-card-heading h2 {
+    font-size: 23px;
+    margin: 0 0 6px
+}
+
+.hotel-reg-card-heading p {
+    color: #728078;
+    font-size: 13px;
+    margin: 0
+}
+
+.hotel-reg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.hotel-reg-form label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 10px
+}
+
+.hotel-reg-form label svg {
+    color: #b88b4b
+}
+
+.hotel-reg-form input {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    border: 1px solid #dce5df;
+    border-radius: 9px;
+    background: #fff;
+    color: #143a30;
+    font: inherit;
+    font-size: 14px;
+    outline: none
+}
+
+.hotel-reg-form input:focus {
+    border-color: #bc9459;
+    box-shadow: 0 0 0 3px rgba(188, 148, 89, .14)
+}
+
+.hotel-reg-form button,
+.hotel-reg-success button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    min-height: 50px;
+    margin-top: 20px;
+    background: #153e33;
+    border: 0;
+    border-radius: 9px;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer
+}
+
+.hotel-reg-form button:disabled {
+    opacity: .65;
+    cursor: wait
+}
+
+.hotel-reg-note {
+    text-align: center;
+    color: #829087;
+    font-size: 12px;
+    line-height: 1.7;
+    margin: 4px 0 0
+}
+
+.hotel-reg-error {
+    background: #fff1f0;
+    color: #b42318;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 13px
+}
+
+.hotel-reg-success {
+    text-align: center;
+    padding: 25px 0
+}
+
+.hotel-reg-success>svg {
+    color: #27835a
+}
+
+.hotel-reg-success h2 {
+    font-size: 28px
+}
+
+.hotel-reg-success p {
+    color: #6d7d76;
+    line-height: 1.8
+}
+
+.hotel-reg-success button {
+    margin: 24px auto 0;
+    padding: 0 25px
+}
+
+@media(max-width:600px) {
+    .hotel-reg-page {
+        padding: 45px 15px 70px
+    }
+
+    .hotel-reg-card {
+        padding: 25px 20px
+    }
+
+    .hotel-reg-card-heading h2 {
+        font-size: 20px
+    }
+}

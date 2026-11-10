@@ -173,3 +173,98 @@
         font-size: 20px
     }
 }
+
+
+.hotel-logo-hidden-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.hotel-logo-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 145px;
+    padding: 20px;
+    border: 2px dashed #cbdcd4;
+    border-radius: 14px;
+    background: #f8fbf9;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.hotel-logo-upload:hover,
+.hotel-logo-upload:focus-within {
+    border-color: #174c40;
+    background: #eff7f2;
+}
+
+.hotel-logo-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    text-align: center;
+}
+
+.hotel-logo-placeholder svg {
+    color: #b68a49;
+}
+
+.hotel-logo-placeholder strong {
+    font-size: 14px;
+    color: #173e33;
+    font-weight: 600;
+}
+
+.hotel-logo-placeholder span {
+    font-size: 12px;
+    color: #7b8e86;
+}
+
+.hotel-logo-selected {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    min-width: 0;
+}
+
+.hotel-logo-selected img {
+    width: 76px;
+    height: 76px;
+    object-fit: contain;
+    background: white;
+    border: 1px solid #e1e9e4;
+    border-radius: 12px;
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+.hotel-logo-selected>div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.hotel-logo-selected strong {
+    font-size: 14px;
+    color: #173e33;
+    overflow-wrap: anywhere;
+}
+
+.hotel-logo-selected span {
+    font-size: 12px;
+    color: #788a80;
+}
+
+.hotel-logo-hidden-input:focus-visible+.hotel-logo-upload {
+    outline: 2px solid #174c40;
+    outline-offset: 3px;
+}

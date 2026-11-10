@@ -1244,3 +1244,92 @@
     width: 100%;
   }
 }
+
+
+
+
+/* ==========================================
+   NORTHERNSTAYS - HOTELS PAGE TYPOGRAPHY
+   BOP Style - DM Sans
+========================================== */
+
+/* Entire Hotels Page */
+.hotels-page,
+.hotels-page * {
+  font-family: "DM Sans", sans-serif !important;
+  font-style: normal !important;
+  letter-spacing: 0 !important;
+}
+
+/* Main Heading - Available Rooms */
+.hotels-page .listing-banner h1 {
+  font-size: 32px !important;
+  font-weight: 400 !important;
+  line-height: 1.4 !important;
+  color: #173d34 !important;
+}
+
+/* Results Heading - Hunza Rooms */
+.hotels-page .results-header h2 {
+  font-size: 24px !important;
+  font-weight: 400 !important;
+  line-height: 1.4 !important;
+  color: #173d34 !important;
+}
+
+/* Search & Filters Heading */
+.hotels-page .filters-title h3 {
+  font-size: 20px !important;
+  font-weight: 500 !important;
+}
+
+/* Room Name - Staff, Suite, Deluxe */
+.hotels-page .hotel-card-body h3 {
+  font-size: 22px !important;
+  font-weight: 400 !important;
+  line-height: 1.4 !important;
+}
+
+/* Paragraphs and Descriptions */
+.hotels-page p,
+.hotels-page .hotel-location,
+.hotels-page .hotel-amenities {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Filter Labels */
+.hotels-page .filters-panel label {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+/* Inputs, Dropdowns and Buttons */
+.hotels-page input,
+.hotels-page select,
+.hotels-page button,
+.hotels-page .details-button {
+  font-family: "DM Sans", sans-serif !important;
+}
+
+/* Room Price */
+.hotels-page .hotel-card-bottom strong {
+  font-family: "DM Sans", sans-serif !important;
+  font-weight: 600 !important;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .hotels-page .listing-banner h1 {
+    font-size: 28px !important;
+  }
+
+  .hotels-page .results-header h2 {
+    font-size: 22px !important;
+  }
+
+  .hotels-page .hotel-card-body h3 {
+    font-size: 20px !important;
+  }
+}

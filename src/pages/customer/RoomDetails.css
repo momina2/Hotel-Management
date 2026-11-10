@@ -474,3 +474,632 @@
  .nsrd-amenity span {
      color: #536c61
  }
+
+
+
+ /* Optional services: shown only in the booking card, not Room Amenities */
+ .nsrd-addons {
+     margin-top: 18px;
+     padding-top: 17px;
+     border-top: 1px solid #e4eae6;
+ }
+
+ .nsrd-addons h3 {
+     margin: 0 0 6px;
+     font: bold 19px Georgia, serif;
+     color: #153e35;
+ }
+
+ .nsrd-addons>p {
+     margin: 0 0 13px;
+     font-size: 12px;
+     color: #62756e;
+ }
+
+ .nsrd-addon-option {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     padding: 12px 9px;
+     margin: 8px 0;
+     border: 1px solid #e2e9e4;
+     border-radius: 9px;
+     cursor: pointer;
+     background: #f8faf8;
+ }
+
+ .nsrd-addon-option:has(input:checked) {
+     border-color: #1c624d;
+     background: #eff7f1;
+ }
+
+ .nsrd-addon-option input {
+     width: 17px;
+     height: 17px;
+     accent-color: #163e34;
+     flex-shrink: 0;
+ }
+
+ .nsrd-addon-name {
+     flex: 1;
+     min-width: 0;
+     display: grid;
+     gap: 3px;
+     font-size: 13px;
+ }
+
+ .nsrd-addon-name small {
+     font-size: 11px;
+     color: #6b7977;
+ }
+
+ .nsrd-addon-cost {
+     font-size: 12px;
+     font-weight: 700;
+     white-space: nowrap;
+ }
+
+ .nsrd-addon-summary {
+     margin: 9px 0;
+ }
+
+ .nsrd-addon-summary span {
+     display: inline-flex;
+     align-items: center;
+     gap: 6px;
+ }
+
+ .nsrd-total {
+     border-top: 1px solid #e4eae6;
+     padding-top: 14px;
+     font-size: 16px;
+     font-weight: 700;
+ }
+
+ .nsrd-total strong {
+     color: #166448;
+ }
+
+ /* NorthernStays – Add/Edit Room modal. Append to the END of admin.css */
+ .ns-room-overlay {
+     position: fixed !important;
+     inset: 0 !important;
+     z-index: 9999 !important;
+     background: rgba(12, 28, 37, .62) !important;
+     display: flex !important;
+     align-items: center !important;
+     justify-content: center !important;
+     padding: 22px !important;
+     overflow-y: auto !important;
+     box-sizing: border-box !important
+ }
+
+ .ns-room-dialog {
+     width: min(860px, 100%) !important;
+     max-height: calc(100vh - 44px) !important;
+     overflow-y: auto !important;
+     background: #fff !important;
+     color: #173a35 !important;
+     border-radius: 18px !important;
+     box-shadow: 0 24px 80px rgba(0, 0, 0, .24) !important;
+     padding: 28px !important;
+     box-sizing: border-box !important
+ }
+
+ .ns-room-dialog * {
+     box-sizing: border-box
+ }
+
+ .ns-room-dialog-header {
+     display: flex !important;
+     align-items: center !important;
+     justify-content: space-between !important;
+     gap: 16px !important;
+     margin-bottom: 22px !important;
+     border-bottom: 1px solid #e7ecea !important;
+     padding-bottom: 15px !important
+ }
+
+ .ns-room-dialog-header h2 {
+     font-size: 24px !important;
+     line-height: 1.3 !important;
+     margin: 0 !important;
+     color: #153d35 !important
+ }
+
+ .ns-room-dialog-header button {
+     display: grid;
+     place-items: center;
+     width: 36px;
+     height: 36px;
+     border: 1px solid #e0e6e3;
+     border-radius: 9px;
+     background: #f7f9f8;
+     cursor: pointer
+ }
+
+ .ns-room-form {
+     display: flex !important;
+     flex-direction: column !important;
+     gap: 19px !important
+ }
+
+ .ns-room-form .ns-room-fields {
+     display: grid !important;
+     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+     gap: 16px !important;
+     width: 100% !important
+ }
+
+ .ns-room-form label {
+     display: flex !important;
+     flex-direction: column !important;
+     align-items: stretch !important;
+     gap: 7px !important;
+     font-size: 13px !important;
+     font-weight: 600 !important;
+     color: #344e48 !important;
+     min-width: 0 !important
+ }
+
+ .ns-room-form input:not([type="file"]),
+ .ns-room-form select,
+ .ns-room-form textarea {
+     display: block !important;
+     width: 100% !important;
+     min-width: 0 !important;
+     max-width: 100% !important;
+     min-height: 43px !important;
+     border: 1px solid #cfdad6 !important;
+     border-radius: 9px !important;
+     padding: 10px 12px !important;
+     background: #fff !important;
+     color: #183a33 !important;
+     font: inherit !important;
+     font-size: 14px !important;
+     outline: none !important
+ }
+
+ .ns-room-form textarea {
+     min-height: 95px !important;
+     resize: vertical !important
+ }
+
+ .ns-room-form input:focus,
+ .ns-room-form select:focus,
+ .ns-room-form textarea:focus {
+     border-color: #16836c !important;
+     box-shadow: 0 0 0 3px rgba(22, 131, 108, .12) !important
+ }
+
+ .ns-room-availability,
+ .ns-room-gallery-editor,
+ .ns-room-amenities-editor {
+     border: 1px solid #e1eae6 !important;
+     border-radius: 12px !important;
+     background: #fafcfb !important;
+     padding: 17px !important;
+     min-width: 0 !important
+ }
+
+ .ns-room-availability>strong,
+ .ns-room-gallery-editor>strong {
+     display: block;
+     margin-bottom: 8px;
+     font-size: 15px;
+     color: #183f36
+ }
+
+ .ns-room-availability small {
+     display: block;
+     color: #687d76;
+     margin-top: 4px
+ }
+
+ .ns-room-gallery-editor {
+     display: flex !important;
+     flex-direction: column !important;
+     gap: 12px !important
+ }
+
+ .ns-room-gallery-editor .ns-note {
+     margin: 0 !important;
+     font-size: 12px !important;
+     color: #7c8b85 !important
+ }
+
+ .ns-room-gallery-editor input[type="file"] {
+     width: 100%;
+     max-width: 100%;
+     font-size: 13px
+ }
+
+ .ns-room-inline {
+     display: flex !important;
+     gap: 10px !important;
+     align-items: center !important;
+     min-width: 0 !important
+ }
+
+ .ns-room-inline input {
+     flex: 1 !important;
+     min-width: 0 !important
+ }
+
+ .ns-room-inline button {
+     flex-shrink: 0 !important
+ }
+
+ .ns-room-gallery-grid {
+     display: grid !important;
+     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+     gap: 12px !important
+ }
+
+ .ns-room-gallery-tile {
+     position: relative;
+     overflow: hidden;
+     border-radius: 10px;
+     border: 1px solid #dbe4df;
+     background: white
+ }
+
+ .ns-room-gallery-tile img {
+     display: block;
+     width: 100%;
+     height: 100px;
+     object-fit: cover
+ }
+
+ .ns-room-gallery-tile span {
+     display: block;
+     padding: 5px 8px;
+     font-size: 12px
+ }
+
+ .ns-room-gallery-tile button {
+     position: absolute;
+     right: 5px;
+     top: 5px;
+     background: white;
+     border: 0;
+     border-radius: 5px;
+     cursor: pointer
+ }
+
+ .ns-room-amenities-head {
+     display: flex !important;
+     align-items: center !important;
+     justify-content: space-between !important;
+     gap: 12px !important;
+     margin-bottom: 12px !important
+ }
+
+ .ns-room-amenity-row {
+     display: grid !important;
+     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 42px !important;
+     gap: 10px !important;
+     align-items: center !important;
+     margin-top: 9px !important
+ }
+
+ .ns-room-amenity-row button {
+     height: 43px !important;
+     min-width: 42px !important;
+     padding: 0 !important
+ }
+
+ .ns-room-actions {
+     display: flex !important;
+     justify-content: flex-end !important;
+     gap: 12px !important;
+     border-top: 1px solid #e7ecea !important;
+     padding-top: 18px !important;
+     margin-top: 3px !important
+ }
+
+ .ns-room-form .ns-btn,
+ .ns-room-form .ns-cancel {
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     gap: 7px;
+     min-height: 42px;
+     padding: 10px 18px;
+     border-radius: 9px;
+     font-weight: 600;
+     cursor: pointer
+ }
+
+ .ns-room-form .ns-btn {
+     background: #174c3f;
+     color: #fff;
+     border: 1px solid #174c3f
+ }
+
+ .ns-room-form .ns-cancel {
+     background: #fff;
+     color: #26483e;
+     border: 1px solid #cfdad6
+ }
+
+ .ns-room-form .ns-room-error {
+     color: #b42318;
+     font-size: 13px
+ }
+
+ @media(max-width:640px) {
+     .ns-room-overlay {
+         padding: 10px !important;
+         align-items: flex-start !important
+     }
+
+     .ns-room-dialog {
+         padding: 18px !important;
+         max-height: calc(100dvh - 20px) !important;
+         border-radius: 13px !important
+     }
+
+     .ns-room-form .ns-room-fields {
+         grid-template-columns: minmax(0, 1fr) !important;
+         gap: 13px !important
+     }
+
+     .ns-room-amenity-row {
+         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 38px !important;
+         gap: 6px !important
+     }
+
+     .ns-room-inline {
+         flex-wrap: wrap
+     }
+
+     .ns-room-actions button {
+         flex: 1
+     }
+
+     .ns-room-dialog-header h2 {
+         font-size: 21px !important
+     }
+ }
+
+
+
+ /* Room booking card: discounted price left, original price and offer right */
+ .nsrd-price {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     align-items: center;
+     flex-wrap: nowrap;
+     gap: 12px;
+     width: 100%;
+ }
+
+ .nsrd-current-price {
+     display: flex;
+     align-items: baseline;
+     flex-wrap: nowrap;
+     gap: 6px;
+     min-width: 0;
+ }
+
+ .nsrd-current-price strong {
+     font-family: Georgia, serif;
+     font-size: clamp(23px, 2.4vw, 34px);
+     line-height: 1.15;
+     white-space: nowrap;
+ }
+
+ .nsrd-current-price span {
+     font-size: 12px;
+     white-space: nowrap;
+ }
+
+ .nsrd-price-discount {
+     display: flex;
+     flex-direction: column;
+     align-items: flex-end;
+     gap: 5px;
+     flex-shrink: 0;
+     text-align: right;
+ }
+
+ .nsrd-price-discount s {
+     color: #88918d;
+     font-size: 13px;
+     white-space: nowrap;
+ }
+
+ .nsrd-price-discount small {
+     color: #15803d;
+     font-size: 12px;
+     font-weight: 700;
+     white-space: nowrap;
+ }
+
+ @media (max-width: 390px) {
+     .nsrd-price {
+         gap: 7px;
+     }
+
+     .nsrd-current-price strong {
+         font-size: 22px;
+     }
+
+     .nsrd-price-discount s {
+         font-size: 11px;
+     }
+
+     .nsrd-price-discount small {
+         font-size: 11px;
+     }
+ }
+
+ /* Room Management Search Bar Fix */
+
+ .ns-panel .ns-search {
+     display: block;
+     width: 100%;
+     max-width: 100%;
+     min-width: 0;
+     height: 46px;
+     padding: 12px 16px;
+     box-sizing: border-box;
+
+     border: 1px solid #dce5df;
+     border-radius: 10px;
+     background: #f8faf9;
+     color: #173d34;
+
+     font-size: 14px;
+     font-family: inherit;
+     outline: none;
+     transition: border-color 0.2s ease;
+ }
+
+ .ns-panel .ns-search:focus {
+     border-color: #17624e;
+     box-shadow: 0 0 0 3px rgba(23, 98, 78, 0.1);
+ }
+
+ .ns-panel .ns-search::placeholder {
+     color: #87958f;
+ }
+
+ /* NorthernStays - Room Management Search Fix */
+
+ .ns-admin .ns-content .ns-panel input[type="search"],
+ .ns-admin .ns-content .ns-panel input.ns-search,
+ .ns-admin .ns-content .ns-panel input[placeholder*="Search room"],
+ .ns-admin .ns-content .ns-panel input[placeholder*="Search Room"] {
+     display: block !important;
+     width: 100% !important;
+     min-width: 100% !important;
+     max-width: 100% !important;
+     height: 46px !important;
+     padding: 12px 16px !important;
+     margin: 0 0 16px !important;
+     box-sizing: border-box !important;
+
+     border: 1px solid #dce5df !important;
+     border-radius: 10px !important;
+     background: #f8faf9 !important;
+     color: #173d34 !important;
+
+     font-family: inherit !important;
+     font-size: 14px !important;
+     outline: none !important;
+ }
+
+ .ns-admin .ns-content .ns-panel input[placeholder*="Search room"]:focus {
+     border-color: #17624e !important;
+     box-shadow: 0 0 0 3px rgba(23, 98, 78, 0.1) !important;
+ }
+
+
+ /* ==========================================
+   NORTHERNSTAYS - ROOM DETAILS TYPOGRAPHY
+   BOP Style - DM Sans
+========================================== */
+
+ /* Entire Room Details Page */
+ .nsrd-page,
+ .nsrd-page *,
+ .nsrd-state,
+ .nsrd-state * {
+     font-family: "DM Sans", sans-serif !important;
+     font-style: normal !important;
+     letter-spacing: 0 !important;
+ }
+
+ /* Main Room Name - Staff, Suite, Deluxe */
+ .nsrd-intro h1 {
+     font-size: 32px !important;
+     font-weight: 400 !important;
+     line-height: 1.3 !important;
+     color: #173d34 !important;
+ }
+
+ /* Booking Price - PKR 1,500 */
+ .nsrd-current-price strong {
+     font-size: 30px !important;
+     font-weight: 500 !important;
+     line-height: 1.3 !important;
+     color: #173d34 !important;
+ }
+
+ /* Section Headings */
+ .nsrd-info h2,
+ .nsrd-addons h3,
+ .nsrd-help h3 {
+     font-size: 20px !important;
+     font-weight: 500 !important;
+     line-height: 1.4 !important;
+ }
+
+ /* Room Description */
+ .nsrd-description,
+ .nsrd-location,
+ .nsrd-hotel,
+ .nsrd-features {
+     font-size: 14px;
+     font-weight: 400;
+     line-height: 1.6;
+ }
+
+ /* Booking Form Labels */
+ .nsrd-form-grid label,
+ .nsrd-form-grid label span {
+     font-size: 13px;
+     font-weight: 400;
+ }
+
+ /* Inputs, Dropdowns and Buttons */
+ .nsrd-page input,
+ .nsrd-page select,
+ .nsrd-page button {
+     font-family: "DM Sans", sans-serif !important;
+ }
+
+ /* Total Amount */
+ .nsrd-total,
+ .nsrd-total strong {
+     font-size: 15px !important;
+     font-weight: 600 !important;
+ }
+
+ /* Optional Add-ons */
+ .nsrd-addon-name strong {
+     font-size: 13px;
+     font-weight: 500;
+ }
+
+ .nsrd-addon-name small {
+     font-size: 11px;
+     font-weight: 400;
+ }
+
+ /* Breadcrumb */
+ .nsrd-crumbs,
+ .nsrd-crumbs a,
+ .nsrd-crumbs span {
+     font-size: 12px;
+     font-weight: 400;
+ }
+
+ /* Mobile Responsive */
+ @media (max-width: 600px) {
+     .nsrd-intro h1 {
+         font-size: 26px !important;
+     }
+
+     .nsrd-current-price strong {
+         font-size: 24px !important;
+     }
+
+     .nsrd-info h2,
+     .nsrd-addons h3 {
+         font-size: 18px !important;
+     }
+ }

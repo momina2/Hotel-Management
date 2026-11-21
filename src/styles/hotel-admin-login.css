@@ -424,3 +424,172 @@
     font-size: 23px;
   }
 }
+
+
+/* =====================================
+   LOGIN THEME (shared by admin, staff & forgot-password pages)
+   Soft iOS-style typography + warm palette matching the site.
+===================================== */
+
+.hotel-login {
+  background: #f7f5f0;
+  color: #1d2b27;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.hotel-login button,
+.hotel-login input {
+  font-family: inherit;
+  letter-spacing: inherit;
+}
+
+.hotel-login-brand {
+  background:
+    linear-gradient(160deg, rgba(16, 48, 42, .94) 0%, rgba(16, 48, 42, .86) 55%, rgba(10, 34, 29, .96) 100%),
+    url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=70") center / cover;
+}
+
+.hotel-login-logo-icon {
+  background: #e4c58d;
+  color: #10302a;
+}
+
+.hotel-login-logo h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.hotel-login-logo p {
+  font-size: 11px;
+  letter-spacing: .12em;
+}
+
+.hotel-login-tag {
+  padding: 7px 14px;
+  border-color: rgba(228, 197, 141, .4);
+  background: rgba(228, 197, 141, .08);
+  color: #e4c58d;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .06em;
+}
+
+.hotel-login-brand-content h2 {
+  font-size: clamp(36px, 3.8vw, 58px);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.hotel-login-brand-content h2 span {
+  color: #e4c58d;
+}
+
+.hotel-login-brand-content>p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, .72);
+}
+
+.hotel-login-eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  text-transform: none;
+  color: #b08a4f;
+}
+
+.hotel-login-heading h2,
+.hotel-otp-heading {
+  margin: 8px 0 10px;
+  font-size: clamp(28px, 2.6vw, 36px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: #173d34;
+}
+
+.hotel-login-heading p,
+.hotel-otp-description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #6b7a72;
+}
+
+.hotel-login-field label {
+  margin-bottom: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #1d2b27;
+}
+
+.hotel-login-input,
+.hotel-otp-input {
+  border-color: #d9d3c6;
+  border-radius: 12px;
+  color: #1d2b27;
+  font-size: 15px;
+}
+
+.hotel-login-input:hover,
+.hotel-otp-input:hover {
+  border-color: #c9c2b3;
+}
+
+.hotel-login-input:focus,
+.hotel-otp-input:focus {
+  border-color: #173d34;
+  box-shadow: 0 0 0 4px rgba(23, 61, 52, .1);
+}
+
+.hotel-login-input-wrap:focus-within>svg {
+  color: #173d34;
+}
+
+.hotel-login-submit {
+  min-height: 52px;
+  border-radius: 999px;
+  background: #173d34;
+  font-size: 15.5px;
+  font-weight: 600;
+}
+
+.hotel-login-submit:hover:not(:disabled) {
+  background: #0f2c25;
+  transform: none;
+}
+
+.hotel-login-error,
+.hotel-login-success {
+  border-radius: 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.hotel-login-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #b9c0bb;
+}
+
+.hotel-login-links a {
+  color: #173d34;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.hotel-login-links a:hover {
+  text-decoration: underline;
+}
+
+.hotel-login a:focus-visible,
+.hotel-login button:focus-visible {
+  outline: 3px solid rgba(198, 154, 92, .55);
+  outline-offset: 2px;
+}

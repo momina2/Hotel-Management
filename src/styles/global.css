@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap");
 
 :root {
   font-family: "DM Sans", sans-serif;
@@ -1607,245 +1607,6 @@ button {
 
 
 
-/* BOP-inspired compact city grid; NorthernStays green/gold identity */
-.ns-popular-destinations .ns-popular-city-list {
-  display: grid;
-  gap: 22px;
-  margin-top: 30px;
-}
-
-.ns-popular-destinations .ns-popular-city-group {
-  min-width: 0;
-}
-
-.ns-popular-destinations .ns-popular-city-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 20px;
-}
-
-.ns-popular-destinations .ns-popular-city-card {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 142px;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-  border-radius: 6px;
-  background: #dbe5e1;
-  cursor: pointer;
-  text-align: left;
-  box-shadow: 0 4px 12px rgba(15, 48, 39, .12);
-}
-
-.ns-popular-destinations .ns-popular-city-card img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform .25s ease;
-}
-
-.ns-popular-destinations .ns-popular-city-card:hover img {
-  transform: scale(1.05);
-}
-
-.ns-popular-destinations .ns-popular-city-card:focus-visible {
-  outline: 3px solid #bd904e;
-  outline-offset: 3px;
-}
-
-.ns-popular-destinations .ns-popular-city-card.is-selected {
-  outline: 3px solid #bd904e;
-  outline-offset: 2px;
-}
-
-.ns-popular-destinations .ns-popular-city-shade,
-.ns-popular-destinations .ns-expanded-area-shade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 35%, rgba(5, 30, 24, .78) 100%);
-  pointer-events: none;
-}
-
-.ns-popular-destinations .ns-popular-city-caption {
-  position: absolute;
-  right: 13px;
-  bottom: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  color: #fff;
-  line-height: 1.25;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, .4);
-}
-
-.ns-popular-destinations .ns-popular-city-caption strong {
-  font-size: 21px;
-  font-weight: 700;
-}
-
-.ns-popular-destinations .ns-popular-city-caption small {
-  font-size: 13px;
-}
-
-.ns-popular-destinations .ns-expanded-areas {
-  margin-top: 18px;
-  padding: 22px;
-  border: 1px solid #dbe5df;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, .94);
-  box-shadow: 0 7px 24px rgba(15, 48, 39, .06);
-}
-
-.ns-popular-destinations .ns-expanded-areas-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 15px;
-  margin-bottom: 16px;
-}
-
-.ns-popular-destinations .ns-expanded-areas-heading h3 {
-  margin: 0 0 5px;
-  color: #153d32;
-  font-size: 24px;
-}
-
-.ns-popular-destinations .ns-expanded-areas-heading p {
-  margin: 0;
-  color: #72827a;
-  font-size: 14px;
-}
-
-.ns-popular-destinations .ns-expanded-close {
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  background: #f4f7f5;
-  border: 1px solid #e0e9e3;
-  border-radius: 50%;
-  color: #163e32;
-  cursor: pointer;
-}
-
-.ns-popular-destinations .ns-expanded-carousel-shell {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-}
-
-.ns-popular-destinations .ns-expanded-carousel {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  padding: 3px 2px 10px;
-}
-
-.ns-popular-destinations .ns-expanded-area-card {
-  position: relative;
-  flex: 0 0 215px;
-  height: 145px;
-  padding: 0;
-  border: 0;
-  border-radius: 9px;
-  overflow: hidden;
-  background: #dce6e0;
-  cursor: pointer;
-  text-align: left;
-  scroll-snap-align: start;
-}
-
-.ns-popular-destinations .ns-expanded-area-card img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-}
-
-.ns-popular-destinations .ns-expanded-area-caption {
-  position: absolute;
-  left: 15px;
-  bottom: 13px;
-  display: grid;
-  gap: 7px;
-  color: #fff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
-}
-
-.ns-popular-destinations .ns-expanded-area-caption strong {
-  font-size: 19px;
-}
-
-.ns-popular-destinations .ns-expanded-area-caption small {
-  display: flex;
-  gap: 7px;
-  align-items: center;
-  font-size: 12px;
-}
-
-.ns-popular-destinations .ns-expanded-arrow {
-  width: 38px;
-  height: 38px;
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  border: 1px solid #dce6e0;
-  border-radius: 50%;
-  background: #fff;
-  color: #174436;
-  cursor: pointer;
-}
-
-@media (max-width: 900px) {
-  .ns-popular-destinations .ns-popular-city-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 13px;
-  }
-}
-
-@media (max-width: 640px) {
-  .ns-popular-destinations .ns-popular-city-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-
-  .ns-popular-destinations .ns-popular-city-card {
-    height: 120px;
-  }
-
-  .ns-popular-destinations .ns-popular-city-caption strong {
-    font-size: 17px;
-  }
-
-  .ns-popular-destinations .ns-expanded-areas {
-    padding: 13px;
-  }
-
-  .ns-popular-destinations .ns-expanded-areas-heading h3 {
-    font-size: 19px;
-  }
-
-  .ns-popular-destinations .ns-expanded-arrow {
-    width: 30px;
-    height: 30px;
-  }
-
-  .ns-popular-destinations .ns-expanded-area-card {
-    flex-basis: 180px;
-    height: 130px;
-  }
-}
-
-
-
 /* Explore Areas - Transparent Background */
 .ns-expanded-areas,
 .ns-city-expanded,
@@ -1910,54 +1671,6 @@ button {
   background: transparent !important;
   box-shadow: none !important;
   border: none !important;
-}
-
-/* FINAL FIX: actual expanded area carousel scrollbar */
-.ns-popular-destinations .ns-expanded-carousel {
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 0 !important;
-}
-
-.ns-popular-destinations .ns-expanded-carousel::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-}
-
-.ns-popular-destinations .ns-expanded-areas {
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-}
-
-
-
-
-
-/* Popular Destinations - BOP Style Heading */
-
-.ns-popular-destinations .section-heading h2,
-.destinations.ns-destinations .section-heading h2 {
-  font-family: "DM Sans", sans-serif !important;
-  font-size: 24px !important;
-  font-weight: 400 !important;
-  line-height: 1.4 !important;
-  letter-spacing: 0 !important;
-  color: #222222 !important;
-  text-transform: none !important;
-  margin: 0 0 12px !important;
-}
-
-/* Small screens */
-@media (max-width: 600px) {
-
-  .ns-popular-destinations .section-heading h2,
-  .destinations.ns-destinations .section-heading h2 {
-    font-size: 22px !important;
-  }
 }
 
 
@@ -2057,88 +1770,733 @@ button {
 
 
 
-/* =====================================
-   NORTHERNSTAYS - CITY CARDS FONT
-   BOP Inspired Typography
-===================================== */
-
-/* City Names */
-.ns-popular-destinations .ns-popular-city-caption strong {
-  font-family: "DM Sans", sans-serif !important;
-  font-size: 21px !important;
-  font-weight: 400 !important;
-  font-style: normal !important;
-  letter-spacing: 0 !important;
-  line-height: 1.3 !important;
-  color: #ffffff !important;
-}
-
-/* Pakistan Label */
-.ns-popular-destinations .ns-popular-city-caption small {
-  font-family: "DM Sans", sans-serif !important;
-  font-size: 13px !important;
-  font-weight: 400 !important;
-  color: #ffffff !important;
-}
-
-/* Area Carousel Card Names */
-.ns-popular-destinations .ns-expanded-area-caption strong {
-  font-family: "DM Sans", sans-serif !important;
-  font-size: 19px !important;
-  font-weight: 400 !important;
-}
-
-/* Explore Rooms Text */
-.ns-popular-destinations .ns-expanded-area-caption small {
-  font-family: "DM Sans", sans-serif !important;
-  font-size: 12px !important;
-  font-weight: 400 !important;
-}
-
-/* Mobile */
-@media (max-width: 600px) {
-  .ns-popular-destinations .ns-popular-city-caption strong {
-    font-size: 18px !important;
-  }
-}
-
 
 
 /* =====================================
-   EXPLORE AREAS - BOP STYLE FONT
+   NORTHERNSTAYS - POPULAR DESTINATIONS
+   City tabs + area card grid (homepage)
 ===================================== */
 
-/* Explore Areas Heading */
-.ns-popular-destinations .ns-expanded-areas-heading h3 {
-  font-family: "DM Sans", sans-serif !important;
-  font-size: 24px !important;
-  font-weight: 400 !important;
-  font-style: normal !important;
-  letter-spacing: 0 !important;
-  line-height: 1.4 !important;
-  color: #222222 !important;
-  text-transform: none !important;
+.ns-pd-section {
+  padding: 88px 0 96px;
+  background: #f7f5f0;
+  border-top: 1px solid #ece7dc;
 }
 
-/* Description */
-.ns-popular-destinations .ns-expanded-areas-heading p {
-  font-family: "DM Sans", sans-serif !important;
-  font-size: 14px !important;
-  font-weight: 400 !important;
-  line-height: 1.6 !important;
-  color: #72827a !important;
+.ns-pd-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
 }
 
-/* Mobile */
-@media (max-width: 600px) {
-  .ns-popular-destinations .ns-expanded-areas-heading h3 {
-    font-size: 20px !important;
+.ns-pd-heading .section-label {
+  color: #b08a4f;
+}
+
+.ns-pd-heading h2 {
+  margin: 10px 0 8px;
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #173d34;
+}
+
+.ns-pd-heading p {
+  margin: 0;
+  color: #6b7a72;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.ns-pd-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: 1px solid #d9d2c3;
+  border-radius: 999px;
+  background: #fff;
+  color: #173d34;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: border-color .2s, background .2s, color .2s;
+}
+
+.ns-pd-link:hover {
+  border-color: #173d34;
+  background: #173d34;
+  color: #fff;
+}
+
+/* City tabs */
+.ns-pd-tabs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 2px 2px 18px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #e6e0d3;
+  scrollbar-width: none;
+}
+
+.ns-pd-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.ns-pd-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  height: 46px;
+  padding: 0 18px 0 6px;
+  border: 1px solid #e0dacd;
+  border-radius: 999px;
+  background: #fff;
+  color: #173d34;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s;
+}
+
+.ns-pd-tab img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.ns-pd-tab:hover {
+  border-color: #173d34;
+}
+
+.ns-pd-tab.is-active {
+  background: #173d34;
+  border-color: #173d34;
+  color: #fff;
+}
+
+.ns-pd-tab.is-skeleton {
+  width: 120px;
+  border: 0;
+}
+
+/* Results header */
+.ns-pd-results-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 52px;
+}
+
+.ns-pd-results-head p {
+  margin: 0;
+  color: #6b7a72;
+  font-size: 14px;
+}
+
+.ns-pd-results-head strong {
+  color: #173d34;
+  font-weight: 600;
+}
+
+.ns-pd-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #98733e;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ns-pd-text-link:hover {
+  text-decoration: underline;
+}
+
+/* Area cards */
+.ns-pd-areas-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.ns-pd-area {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #e6e0d3;
+  border-radius: 14px;
+  background: #fff;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s;
+}
+
+.ns-pd-area:hover {
+  transform: translateY(-4px);
+  border-color: #d9d2c3;
+  box-shadow: 0 14px 30px rgba(15, 48, 39, .1);
+}
+
+.ns-pd-area:focus-visible,
+.ns-pd-tab:focus-visible,
+.ns-pd-link:focus-visible {
+  outline: 3px solid #c69a5c;
+  outline-offset: 3px;
+}
+
+.ns-pd-area-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #e2e6e1;
+}
+
+.ns-pd-area-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+
+.ns-pd-area:hover .ns-pd-area-media img {
+  transform: scale(1.05);
+}
+
+.ns-pd-area-body {
+  display: grid;
+  gap: 6px;
+  padding: 16px 18px 18px;
+}
+
+.ns-pd-area-body strong {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #173d34;
+}
+
+.ns-pd-area-body small {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #6b7a72;
+  font-size: 13px;
+}
+
+.ns-pd-area-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  color: #98733e;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ns-pd-area-cta svg {
+  transition: transform .2s;
+}
+
+.ns-pd-area:hover .ns-pd-area-cta svg {
+  transform: translateX(4px);
+}
+
+/* Skeleton + empty states */
+.ns-pd-area.is-skeleton {
+  cursor: default;
+}
+
+.ns-pd-area.is-skeleton:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.ns-pd-line {
+  display: block;
+  height: 14px;
+  width: 70%;
+  border-radius: 6px;
+}
+
+.ns-pd-line.is-short {
+  width: 45%;
+}
+
+.ns-pd-shimmer {
+  background: linear-gradient(90deg, #ebe7de 0%, #f5f2ec 50%, #ebe7de 100%);
+  background-size: 200% 100%;
+  animation: ns-pd-shimmer 1.3s linear infinite;
+}
+
+@keyframes ns-pd-shimmer {
+  from {
+    background-position: 200% 0;
   }
 
-  .ns-popular-destinations .ns-expanded-areas-heading p {
-    font-size: 13px !important;
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.ns-pd-empty {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 48px 16px;
+  border: 1px dashed #d9d2c3;
+  border-radius: 14px;
+  background: #fff;
+  color: #6b7a72;
+  text-align: center;
+}
+
+.ns-pd-empty svg {
+  color: #b08a4f;
+}
+
+.ns-pd-empty p {
+  margin: 0;
+  font-size: 15px;
+}
+
+.ns-pd-message {
+  margin: 0;
+  padding: 18px 0 4px;
+  color: #6b7a72;
+  font-size: 14px;
+}
+
+.ns-pd-message[role="alert"] {
+  color: #b42318;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .ns-pd-areas-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+
+@media (max-width: 700px) {
+  .ns-pd-section {
+    padding: 56px 0 64px;
+  }
+
+  .ns-pd-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+
+  .ns-pd-tab {
+    height: 40px;
+    padding: 0 14px 0 5px;
+    font-size: 14px;
+  }
+
+  .ns-pd-tab img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .ns-pd-areas-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .ns-pd-area-body {
+    padding: 12px;
+  }
+
+  .ns-pd-area-body strong {
+    font-size: 15px;
+  }
+
+  .ns-pd-area-body small {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .ns-pd-area,
+  .ns-pd-area-media img,
+  .ns-pd-shimmer {
+    transition: none;
+    animation: none;
   }
 }
 
 
+/* =====================================
+   NORTHERNSTAYS - AREA ROOMS PAGE
+   Soft iOS-style typography (SF Pro on Apple, Inter elsewhere)
+===================================== */
 
+.ns-ar {
+  --ns-ar-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+  min-height: 70vh;
+  padding: 40px 0 96px;
+  background: #f7f5f0;
+  font-family: var(--ns-ar-font);
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #1d2b27;
+}
+
+.ns-ar button,
+.ns-ar select {
+  font-family: inherit;
+}
+
+.ns-ar-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 22px;
+  font-size: 13px;
+  color: #8a958f;
+}
+
+.ns-ar-breadcrumb a {
+  color: #6b7a72;
+  transition: color .2s;
+}
+
+.ns-ar-breadcrumb a:hover {
+  color: #173d34;
+}
+
+.ns-ar-breadcrumb [aria-current] {
+  color: #1d2b27;
+  font-weight: 500;
+}
+
+.ns-ar-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.ns-ar-header h1 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: #173d34;
+}
+
+.ns-ar-header p {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  font-size: 15px;
+  color: #6b7a72;
+}
+
+.ns-ar-dot {
+  width: 4px;
+  height: 4px;
+  margin: 0 4px;
+  border-radius: 50%;
+  background: #b9c0bb;
+}
+
+.ns-ar-back,
+.ns-ar-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 18px;
+  border: 1px solid #ddd7ca;
+  border-radius: 999px;
+  background: #fff;
+  color: #173d34;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s;
+}
+
+.ns-ar-back:hover {
+  border-color: #173d34;
+}
+
+.ns-ar-primary {
+  background: #173d34;
+  border-color: #173d34;
+  color: #fff;
+}
+
+.ns-ar-primary:hover {
+  background: #0f2c25;
+}
+
+.ns-ar-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 18px;
+  font-size: 14px;
+  color: #6b7a72;
+}
+
+.ns-ar-toolbar select {
+  height: 38px;
+  padding: 0 34px 0 14px;
+  border: 1px solid #ddd7ca;
+  border-radius: 10px;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23173d34' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;
+  color: #1d2b27;
+  font-size: 14px;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+/* Room cards */
+.ns-ar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
+  gap: 24px;
+}
+
+.ns-ar-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #ebe6db;
+  border-radius: 18px;
+  background: #fff;
+  color: inherit;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.ns-ar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px rgba(15, 48, 39, .1);
+}
+
+.ns-ar-card:focus-visible,
+.ns-ar-back:focus-visible,
+.ns-ar-primary:focus-visible,
+.ns-ar-toolbar select:focus-visible {
+  outline: 3px solid #c69a5c;
+  outline-offset: 3px;
+}
+
+.ns-ar-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #e2e6e1;
+}
+
+.ns-ar-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+
+.ns-ar-card:hover .ns-ar-media img {
+  transform: scale(1.05);
+}
+
+.ns-ar-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 8px;
+  padding: 18px 20px 20px;
+}
+
+.ns-ar-hotel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #8a958f;
+}
+
+.ns-ar-body h3 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #173d34;
+}
+
+.ns-ar-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.ns-ar-tags span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #f2f0ea;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #4e5d56;
+}
+
+.ns-ar-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid #f0ece3;
+}
+
+.ns-ar-price {
+  display: grid;
+  margin: 0;
+}
+
+.ns-ar-price strong {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #173d34;
+}
+
+.ns-ar-price span {
+  font-size: 12.5px;
+  color: #8a958f;
+}
+
+.ns-ar-view {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: #173d34;
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background .2s;
+}
+
+.ns-ar-view svg {
+  transition: transform .2s;
+}
+
+.ns-ar-card:hover .ns-ar-view {
+  background: #0f2c25;
+}
+
+.ns-ar-card:hover .ns-ar-view svg {
+  transform: translateX(3px);
+}
+
+.ns-ar-card.is-skeleton:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Empty / error states */
+.ns-ar-state {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 56px 20px;
+  border: 1px dashed #d9d2c3;
+  border-radius: 18px;
+  background: #fff;
+  text-align: center;
+  color: #6b7a72;
+}
+
+.ns-ar-state svg {
+  color: #b08a4f;
+}
+
+.ns-ar-state h2 {
+  margin: 4px 0 0;
+  font-size: 19px;
+  font-weight: 600;
+  color: #173d34;
+}
+
+.ns-ar-state p {
+  margin: 0;
+  font-size: 14.5px;
+}
+
+.ns-ar-state[role="alert"] p {
+  color: #b42318;
+}
+
+.ns-ar-state-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+@media (max-width: 700px) {
+  .ns-ar {
+    padding: 28px 0 64px;
+  }
+
+  .ns-ar-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .ns-ar-toolbar {
+    justify-content: flex-start;
+  }
+
+  .ns-ar-grid {
+    gap: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .ns-ar-card,
+  .ns-ar-media img {
+    transition: none;
+  }
+}

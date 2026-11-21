@@ -1,1105 +1,1032 @@
- .nsrd-page {
-     background: #fbfaf7;
-     color: #153e35;
-     min-height: 85vh;
-     padding: 28px 0 80px
- }
-
- .nsrd-container {
-     width: min(1300px, calc(100% - 48px));
-     margin: auto
- }
-
- .nsrd-crumbs {
-     display: flex;
-     flex-wrap: wrap;
-     align-items: center;
-     gap: 11px;
-     font-size: 13px;
-     margin: 0 0 22px;
-     color: #62756e
- }
-
- .nsrd-crumbs a {
-     color: inherit;
-     text-decoration: none
- }
-
- .nsrd-crumbs span:last-child {
-     color: #173d34;
-     font-weight: 700
- }
-
- .nsrd-layout {
-     display: grid;
-     grid-template-columns: minmax(0, 2.1fr) minmax(320px, 1fr);
-     gap: 28px;
-     align-items: start
- }
-
- .nsrd-main {
-     min-width: 0
- }
-
- .nsrd-gallery {
-     height: 460px;
-     border-radius: 13px;
-     position: relative;
-     overflow: hidden;
-     background: #e9e9e9
- }
-
- .nsrd-gallery>img {
-     width: 100%;
-     height: 100%;
-     object-fit: cover
- }
-
- .nsrd-photo-label {
-     position: absolute;
-     top: 18px;
-     left: 18px;
-     background: white;
-     border-radius: 30px;
-     padding: 10px 14px;
-     display: flex;
-     align-items: center;
-     gap: 7px;
-     font-size: 13px
- }
-
- .nsrd-gallery-prev,
- .nsrd-gallery-next {
-     position: absolute;
-     top: 50%;
-     transform: translateY(-50%);
-     border: 0;
-     background: #fff;
-     width: 40px;
-     height: 40px;
-     border-radius: 50%;
-     display: grid;
-     place-items: center;
-     cursor: pointer
- }
-
- .nsrd-gallery-prev {
-     left: 14px
- }
-
- .nsrd-gallery-next {
-     right: 14px
- }
-
- .nsrd-photo-count {
-     position: absolute;
-     bottom: 15px;
-     right: 18px;
-     color: #fff;
-     background: #0009;
-     padding: 7px 12px;
-     border-radius: 20px;
-     font-size: 13px
- }
-
- .nsrd-thumbs {
-     display: flex;
-     gap: 10px;
-     margin-top: 10px;
-     overflow-x: auto
- }
-
- .nsrd-thumbs button {
-     border: 2px solid transparent;
-     background: none;
-     border-radius: 10px;
-     padding: 0;
-     flex: 0 0 145px;
-     height: 85px;
-     overflow: hidden;
-     cursor: pointer
- }
-
- .nsrd-thumbs button.selected {
-     border-color: #c49a5b
- }
-
- .nsrd-thumbs img {
-     width: 100%;
-     height: 100%;
-     object-fit: cover
- }
-
- .nsrd-intro {
-     margin: 28px 0 22px
- }
-
- .nsrd-kicker {
-     font-size: 12px;
-     letter-spacing: 2px;
-     text-transform: uppercase;
-     color: #b58646;
-     font-weight: 700
- }
-
- .nsrd-intro h1 {
-     font-family: Georgia, serif;
-     font-size: clamp(32px, 4vw, 43px);
-     margin: 10px 0;
-     color: #153e35
- }
-
- .nsrd-location {
-     display: flex;
-     align-items: center;
-     gap: 8px;
-     color: #526c66
- }
-
- .nsrd-description {
-     color: #52666a;
-     line-height: 1.8;
-     max-width: 850px
- }
-
- .nsrd-features {
-     display: flex;
-     flex-wrap: wrap;
-     gap: 18px 28px;
-     padding: 15px 0 28px;
-     border-bottom: 1px solid #e7e9e6
- }
-
- .nsrd-features span {
-     display: flex;
-     align-items: center;
-     gap: 9px;
-     font-size: 14px
- }
-
- .nsrd-info {
-     padding-top: 22px
- }
-
- .nsrd-info h2 {
-     font-family: Georgia, serif;
-     font-size: 24px;
-     margin-bottom: 16px
- }
-
- .nsrd-facts {
-     display: grid;
-     grid-template-columns: repeat(5, minmax(0, 1fr));
-     gap: 8px
- }
-
- .nsrd-facts>div {
-     padding: 16px 12px;
-     background: #f0f1ef;
-     border-radius: 10px;
-     display: grid;
-     gap: 8px
- }
-
- .nsrd-facts small {
-     color: #6b7977
- }
-
- .nsrd-facts strong {
-     font-size: 13px
- }
-
- .nsrd-sidebar {
-     display: grid;
-     gap: 24px
- }
-
- .nsrd-booking,
- .nsrd-help {
-     background: white;
-     border-radius: 14px;
-     padding: 26px;
-     box-shadow: 0 8px 36px #163a3010
- }
-
- .nsrd-price {
-     display: flex;
-     align-items: baseline;
-     gap: 7px;
-     flex-wrap: wrap
- }
-
- .nsrd-price strong {
-     font-size: clamp(26px, 3vw, 34px);
-     font-family: Georgia, serif
- }
-
- .nsrd-price span {
-     font-size: 14px
- }
-
- .nsrd-hotel {
-     display: flex;
-     gap: 10px;
-     align-items: flex-start;
-     color: #566d69;
-     font-size: 14px;
-     margin: 22px 0
- }
-
- .nsrd-hotel small {
-     display: block;
-     margin-top: 5px
- }
-
- .nsrd-quick {
-     background: #f0f6f0;
-     border-radius: 8px;
-     padding: 15px 12px;
-     display: flex;
-     flex-wrap: wrap;
-     gap: 12px;
-     font-size: 12px
- }
-
- .nsrd-quick span {
-     display: flex;
-     align-items: center;
-     gap: 6px
- }
-
- .nsrd-form-grid {
-     display: grid;
-     grid-template-columns: 1fr 1fr;
-     gap: 12px;
-     margin: 22px 0
- }
-
- .nsrd-form-grid label {
-     min-width: 0;
-     display: grid;
-     gap: 7px;
-     font-size: 12px
- }
-
- .nsrd-form-grid label>span {
-     display: flex;
-     gap: 5px;
-     align-items: center;
-     color: #5a6d68
- }
-
- .nsrd-form-grid input,
- .nsrd-form-grid select {
-     min-width: 0;
-     width: 100%;
-     border: 1px solid #e0e6e2;
-     background: #f8f9f8;
-     border-radius: 9px;
-     padding: 12px 9px;
-     font: inherit;
-     color: #153e35
- }
-
- .nsrd-subtotal {
-     display: flex;
-     justify-content: space-between;
-     gap: 10px;
-     font-size: 13px;
-     margin: 16px 0
- }
-
- .nsrd-validation {
-     color: #b42318;
-     font-size: 12px
- }
-
- .nsrd-book-btn {
-     background: #163e34;
-     color: #fff;
-     border: 0;
-     border-radius: 8px;
-     padding: 17px;
-     width: 100%;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     gap: 9px;
-     font-weight: 700;
-     cursor: pointer
- }
-
- .nsrd-book-btn:disabled {
-     opacity: .55;
-     cursor: not-allowed
- }
-
- .nsrd-secure {
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     gap: 7px;
-     font-size: 12px;
-     margin: 16px 0 0
- }
-
- .nsrd-help {
-     display: flex;
-     gap: 18px;
-     align-items: flex-start
- }
-
- .nsrd-help h3 {
-     font-family: Georgia, serif;
-     font-size: 21px;
-     margin: 0 0 8px
- }
-
- .nsrd-help p {
-     font-size: 13px;
-     color: #687a75
- }
-
- .nsrd-help a {
-     display: flex;
-     align-items: center;
-     gap: 8px;
-     color: #163e34;
-     border: 1px solid #163e34;
-     border-radius: 7px;
-     padding: 11px 14px;
-     text-decoration: none;
-     font-size: 13px;
-     font-weight: 600
- }
-
- .nsrd-back {
-     display: inline-flex;
-     gap: 7px;
-     align-items: center;
-     margin-top: 35px;
-     color: #163e34
- }
-
- .nsrd-state {
-     padding: 90px 0;
-     min-height: 45vh
- }
-
- @media(max-width:950px) {
-     .nsrd-layout {
-         grid-template-columns: 1fr
-     }
-
-     .nsrd-sidebar {
-         grid-template-columns: 1fr 1fr
-     }
-
-     .nsrd-facts {
-         grid-template-columns: repeat(3, 1fr)
-     }
- }
-
- @media(max-width:650px) {
-     .nsrd-container {
-         width: min(100% - 28px, 1300px)
-     }
-
-     .nsrd-gallery {
-         height: 290px
-     }
-
-     .nsrd-sidebar {
-         grid-template-columns: 1fr
-     }
-
-     .nsrd-facts {
-         grid-template-columns: repeat(2, 1fr)
-     }
-
-     .nsrd-booking,
-     .nsrd-help {
-         padding: 20px
-     }
-
-     .nsrd-page {
-         padding-top: 18px
-     }
- }
-
- .nsrd-amenities {
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-     gap: 12px
- }
-
- .nsrd-amenity {
-     display: flex;
-     justify-content: space-between;
-     gap: 10px;
-     align-items: center;
-     background: #f0f3f0;
-     border-radius: 10px;
-     padding: 13px
- }
-
- .nsrd-amenity strong {
-     color: #173d34
- }
-
- .nsrd-amenity span {
-     color: #536c61
- }
-
- .nsrd-amenities {
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-     gap: 12px
- }
-
- .nsrd-amenity {
-     display: flex;
-     justify-content: space-between;
-     gap: 10px;
-     align-items: center;
-     background: #f0f3f0;
-     border-radius: 10px;
-     padding: 13px
- }
-
- .nsrd-amenity strong {
-     color: #173d34
- }
-
- .nsrd-amenity span {
-     color: #536c61
- }
-
-
-
- /* Optional services: shown only in the booking card, not Room Amenities */
- .nsrd-addons {
-     margin-top: 18px;
-     padding-top: 17px;
-     border-top: 1px solid #e4eae6;
- }
-
- .nsrd-addons h3 {
-     margin: 0 0 6px;
-     font: bold 19px Georgia, serif;
-     color: #153e35;
- }
-
- .nsrd-addons>p {
-     margin: 0 0 13px;
-     font-size: 12px;
-     color: #62756e;
- }
-
- .nsrd-addon-option {
-     display: flex;
-     align-items: center;
-     gap: 10px;
-     padding: 12px 9px;
-     margin: 8px 0;
-     border: 1px solid #e2e9e4;
-     border-radius: 9px;
-     cursor: pointer;
-     background: #f8faf8;
- }
-
- .nsrd-addon-option:has(input:checked) {
-     border-color: #1c624d;
-     background: #eff7f1;
- }
-
- .nsrd-addon-option input {
-     width: 17px;
-     height: 17px;
-     accent-color: #163e34;
-     flex-shrink: 0;
- }
-
- .nsrd-addon-name {
-     flex: 1;
-     min-width: 0;
-     display: grid;
-     gap: 3px;
-     font-size: 13px;
- }
-
- .nsrd-addon-name small {
-     font-size: 11px;
-     color: #6b7977;
- }
-
- .nsrd-addon-cost {
-     font-size: 12px;
-     font-weight: 700;
-     white-space: nowrap;
- }
-
- .nsrd-addon-summary {
-     margin: 9px 0;
- }
-
- .nsrd-addon-summary span {
-     display: inline-flex;
-     align-items: center;
-     gap: 6px;
- }
-
- .nsrd-total {
-     border-top: 1px solid #e4eae6;
-     padding-top: 14px;
-     font-size: 16px;
-     font-weight: 700;
- }
-
- .nsrd-total strong {
-     color: #166448;
- }
-
- /* NorthernStays – Add/Edit Room modal. Append to the END of admin.css */
- .ns-room-overlay {
-     position: fixed !important;
-     inset: 0 !important;
-     z-index: 9999 !important;
-     background: rgba(12, 28, 37, .62) !important;
-     display: flex !important;
-     align-items: center !important;
-     justify-content: center !important;
-     padding: 22px !important;
-     overflow-y: auto !important;
-     box-sizing: border-box !important
- }
-
- .ns-room-dialog {
-     width: min(860px, 100%) !important;
-     max-height: calc(100vh - 44px) !important;
-     overflow-y: auto !important;
-     background: #fff !important;
-     color: #173a35 !important;
-     border-radius: 18px !important;
-     box-shadow: 0 24px 80px rgba(0, 0, 0, .24) !important;
-     padding: 28px !important;
-     box-sizing: border-box !important
- }
-
- .ns-room-dialog * {
-     box-sizing: border-box
- }
-
- .ns-room-dialog-header {
-     display: flex !important;
-     align-items: center !important;
-     justify-content: space-between !important;
-     gap: 16px !important;
-     margin-bottom: 22px !important;
-     border-bottom: 1px solid #e7ecea !important;
-     padding-bottom: 15px !important
- }
-
- .ns-room-dialog-header h2 {
-     font-size: 24px !important;
-     line-height: 1.3 !important;
-     margin: 0 !important;
-     color: #153d35 !important
- }
-
- .ns-room-dialog-header button {
-     display: grid;
-     place-items: center;
-     width: 36px;
-     height: 36px;
-     border: 1px solid #e0e6e3;
-     border-radius: 9px;
-     background: #f7f9f8;
-     cursor: pointer
- }
-
- .ns-room-form {
-     display: flex !important;
-     flex-direction: column !important;
-     gap: 19px !important
- }
-
- .ns-room-form .ns-room-fields {
-     display: grid !important;
-     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-     gap: 16px !important;
-     width: 100% !important
- }
-
- .ns-room-form label {
-     display: flex !important;
-     flex-direction: column !important;
-     align-items: stretch !important;
-     gap: 7px !important;
-     font-size: 13px !important;
-     font-weight: 600 !important;
-     color: #344e48 !important;
-     min-width: 0 !important
- }
-
- .ns-room-form input:not([type="file"]),
- .ns-room-form select,
- .ns-room-form textarea {
-     display: block !important;
-     width: 100% !important;
-     min-width: 0 !important;
-     max-width: 100% !important;
-     min-height: 43px !important;
-     border: 1px solid #cfdad6 !important;
-     border-radius: 9px !important;
-     padding: 10px 12px !important;
-     background: #fff !important;
-     color: #183a33 !important;
-     font: inherit !important;
-     font-size: 14px !important;
-     outline: none !important
- }
-
- .ns-room-form textarea {
-     min-height: 95px !important;
-     resize: vertical !important
- }
-
- .ns-room-form input:focus,
- .ns-room-form select:focus,
- .ns-room-form textarea:focus {
-     border-color: #16836c !important;
-     box-shadow: 0 0 0 3px rgba(22, 131, 108, .12) !important
- }
-
- .ns-room-availability,
- .ns-room-gallery-editor,
- .ns-room-amenities-editor {
-     border: 1px solid #e1eae6 !important;
-     border-radius: 12px !important;
-     background: #fafcfb !important;
-     padding: 17px !important;
-     min-width: 0 !important
- }
-
- .ns-room-availability>strong,
- .ns-room-gallery-editor>strong {
-     display: block;
-     margin-bottom: 8px;
-     font-size: 15px;
-     color: #183f36
- }
-
- .ns-room-availability small {
-     display: block;
-     color: #687d76;
-     margin-top: 4px
- }
-
- .ns-room-gallery-editor {
-     display: flex !important;
-     flex-direction: column !important;
-     gap: 12px !important
- }
-
- .ns-room-gallery-editor .ns-note {
-     margin: 0 !important;
-     font-size: 12px !important;
-     color: #7c8b85 !important
- }
-
- .ns-room-gallery-editor input[type="file"] {
-     width: 100%;
-     max-width: 100%;
-     font-size: 13px
- }
-
- .ns-room-inline {
-     display: flex !important;
-     gap: 10px !important;
-     align-items: center !important;
-     min-width: 0 !important
- }
-
- .ns-room-inline input {
-     flex: 1 !important;
-     min-width: 0 !important
- }
-
- .ns-room-inline button {
-     flex-shrink: 0 !important
- }
-
- .ns-room-gallery-grid {
-     display: grid !important;
-     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
-     gap: 12px !important
- }
-
- .ns-room-gallery-tile {
-     position: relative;
-     overflow: hidden;
-     border-radius: 10px;
-     border: 1px solid #dbe4df;
-     background: white
- }
-
- .ns-room-gallery-tile img {
-     display: block;
-     width: 100%;
-     height: 100px;
-     object-fit: cover
- }
-
- .ns-room-gallery-tile span {
-     display: block;
-     padding: 5px 8px;
-     font-size: 12px
- }
-
- .ns-room-gallery-tile button {
-     position: absolute;
-     right: 5px;
-     top: 5px;
-     background: white;
-     border: 0;
-     border-radius: 5px;
-     cursor: pointer
- }
-
- .ns-room-amenities-head {
-     display: flex !important;
-     align-items: center !important;
-     justify-content: space-between !important;
-     gap: 12px !important;
-     margin-bottom: 12px !important
- }
-
- .ns-room-amenity-row {
-     display: grid !important;
-     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 42px !important;
-     gap: 10px !important;
-     align-items: center !important;
-     margin-top: 9px !important
- }
-
- .ns-room-amenity-row button {
-     height: 43px !important;
-     min-width: 42px !important;
-     padding: 0 !important
- }
-
- .ns-room-actions {
-     display: flex !important;
-     justify-content: flex-end !important;
-     gap: 12px !important;
-     border-top: 1px solid #e7ecea !important;
-     padding-top: 18px !important;
-     margin-top: 3px !important
- }
-
- .ns-room-form .ns-btn,
- .ns-room-form .ns-cancel {
-     display: inline-flex;
-     align-items: center;
-     justify-content: center;
-     gap: 7px;
-     min-height: 42px;
-     padding: 10px 18px;
-     border-radius: 9px;
-     font-weight: 600;
-     cursor: pointer
- }
-
- .ns-room-form .ns-btn {
-     background: #174c3f;
-     color: #fff;
-     border: 1px solid #174c3f
- }
-
- .ns-room-form .ns-cancel {
-     background: #fff;
-     color: #26483e;
-     border: 1px solid #cfdad6
- }
-
- .ns-room-form .ns-room-error {
-     color: #b42318;
-     font-size: 13px
- }
-
- @media(max-width:640px) {
-     .ns-room-overlay {
-         padding: 10px !important;
-         align-items: flex-start !important
-     }
-
-     .ns-room-dialog {
-         padding: 18px !important;
-         max-height: calc(100dvh - 20px) !important;
-         border-radius: 13px !important
-     }
-
-     .ns-room-form .ns-room-fields {
-         grid-template-columns: minmax(0, 1fr) !important;
-         gap: 13px !important
-     }
-
-     .ns-room-amenity-row {
-         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 38px !important;
-         gap: 6px !important
-     }
-
-     .ns-room-inline {
-         flex-wrap: wrap
-     }
-
-     .ns-room-actions button {
-         flex: 1
-     }
-
-     .ns-room-dialog-header h2 {
-         font-size: 21px !important
-     }
- }
-
-
-
- /* Room booking card: discounted price left, original price and offer right */
- .nsrd-price {
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-     align-items: center;
-     flex-wrap: nowrap;
-     gap: 12px;
-     width: 100%;
- }
-
- .nsrd-current-price {
-     display: flex;
-     align-items: baseline;
-     flex-wrap: nowrap;
-     gap: 6px;
-     min-width: 0;
- }
-
- .nsrd-current-price strong {
-     font-family: Georgia, serif;
-     font-size: clamp(23px, 2.4vw, 34px);
-     line-height: 1.15;
-     white-space: nowrap;
- }
-
- .nsrd-current-price span {
-     font-size: 12px;
-     white-space: nowrap;
- }
-
- .nsrd-price-discount {
-     display: flex;
-     flex-direction: column;
-     align-items: flex-end;
-     gap: 5px;
-     flex-shrink: 0;
-     text-align: right;
- }
-
- .nsrd-price-discount s {
-     color: #88918d;
-     font-size: 13px;
-     white-space: nowrap;
- }
-
- .nsrd-price-discount small {
-     color: #15803d;
-     font-size: 12px;
-     font-weight: 700;
-     white-space: nowrap;
- }
-
- @media (max-width: 390px) {
-     .nsrd-price {
-         gap: 7px;
-     }
-
-     .nsrd-current-price strong {
-         font-size: 22px;
-     }
-
-     .nsrd-price-discount s {
-         font-size: 11px;
-     }
-
-     .nsrd-price-discount small {
-         font-size: 11px;
-     }
- }
-
- /* Room Management Search Bar Fix */
-
- .ns-panel .ns-search {
-     display: block;
-     width: 100%;
-     max-width: 100%;
-     min-width: 0;
-     height: 46px;
-     padding: 12px 16px;
-     box-sizing: border-box;
-
-     border: 1px solid #dce5df;
-     border-radius: 10px;
-     background: #f8faf9;
-     color: #173d34;
-
-     font-size: 14px;
-     font-family: inherit;
-     outline: none;
-     transition: border-color 0.2s ease;
- }
-
- .ns-panel .ns-search:focus {
-     border-color: #17624e;
-     box-shadow: 0 0 0 3px rgba(23, 98, 78, 0.1);
- }
-
- .ns-panel .ns-search::placeholder {
-     color: #87958f;
- }
-
- /* NorthernStays - Room Management Search Fix */
-
- .ns-admin .ns-content .ns-panel input[type="search"],
- .ns-admin .ns-content .ns-panel input.ns-search,
- .ns-admin .ns-content .ns-panel input[placeholder*="Search room"],
- .ns-admin .ns-content .ns-panel input[placeholder*="Search Room"] {
-     display: block !important;
-     width: 100% !important;
-     min-width: 100% !important;
-     max-width: 100% !important;
-     height: 46px !important;
-     padding: 12px 16px !important;
-     margin: 0 0 16px !important;
-     box-sizing: border-box !important;
-
-     border: 1px solid #dce5df !important;
-     border-radius: 10px !important;
-     background: #f8faf9 !important;
-     color: #173d34 !important;
-
-     font-family: inherit !important;
-     font-size: 14px !important;
-     outline: none !important;
- }
-
- .ns-admin .ns-content .ns-panel input[placeholder*="Search room"]:focus {
-     border-color: #17624e !important;
-     box-shadow: 0 0 0 3px rgba(23, 98, 78, 0.1) !important;
- }
-
-
- /* ==========================================
-   NORTHERNSTAYS - ROOM DETAILS TYPOGRAPHY
-   BOP Style - DM Sans
-========================================== */
-
- /* Entire Room Details Page */
- .nsrd-page,
- .nsrd-page *,
- .nsrd-state,
- .nsrd-state * {
-     font-family: "DM Sans", sans-serif !important;
-     font-style: normal !important;
-     letter-spacing: 0 !important;
- }
-
- /* Main Room Name - Staff, Suite, Deluxe */
- .nsrd-intro h1 {
-     font-size: 32px !important;
-     font-weight: 400 !important;
-     line-height: 1.3 !important;
-     color: #173d34 !important;
- }
-
- /* Booking Price - PKR 1,500 */
- .nsrd-current-price strong {
-     font-size: 30px !important;
-     font-weight: 500 !important;
-     line-height: 1.3 !important;
-     color: #173d34 !important;
- }
-
- /* Section Headings */
- .nsrd-info h2,
- .nsrd-addons h3,
- .nsrd-help h3 {
-     font-size: 20px !important;
-     font-weight: 500 !important;
-     line-height: 1.4 !important;
- }
-
- /* Room Description */
- .nsrd-description,
- .nsrd-location,
- .nsrd-hotel,
- .nsrd-features {
-     font-size: 14px;
-     font-weight: 400;
-     line-height: 1.6;
- }
-
- /* Booking Form Labels */
- .nsrd-form-grid label,
- .nsrd-form-grid label span {
-     font-size: 13px;
-     font-weight: 400;
- }
-
- /* Inputs, Dropdowns and Buttons */
- .nsrd-page input,
- .nsrd-page select,
- .nsrd-page button {
-     font-family: "DM Sans", sans-serif !important;
- }
-
- /* Total Amount */
- .nsrd-total,
- .nsrd-total strong {
-     font-size: 15px !important;
-     font-weight: 600 !important;
- }
-
- /* Optional Add-ons */
- .nsrd-addon-name strong {
-     font-size: 13px;
-     font-weight: 500;
- }
-
- .nsrd-addon-name small {
-     font-size: 11px;
-     font-weight: 400;
- }
-
- /* Breadcrumb */
- .nsrd-crumbs,
- .nsrd-crumbs a,
- .nsrd-crumbs span {
-     font-size: 12px;
-     font-weight: 400;
- }
-
- /* Mobile Responsive */
- @media (max-width: 600px) {
-     .nsrd-intro h1 {
-         font-size: 26px !important;
-     }
-
-     .nsrd-current-price strong {
-         font-size: 24px !important;
-     }
-
-     .nsrd-info h2,
-     .nsrd-addons h3 {
-         font-size: 18px !important;
-     }
- }
+/* =====================================
+   NORTHERNSTAYS - ROOM DETAILS PAGE
+   Soft iOS-style typography (SF Pro on Apple, Inter elsewhere)
+===================================== */
+
+.nsrd-page {
+  --nsrd-green: #173d34;
+  --nsrd-green-dark: #0f2c25;
+  --nsrd-gold: #b08a4f;
+  --nsrd-text: #1d2b27;
+  --nsrd-muted: #6b7a72;
+  --nsrd-soft: #8a958f;
+  --nsrd-line: #ebe6db;
+  --nsrd-bg: #f7f5f0;
+  --nsrd-ok: #15803d;
+  --nsrd-err: #b42318;
+  min-height: 70vh;
+  padding: 32px 0 96px;
+  background: var(--nsrd-bg);
+  color: var(--nsrd-text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.nsrd-page button,
+.nsrd-page input,
+.nsrd-page select {
+  font-family: inherit;
+  letter-spacing: inherit;
+}
+
+.nsrd-container {
+  width: min(100% - 48px, 1320px);
+  margin-inline: auto;
+}
+
+/* Breadcrumb + header */
+.nsrd-crumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--nsrd-soft);
+}
+
+.nsrd-crumbs a {
+  color: var(--nsrd-muted);
+  transition: color .2s;
+}
+
+.nsrd-crumbs a:hover {
+  color: var(--nsrd-green);
+}
+
+.nsrd-crumbs [aria-current] {
+  color: var(--nsrd-text);
+  font-weight: 500;
+}
+
+.nsrd-header {
+  margin-bottom: 24px;
+}
+
+.nsrd-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--nsrd-gold);
+}
+
+.nsrd-header h1 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--nsrd-green);
+}
+
+.nsrd-header p {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  font-size: 15px;
+  color: var(--nsrd-muted);
+}
+
+.nsrd-dot {
+  width: 4px;
+  height: 4px;
+  margin: 0 6px;
+  border-radius: 50%;
+  background: #b9c0bb;
+}
+
+/* Layout */
+.nsrd-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 400px;
+  gap: 40px;
+  align-items: start;
+}
+
+.nsrd-main {
+  min-width: 0;
+}
+
+/* Gallery */
+.nsrd-gallery {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #e2e6e1;
+}
+
+.nsrd-gallery img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nsrd-gallery-btn {
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .92);
+  color: var(--nsrd-green);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .15);
+  transform: translateY(-50%);
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+
+.nsrd-gallery-btn:hover {
+  background: #fff;
+  transform: translateY(-50%) scale(1.06);
+}
+
+.nsrd-gallery-btn.is-prev {
+  left: 16px;
+}
+
+.nsrd-gallery-btn.is-next {
+  right: 16px;
+}
+
+.nsrd-photo-count {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, .55);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 500;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.nsrd-thumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nsrd-thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.nsrd-thumbs button {
+  flex: 0 0 96px;
+  height: 68px;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: none;
+  opacity: .7;
+  cursor: pointer;
+  transition: opacity .2s, border-color .2s;
+}
+
+.nsrd-thumbs button:hover,
+.nsrd-thumbs button.is-selected {
+  opacity: 1;
+}
+
+.nsrd-thumbs button.is-selected {
+  border-color: var(--nsrd-green);
+}
+
+.nsrd-thumbs img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Content sections */
+.nsrd-section {
+  padding: 32px 0;
+  border-bottom: 1px solid var(--nsrd-line);
+}
+
+.nsrd-section h2 {
+  margin: 0 0 14px;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--nsrd-green);
+}
+
+.nsrd-description {
+  margin: 0 0 22px;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: #46544e;
+}
+
+.nsrd-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.nsrd-highlights>div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--nsrd-line);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.nsrd-highlights svg {
+  flex-shrink: 0;
+  color: var(--nsrd-gold);
+}
+
+.nsrd-highlights span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.nsrd-highlights small {
+  font-size: 12.5px;
+  color: var(--nsrd-soft);
+}
+
+.nsrd-highlights strong {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--nsrd-text);
+  overflow-wrap: anywhere;
+}
+
+.nsrd-amenities {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nsrd-amenities li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 15px;
+}
+
+.nsrd-amenities svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  padding: 3px;
+  box-sizing: content-box;
+  border-radius: 50%;
+  background: #e8f2ec;
+  color: var(--nsrd-ok);
+}
+
+.nsrd-amenities span {
+  display: grid;
+  gap: 2px;
+}
+
+.nsrd-amenities strong {
+  font-weight: 500;
+}
+
+.nsrd-amenities small {
+  font-size: 13px;
+  color: var(--nsrd-soft);
+}
+
+.nsrd-hotel-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+  padding: 20px;
+  border: 1px solid var(--nsrd-line);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.nsrd-hotel-card h2 {
+  margin: 0 0 4px;
+  font-size: 17px;
+}
+
+.nsrd-hotel-card p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--nsrd-muted);
+}
+
+.nsrd-hotel-card>div {
+  flex: 1;
+  min-width: 0;
+}
+
+.nsrd-hotel-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #f2efe7;
+  color: var(--nsrd-gold);
+}
+
+.nsrd-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--nsrd-muted);
+  transition: color .2s;
+}
+
+.nsrd-back:hover {
+  color: var(--nsrd-green);
+}
+
+/* Buttons */
+.nsrd-btn-primary,
+.nsrd-btn-outline,
+.nsrd-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s, opacity .2s;
+}
+
+.nsrd-btn-primary {
+  width: 100%;
+  height: 52px;
+  border: 0;
+  background: var(--nsrd-green);
+  color: #fff;
+  font-size: 16px;
+}
+
+.nsrd-btn-primary:hover:not(:disabled) {
+  background: var(--nsrd-green-dark);
+}
+
+.nsrd-btn-primary:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.nsrd-btn-outline {
+  height: 42px;
+  padding: 0 18px;
+  border: 1px solid #ddd7ca;
+  background: #fff;
+  color: var(--nsrd-green);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.nsrd-btn-outline:hover {
+  border-color: var(--nsrd-green);
+}
+
+.nsrd-btn-ghost {
+  width: 100%;
+  height: 46px;
+  border: 0;
+  background: transparent;
+  color: var(--nsrd-muted);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.nsrd-btn-ghost:hover:not(:disabled) {
+  color: var(--nsrd-text);
+}
+
+.nsrd-page a:focus-visible,
+.nsrd-page button:focus-visible,
+.nsrd-page input:focus-visible,
+.nsrd-page select:focus-visible,
+.nsrd-addon:focus-within {
+  outline: 3px solid rgba(198, 154, 92, .55);
+  outline-offset: 2px;
+}
+
+/* Booking card */
+.nsrd-sidebar {
+  position: sticky;
+  top: 104px;
+}
+
+.nsrd-booking {
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+  border: 1px solid var(--nsrd-line);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 18px 44px rgba(15, 48, 39, .08);
+}
+
+.nsrd-price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+}
+
+.nsrd-price strong {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--nsrd-green);
+}
+
+.nsrd-price>span {
+  font-size: 15px;
+  color: var(--nsrd-muted);
+}
+
+.nsrd-price s {
+  font-size: 14px;
+  color: var(--nsrd-soft);
+}
+
+.nsrd-price em {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #e8f2ec;
+  color: var(--nsrd-ok);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* Airbnb-style combined date/guest picker */
+.nsrd-picker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  border: 1px solid #d9d3c6;
+  border-radius: 14px;
+}
+
+.nsrd-picker-cell {
+  display: grid;
+  gap: 2px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.nsrd-picker-cell:hover {
+  background: #faf9f6;
+}
+
+.nsrd-picker-cell:first-child {
+  border-right: 1px solid #d9d3c6;
+}
+
+.nsrd-picker-cell.is-wide {
+  grid-column: 1 / -1;
+  border-top: 1px solid #d9d3c6;
+}
+
+.nsrd-picker-cell span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--nsrd-text);
+}
+
+.nsrd-picker-cell input,
+.nsrd-picker-cell select {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--nsrd-muted);
+  font-size: 15px;
+  outline: none;
+  cursor: pointer;
+}
+
+.nsrd-picker-cell:focus-within {
+  background: #faf9f6;
+  box-shadow: inset 0 0 0 2px var(--nsrd-green);
+}
+
+.nsrd-picker-cell input:focus-visible,
+.nsrd-picker-cell select:focus-visible {
+  outline: none;
+}
+
+/* Add-ons */
+.nsrd-addons {
+  display: grid;
+  gap: 8px;
+}
+
+.nsrd-addons h3 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0 0 2px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--nsrd-text);
+}
+
+.nsrd-addons h3 small {
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--nsrd-soft);
+}
+
+.nsrd-addon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--nsrd-line);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+
+.nsrd-addon:hover {
+  border-color: #d9d3c6;
+}
+
+.nsrd-addon.is-checked {
+  border-color: var(--nsrd-green);
+  background: #f4f8f6;
+}
+
+.nsrd-addon input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nsrd-addon-box {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid #c9c2b3;
+  border-radius: 6px;
+  color: transparent;
+  transition: background .2s, border-color .2s, color .2s;
+}
+
+.nsrd-addon.is-checked .nsrd-addon-box {
+  border-color: var(--nsrd-green);
+  background: var(--nsrd-green);
+  color: #fff;
+}
+
+.nsrd-addon-name {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+}
+
+.nsrd-addon-name strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.nsrd-addon-name small {
+  font-size: 12px;
+  color: var(--nsrd-soft);
+}
+
+.nsrd-addon-cost {
+  font-size: 13.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--nsrd-text);
+}
+
+/* Price summary */
+.nsrd-summary {
+  display: grid;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.nsrd-summary>div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14.5px;
+  color: #46544e;
+}
+
+.nsrd-summary>div>span:last-child,
+.nsrd-summary>div>strong {
+  white-space: nowrap;
+  color: var(--nsrd-text);
+}
+
+.nsrd-summary .is-saving span:last-child {
+  color: var(--nsrd-ok);
+}
+
+.nsrd-summary .is-total {
+  margin-top: 4px;
+  padding-top: 14px;
+  border-top: 1px solid var(--nsrd-line);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--nsrd-text);
+}
+
+/* Status messages */
+.nsrd-status:empty {
+  display: none;
+}
+
+.nsrd-status p,
+.nsrd-error,
+.nsrd-muted,
+.nsrd-ok {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.nsrd-ok {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #ecf6f0;
+  color: var(--nsrd-ok);
+}
+
+.nsrd-ok b {
+  font-weight: 600;
+  color: #b45309;
+}
+
+.nsrd-error {
+  color: var(--nsrd-err);
+}
+
+.nsrd-muted {
+  color: var(--nsrd-muted);
+}
+
+.nsrd-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #d9d3c6;
+  border-top-color: var(--nsrd-green);
+  border-radius: 50%;
+  animation: nsrd-spin .8s linear infinite;
+}
+
+@keyframes nsrd-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.nsrd-secure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: -6px 0 0;
+  font-size: 12.5px;
+  color: var(--nsrd-soft);
+}
+
+/* Modals */
+.nsrd-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(10, 25, 20, .5);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  animation: nsrd-fade .2s ease;
+}
+
+.nsrd-modal {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .25);
+  animation: nsrd-rise .25s ease;
+}
+
+.nsrd-modal h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--nsrd-green);
+}
+
+.nsrd-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #f2f0ea;
+  color: var(--nsrd-text);
+  cursor: pointer;
+}
+
+.nsrd-modal-summary {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 14px;
+  background: #f7f5f0;
+}
+
+.nsrd-modal-summary img {
+  width: 72px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.nsrd-modal-summary div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.nsrd-modal-summary strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.nsrd-modal-summary small {
+  font-size: 12.5px;
+  color: var(--nsrd-muted);
+}
+
+.nsrd-summary.is-compact .is-total {
+  margin-top: 0;
+}
+
+.nsrd-form {
+  display: grid;
+  gap: 14px;
+}
+
+.nsrd-form label {
+  display: grid;
+  gap: 6px;
+}
+
+.nsrd-form label span {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--nsrd-text);
+}
+
+.nsrd-form input {
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid #d9d3c6;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--nsrd-text);
+  font-size: 15px;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.nsrd-form input:focus {
+  outline: none;
+  border-color: var(--nsrd-green);
+  box-shadow: 0 0 0 3px rgba(23, 61, 52, .12);
+}
+
+.nsrd-form .nsrd-btn-primary {
+  margin-top: 6px;
+}
+
+.nsrd-modal.is-success {
+  justify-items: center;
+  text-align: center;
+}
+
+.nsrd-modal.is-success .nsrd-summary {
+  width: 100%;
+  text-align: left;
+}
+
+.nsrd-success-icon {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #e8f2ec;
+  color: var(--nsrd-ok);
+}
+
+@keyframes nsrd-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes nsrd-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(.98);
+  }
+}
+
+/* Loading / error states */
+.nsrd-skel {
+  border-radius: 16px;
+  background: linear-gradient(90deg, #ebe7de 0%, #f5f2ec 50%, #ebe7de 100%);
+  background-size: 200% 100%;
+  animation: nsrd-shimmer 1.3s linear infinite;
+}
+
+.nsrd-skel-crumb {
+  width: 240px;
+  height: 14px;
+  margin-bottom: 24px;
+}
+
+.nsrd-skel-title {
+  width: min(420px, 80%);
+  height: 38px;
+  margin-bottom: 28px;
+}
+
+.nsrd-skel-gallery {
+  aspect-ratio: 16 / 10;
+  border-radius: 20px;
+}
+
+.nsrd-skel-card {
+  height: 460px;
+  border-radius: 22px;
+}
+
+@keyframes nsrd-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.nsrd-state {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  max-width: 520px;
+  margin: 40px auto;
+  padding: 48px 24px;
+  border: 1px dashed #d9d2c3;
+  border-radius: 20px;
+  background: #fff;
+  text-align: center;
+}
+
+.nsrd-state svg {
+  color: var(--nsrd-gold);
+}
+
+.nsrd-state h1 {
+  margin: 4px 0 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--nsrd-green);
+}
+
+.nsrd-state p {
+  margin: 0 0 8px;
+  color: var(--nsrd-muted);
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .nsrd-layout {
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 900px) {
+  .nsrd-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .nsrd-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .nsrd-page {
+    padding: 20px 0 64px;
+  }
+
+  .nsrd-container {
+    width: min(100% - 32px, 1320px);
+  }
+
+  .nsrd-gallery {
+    border-radius: 16px;
+    aspect-ratio: 4 / 3;
+  }
+
+  .nsrd-highlights,
+  .nsrd-amenities {
+    grid-template-columns: 1fr;
+  }
+
+  .nsrd-hotel-card {
+    flex-wrap: wrap;
+  }
+
+  .nsrd-hotel-card .nsrd-btn-outline {
+    width: 100%;
+  }
+
+  .nsrd-booking {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .nsrd-modal {
+    padding: 24px 20px;
+    border-radius: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .nsrd-skel,
+  .nsrd-spinner,
+  .nsrd-modal,
+  .nsrd-modal-backdrop {
+    animation: none;
+  }
+}

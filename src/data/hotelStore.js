@@ -1,6 +1,7 @@
+import { API_BASE } from "../api/client";
 import { useSyncExternalStore } from "react";
 
-const API_URL = "https://coreops.pk/Hotel/api/public_hotels.php";
+const API_URL = `${API_BASE}/public_hotels.php`;
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200";
 const EVENT = "northernstays:hotels-updated";

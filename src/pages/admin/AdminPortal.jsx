@@ -1,3 +1,14 @@
+
+
+
+
+
+
+
+
+
+
+
 // import { useCallback, useEffect, useMemo, useState } from "react";
 // import { createPortal } from "react-dom";
 
@@ -46,6 +57,7 @@
 
 //   Users,
 //   RefreshCw,
+//   KeyRound,
 
 // } from "lucide-react";
 
@@ -62,6 +74,7 @@
 // export function AdminLayout() {
 
 //   const [open, setOpen] = useState(false);
+//   const [showChangePassword, setShowChangePassword] = useState(false);
 //   const [isStaff, setIsStaff] = useState(false);
 //   const [brand, setBrand] = useState({ name: "NorthernStays", logo: "" });
 //   const [logoFailed, setLogoFailed] = useState(false);
@@ -157,9 +170,9 @@
 
 //             ["/admin", "Dashboard", LayoutDashboard],
 
-//             ["/admin/areas", "Area Management", MapPin],
 
-//             ["/admin/cities", "City Management", Map],
+
+
 
 //             ["/admin/hotels", "Hotel Management", Hotel],
 
@@ -179,7 +192,7 @@
 
 //               end={url === "/admin"}
 
-//               onClick={() => setOpen(false)}
+//               onClick={() => { setOpen(false); setShowChangePassword(false); }}
 
 //             >
 
@@ -191,6 +204,13 @@
 
 //           ))}
 
+//           <button
+//             type="button"
+//             onClick={() => { setShowChangePassword(true); setOpen(false); }}
+//             style={{ display: "flex", alignItems: "center", gap: 12, width: "100%", padding: "12px 14px", background: showChangePassword ? "#e7f1eb" : "transparent", color: "inherit", border: 0, borderRadius: 8, font: "inherit", cursor: "pointer", textAlign: "left" }}
+//           >
+//             <KeyRound size={19} /> Change Password
+//           </button>
 //         </nav>
 
 //         <Link className="ns-return" to="/">
@@ -203,7 +223,11 @@
 
 //       <main className="ns-content">
 
-//         <Outlet />
+//         {showChangePassword ? (
+//           <HotelChangePassword onBack={() => setShowChangePassword(false)} />
+//         ) : (
+//           <Outlet />
+//         )}
 
 //       </main>
 
@@ -214,6 +238,108 @@
 // }
 
 
+
+
+// // Shared password screen for Hotel Admin and Hotel User.
+// // Requires an authenticated POST endpoint at /Hotel/api/change_password.php.
+// function HotelChangePassword({ onBack }) {
+//   const navigate = useNavigate();
+//   const [busy, setBusy] = useState(false);
+//   const [error, setError] = useState("");
+//   const [success, setSuccess] = useState("");
+//   const [showPasswords, setShowPasswords] = useState(false);
+
+//   async function submit(event) {
+//     event.preventDefault();
+//     if (busy) return;
+//     setError("");
+//     setSuccess("");
+
+//     // Read actual input values, including values inserted by browser autofill.
+//     // This avoids comparing stale React state against what the user sees.
+//     const form = event.currentTarget;
+//     const currentPassword = form.elements.namedItem("current_password")?.value ?? "";
+//     const newPassword = form.elements.namedItem("new_password")?.value ?? "";
+//     const confirmPassword = form.elements.namedItem("confirm_password")?.value ?? "";
+
+//     if (newPassword.length < 6) {
+//       setError("New password must be at least 6 characters.");
+//       return;
+//     }
+//     if (newPassword !== confirmPassword) {
+//       setError("New passwords do not match. Please re-enter both fields.");
+//       return;
+//     }
+//     if (currentPassword === newPassword) {
+//       setError("Choose a different new password.");
+//       return;
+//     }
+
+//     setBusy(true);
+//     try {
+//       const response = await fetch("https://coreops.pk/Hotel/api/change_password.php", {
+//         method: "POST",
+//         credentials: "include",
+//         cache: "no-store",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({
+//           action: "change_password",
+//           current_password: currentPassword,
+//           new_password: newPassword,
+//           confirm_password: confirmPassword,
+//         }),
+//       });
+//       const data = await response.json().catch(() => {
+//         throw new Error("Password API is unavailable or returned invalid JSON.");
+//       });
+//       if (!response.ok || !data.success) {
+//         throw new Error(data.message || "Password could not be changed.");
+//       }
+//       form.reset();
+//       setShowPasswords(false);
+//       if (data.relogin_required) {
+//         navigate("/admin/login", { replace: true, state: { passwordUpdated: true } });
+//         return;
+//       }
+//       setSuccess(data.message || "Password changed successfully.");
+//     } catch (err) {
+//       setError(err.message || "Unable to change password.");
+//     } finally {
+//       setBusy(false);
+//     }
+//   }
+
+//   return (
+//     <>
+//       <div className="ns-heading">
+//         <div><span>ACCOUNT SECURITY</span><h1>Change Password</h1><p>Update your hotel portal login password.</p></div>
+//       </div>
+//       <section className="ns-panel" style={{ maxWidth: 560 }}>
+//         <form className="ns-form" onSubmit={submit} autoComplete="on" onChange={() => { setError(""); setSuccess(""); }}>
+//           <label className="ns-full">Current Password
+//             <input name="current_password" type={showPasswords ? "text" : "password"} autoComplete="current-password" required />
+//           </label>
+//           <label className="ns-full">New Password
+//             <input name="new_password" type={showPasswords ? "text" : "password"} autoComplete="new-password" minLength={6} maxLength={128} required />
+//           </label>
+//           <label className="ns-full">Confirm New Password
+//             <input name="confirm_password" type={showPasswords ? "text" : "password"} autoComplete="new-password" minLength={6} maxLength={128} required />
+//           </label>
+//           <div className="ns-full" style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 10 }}>
+//             <input id="hotel-show-passwords" type="checkbox" checked={showPasswords} onChange={e => setShowPasswords(e.target.checked)} style={{ width: 18, height: 18, margin: 0, flex: "0 0 18px" }} />
+//             <label htmlFor="hotel-show-passwords" style={{ display: "inline", width: "auto", margin: 0, cursor: "pointer" }}>Show passwords</label>
+//           </div>
+//           {error && <p className="ns-room-error ns-full" role="alert">{error}</p>}
+//           {success && <p className="ns-note ns-full" role="status">{success}</p>}
+//           <div className="ns-form-actions ns-full">
+//             <button type="button" className="ns-cancel" onClick={onBack}>Back</button>
+//             <button type="submit" className="ns-btn" disabled={busy}>{busy ? "Updating..." : "Change Password"}</button>
+//           </div>
+//         </form>
+//       </section>
+//     </>
+//   );
+// }
 
 // export function AdminDashboard() {
 //   const navigate = useNavigate();
@@ -352,6 +478,8 @@
 
 
 // async function hotelProfileRequest(action, fields = {}, signal) {
+//   const isMultipart = fields instanceof FormData;
+//   if (isMultipart) fields.set("action", action);
 
 //   const response = await fetch(HOTEL_PROFILE_API, {
 
@@ -359,15 +487,15 @@
 
 //     credentials: "include",
 
-//     headers: { "Content-Type": "application/json" },
+//     ...(isMultipart ? {} : { headers: { "Content-Type": "application/json" } }),
 
-//     body: JSON.stringify({ action, ...fields }),
+//     body: isMultipart ? fields : JSON.stringify({ action, ...fields }),
 
 //     signal,
 
 //   });
 
-//   const result = await response.json();
+//   const result = await response.json().catch(() => { throw new Error("Server returned an invalid JSON response."); });
 
 //   if (!response.ok || !result.success) {
 
@@ -427,7 +555,7 @@
 //         </Link>
 //       </div>
 //       <section className="ns-panel">
-//         <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap", marginBottom: 18 }}>
+//         <div className="ns-hotel-toolbar">
 //           <input
 //             className="ns-search"
 //             aria-label="Search hotels"
@@ -436,7 +564,7 @@
 //             onChange={(event) => setSearch(event.target.value)}
 //             style={{ flex: "1 1 280px", minWidth: 0 }}
 //           />
-//           <button type="button" className="ns-cancel" onClick={() => loadHotels()} disabled={loading}>
+//           <button type="button" className="ns-hotel-refresh" onClick={() => loadHotels()} disabled={loading}>
 //             <RefreshCw size={16} /> Refresh
 //           </button>
 //         </div>
@@ -448,11 +576,13 @@
 //             <table className="ns-table">
 //               <thead>
 //                 <tr>
+//                   <th>Picture</th>
 //                   <th>Hotel Code</th>
 //                   <th>Hotel Name</th>
 //                   <th>City</th>
 //                   <th>Area</th>
 //                   <th>Contact</th>
+//                   <th>Contact Person</th>
 //                   <th>Status</th>
 //                   {canManage && <th>Actions</th>}
 //                 </tr>
@@ -460,6 +590,7 @@
 //               <tbody>
 //                 {visibleHotels.map((hotel) => (
 //                   <tr key={hotel.id}>
+//                     <td>{(hotel.picture_url || hotel.picture || hotel.image_url) ? <img className="ns-hotel-thumb" src={String(hotel.picture_url || hotel.picture || hotel.image_url).startsWith("http") ? (hotel.picture_url || hotel.picture || hotel.image_url) : new URL(hotel.picture_url || hotel.picture || hotel.image_url, "https://coreops.pk").href} alt={hotel.hotel_name || "Hotel"} /> : <span className="ns-hotel-no-photo"><ImagePlus size={19} /></span>}</td>
 //                     <td>{hotel.hotel_code || "—"}</td>
 //                     <td>
 //                       <strong>{hotel.hotel_name}</strong>
@@ -471,6 +602,7 @@
 //                       {hotel.contact_number || "—"}
 //                       <small>{hotel.email || "—"}</small>
 //                     </td>
+//                     <td>{hotel.contact_person_name || "—"}</td>
 //                     <td><span className="ns-status">{hotel.status === "YES" ? "Active" : hotel.status === "NO" ? "Inactive" : hotel.status}</span></td>
 //                     {canManage && (
 //                       <td>
@@ -499,6 +631,9 @@
 // export function AdminHotelForm() {
 
 //   const navigate = useNavigate();
+//   const [picture, setPicture] = useState(null);
+//   const [picturePreview, setPicturePreview] = useState("");
+//   const [existingPicture, setExistingPicture] = useState("");
 
 //   const [form, setForm] = useState({
 
@@ -515,6 +650,12 @@
 //     email: "",
 
 //     description: "",
+
+//     contact_person_name: "",
+
+//     latitude: "",
+
+//     longitude: "",
 
 //     status: "YES",
 
@@ -540,7 +681,8 @@
 
 //       .then((result) => {
 
-//         const h = result.hotel;
+//         const h = result.hotel || {};
+//         setExistingPicture(h.picture_url || h.picture || h.image_url || "");
 
 //         setHotelCode(h.hotel_code || "");
 
@@ -559,6 +701,12 @@
 //           email: h.email || "",
 
 //           description: h.description || "",
+
+//           contact_person_name: h.contact_person_name || "",
+
+//           latitude: h.latitude ?? "",
+
+//           longitude: h.longitude ?? "",
 
 //           status: h.status || "YES",
 
@@ -585,6 +733,13 @@
 //     return () => controller.abort();
 
 //   }, []);
+
+//   useEffect(() => {
+//     if (!picture) { setPicturePreview(""); return; }
+//     const url = URL.createObjectURL(picture);
+//     setPicturePreview(url);
+//     return () => URL.revokeObjectURL(url);
+//   }, [picture]);
 
 //   const visibleAreas = areas.filter((a) => String(a.city_id) === form.city_id);
 
@@ -618,7 +773,12 @@
 
 //     try {
 
-//       await hotelProfileRequest("update", form);
+//       if (form.latitude !== "" && (!Number.isFinite(Number(form.latitude)) || Number(form.latitude) < -90 || Number(form.latitude) > 90)) throw new Error("Latitude must be between -90 and 90.");
+//       if (form.longitude !== "" && (!Number.isFinite(Number(form.longitude)) || Number(form.longitude) < -180 || Number(form.longitude) > 180)) throw new Error("Longitude must be between -180 and 180.");
+//       const payload = new FormData();
+//       Object.entries(form).forEach(([key, value]) => payload.append(key, String(value ?? "")));
+//       if (picture) payload.append("picture", picture);
+//       await hotelProfileRequest("update", payload);
 
 //       navigate("/admin/hotels", { replace: true });
 
@@ -795,6 +955,33 @@
 //             </label>
 
 //             <label>
+//               Contact Person Name
+//               <input name="contact_person_name" value={form.contact_person_name} onChange={update} maxLength={150} placeholder="Hotel contact person" />
+//             </label>
+
+//             <label>
+//               Latitude
+//               <input name="latitude" type="number" step="any" min="-90" max="90" value={form.latitude} onChange={update} placeholder="e.g. 36.3167" />
+//             </label>
+
+//             <label>
+//               Longitude
+//               <input name="longitude" type="number" step="any" min="-180" max="180" value={form.longitude} onChange={update} placeholder="e.g. 74.6500" />
+//             </label>
+
+//             <label className="ns-full">
+//               Hotel Picture
+//               <input type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => {
+//                 const file = event.target.files?.[0] || null;
+//                 if (file && !["image/jpeg", "image/png", "image/webp"].includes(file.type)) { setError("Only JPG, PNG or WebP images are allowed."); event.target.value = ""; return; }
+//                 if (file && file.size > 5 * 1024 * 1024) { setError("Image must be 5 MB or smaller."); event.target.value = ""; return; }
+//                 setError(""); setPicture(file);
+//               }} />
+//               {(picturePreview || existingPicture) && <img className="ns-hotel-preview" src={picturePreview || (existingPicture.startsWith("http") ? existingPicture : new URL(existingPicture, "https://coreops.pk").href)} alt="Hotel preview" />}
+//               <small>JPG, PNG or WebP, maximum 5 MB. Leave empty to keep the existing picture.</small>
+//             </label>
+
+//             <label>
 
 //               Status
 
@@ -868,723 +1055,8 @@
 
 
 
-// const ROOMS_API = "https://coreops.pk/Hotel/api/rooms.php";
-// const ROOM_CITIES_API = "https://coreops.pk/Hotel/api/getCities.php";
-// const ROOM_AREAS_API = "https://coreops.pk/Hotel/api/getAreasByCities.php";
-// const ROOM_UPLOAD_API = "https://coreops.pk/Hotel/api/uploadRoomImage.php";
-
-// async function roomLocationRequest(url, signal) {
-//   const response = await fetch(url, { method: "GET", credentials: "include", cache: "no-store", signal });
-//   const result = await response.json();
-//   if (!response.ok || !result.success) throw new Error(result.message || "Could not load locations.");
-//   return result;
-// }
-
-
-// const blankRoom = {
-
-//   room_type: "", original_room_number: "", price_per_night: "", discounted_price_per_night: "",
-//   city_id: "", area_id: "",
-
-//   capacity: "2", availability: "Online", description: "", image_url: "", gallery: [], amenities: [], status: "YES",
-
-// };
-
-
-
-// async function roomsRequest(action, fields = {}, signal) {
-
-//   const response = await fetch(ROOMS_API, {
-
-//     method: action === "list" ? "GET" : "POST",
-
-//     credentials: "include",
-
-//     ...(action === "list" ? {} : {
-
-//       headers: { "Content-Type": "application/json" },
-
-//       body: JSON.stringify({ action, ...fields }),
-
-//     }),
-
-//     signal,
-
-//   });
-
-//   let result;
-
-//   try { result = await response.json(); }
-
-//   catch { throw new Error("Server returned an invalid response."); }
-
-//   if (response.status === 401 || response.status === 403) {
-
-//     throw new Error(result.message || "Session expired. Please log in again.");
-
-//   }
-
-//   if (!response.ok || !result.success) {
-
-//     throw new Error(result.message || "Room request failed.");
-
-//   }
-
-//   return result;
-
-// }
-
-
-
-// export function AdminRooms() {
-
-//   const navigate = useNavigate();
-
-//   const [rooms, setRooms] = useState([]);
-//   const [hotels, setHotels] = useState([]);
-//   const [selectedHotelId, setSelectedHotelId] = useState("");
-//   const [roomLocation, setRoomLocation] = useState(null);
-//   const [cityOptions, setCityOptions] = useState([]);
-//   const [areaOptions, setAreaOptions] = useState([]);
-//   const [locationsLoading, setLocationsLoading] = useState(false);
-//   const [locationError, setLocationError] = useState("");
-//   const [uploadingImage, setUploadingImage] = useState(false);
-//   const [imageUploadError, setImageUploadError] = useState("");
-
-//   const [search, setSearch] = useState("");
-
-//   const [editor, setEditor] = useState(null);
-
-//   const [form, setForm] = useState(blankRoom);
-
-//   const [error, setError] = useState("");
-
-//   const [formError, setFormError] = useState("");
-
-//   const [loading, setLoading] = useState(true);
-
-//   const [saving, setSaving] = useState(false);
-
-//   const [deletingId, setDeletingId] = useState(null);
-
-
-
-//   async function reload(signal, hotelId = selectedHotelId) {
-
-//     const response = await fetch(`${ROOMS_API}${hotelId ? `?hotel_id=${encodeURIComponent(hotelId)}` : ""}`, {
-//       method: "GET", credentials: "include", cache: "no-store", signal
-//     });
-//     const result = await response.json();
-//     if (!response.ok || !result.success) throw new Error(result.message || "Unable to load rooms");
-//     setHotels(Array.isArray(result.hotels) ? result.hotels : []);
-//     // City/area dropdown data is loaded separately from company location APIs.
-//     if (!hotelId && result.hotel_id) setSelectedHotelId(String(result.hotel_id));
-
-//     setRooms(Array.isArray(result.rooms) ? result.rooms : []);
-//     setRoomLocation(result.location || null);
-
-//   }
-
-
-
-//   useEffect(() => {
-
-//     const controller = new AbortController();
-
-//     reload(controller.signal, selectedHotelId)
-
-//       .catch((err) => {
-
-//         if (err.name === "AbortError") return;
-
-//         if (/session expired/i.test(err.message)) navigate("/admin/login", { replace: true });
-
-//         else setError(err.message);
-
-//       })
-
-//       .finally(() => { if (!controller.signal.aborted) setLoading(false); });
-
-//     return () => controller.abort();
-
-//   }, [navigate, selectedHotelId]);
-
-
-
-//   // Load company-wide locations independently of the selected hotel/rooms response.
-//   useEffect(() => {
-//     const controller = new AbortController();
-//     const loadLocations = async () => {
-//       setLocationsLoading(true);
-//       setLocationError("");
-//       try {
-//         const endpoints = [
-//           "https://coreops.pk/Hotel/api/cities.php",
-//           "https://coreops.pk/Hotel/api/getAreas.php?city_id=all",
-//         ];
-//         const results = await Promise.all(endpoints.map(async (url) => {
-//           const response = await fetch(url, {
-//             method: "GET", credentials: "include", cache: "no-store", signal: controller.signal,
-//           });
-//           const data = await response.json();
-//           if (!response.ok || !data.success) throw new Error(data.message || `Unable to load locations (${response.status})`);
-//           return data;
-//         }));
-//         if (controller.signal.aborted) return;
-//         const [cityData, areaData] = results;
-//         // getAreas includes the cities used by Area Management as a fallback.
-//         const cityList = Array.isArray(cityData.cities) && cityData.cities.length
-//           ? cityData.cities : (Array.isArray(areaData.cities) ? areaData.cities : []);
-//         setCityOptions(cityList);
-//         setAreaOptions(Array.isArray(areaData.areas) ? areaData.areas : []);
-//       } catch (err) {
-//         if (!controller.signal.aborted) setLocationError(err.message || "Unable to load cities and areas.");
-//       } finally {
-//         if (!controller.signal.aborted) setLocationsLoading(false);
-//       }
-//     };
-//     loadLocations();
-//     return () => controller.abort();
-//   }, []);
-
-//   // City and area options come from company-scoped location APIs.
-//   // Rooms remain tied to one hotel; changing the location filters hotel choices.
-//   const filteredAreaOptions = areaOptions.filter(a => String(a.city_id) === String(form.city_id));
-//   const matchingHotels = hotels.filter(h =>
-//     String(h.city_id) === String(form.city_id) && String(h.area_id) === String(form.area_id)
-//   );
-//   const cityMatchesHotel = (id) => String(id) === String(roomLocation?.city_id);
-//   const areaMatchesHotel = (id) => String(id) === String(roomLocation?.area_id);
-
-//   const visible = rooms.filter((room) =>
-
-//     `${room.room_name} ${room.room_code || ""} ${room.room_type || ""} ${room.original_room_number || room.room_number || ""} ${room.status || ""}`
-
-//       .toLowerCase().includes(search.toLowerCase())
-
-//   );
-
-
-
-//   function openNew() {
-
-//     if (!hotels.length) { setError("Add a hotel in Hotel Management first."); return; }
-//     setEditor({ id: null });
-
-//     setForm({ ...blankRoom, city_id: "", area_id: "", hotel_id: "" });
-
-//     setFormError("");
-//     setImageUploadError("");
-
-//   }
-
-
-
-//   function openEdit(room) {
-
-//     if (!selectedHotelId) { setError("Select a hotel first."); return; }
-//     setEditor({ id: room.id });
-
-//     setForm({
-
-
-
-
-//       room_type: room.room_type || "",
-//       original_room_number: String(room.original_room_number ?? room.room_number ?? ""),
-
-//       price_per_night: String(room.price_per_night ?? ""),
-//       discounted_price_per_night: room.discounted_price_per_night == null ? "" : String(room.discounted_price_per_night),
-
-//       capacity: String(room.capacity ?? 2),
-
-//       availability: Number(room.offline_rooms) > 0 && Number(room.online_rooms) === 0 ? "Offline" : "Online",
-
-//       description: room.description || "",
-
-//       image_url: room.image_url || "",
-//       gallery: Array.isArray(room.gallery) && room.gallery.length ? room.gallery : (room.image_url ? [room.image_url] : []),
-//       amenities: Array.isArray(room.amenities) ? room.amenities : [],
-
-//       status: room.status || "YES",
-//       city_id: String(roomLocation?.city_id || ""),
-//       area_id: String(roomLocation?.area_id || ""),
-//       hotel_id: selectedHotelId || "",
-//     });
-
-//     setFormError("");
-//     setImageUploadError("");
-
-//   }
-
-
-
-//   function updateField(key, value) {
-
-//     setForm((previous) => ({ ...previous, [key]: value }));
-
-//   }
-
-
-
-//   async function uploadRoomImages(files) {
-//     const selected = Array.from(files || []);
-//     if (!selected.length) return;
-//     if ((form.gallery?.length || 0) + selected.length > 7) {
-//       setImageUploadError("Maximum 7 images per room."); return;
-//     }
-//     setUploadingImage(true);
-//     setImageUploadError("");
-//     const urls = [];
-//     try {
-//       for (const file of selected) {
-//         if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024) {
-//           throw new Error("Only JPG, PNG, WebP images up to 5 MB each are allowed.");
-//         }
-//         const data = new FormData();
-//         data.append("image", file);
-//         const response = await fetch(ROOM_UPLOAD_API, { method: "POST", credentials: "include", body: data });
-//         const json = await response.json();
-//         if (!response.ok || !json.success || !json.image_url) throw new Error(json.message || "Image upload failed.");
-//         urls.push(json.image_url);
-//       }
-//       setForm(prev => {
-//         const gallery = [...new Set([...(prev.gallery || []), ...urls])].slice(0, 7);
-//         return { ...prev, gallery, image_url: gallery[0] || "" };
-//       });
-//     } catch (err) {
-//       // Preserve images that already uploaded successfully.
-//       if (urls.length) setForm(prev => {
-//         const gallery = [...new Set([...(prev.gallery || []), ...urls])].slice(0, 7);
-//         return { ...prev, gallery, image_url: gallery[0] || "" };
-//       });
-//       setImageUploadError(err.message || "Image upload failed.");
-//     } finally { setUploadingImage(false); }
-//   }
-
-//   function removeGalleryImage(url) {
-//     setForm(prev => {
-//       const gallery = (prev.gallery || []).filter(item => item !== url);
-//       return { ...prev, gallery, image_url: gallery[0] || "" };
-//     });
-//   }
-
-//   function updateAmenity(index, key, value) {
-//     setForm(prev => ({ ...prev, amenities: (prev.amenities || []).map((a, i) => i === index ? { ...a, [key]: value } : a) }));
-//   }
-
-//   async function saveRoom(event) {
-
-//     event.preventDefault();
-
-//     if (!editor || saving || uploadingImage) return;
-
-//     const price = Number(form.price_per_night);
-//     const discountPrice = form.discounted_price_per_night === "" ? null : Number(form.discounted_price_per_night);
-
-//     const capacity = Number(form.capacity);
-
-//     const online = form.availability === "Online" ? 1 : 0;
-//     const offline = form.availability === "Offline" ? 1 : 0;
-
-//     if (!selectedHotelId || !roomLocation || String(form.hotel_id) !== String(selectedHotelId)) {
-//       setFormError("Selected city/area must have exactly one registered hotel. Please select a valid location.");
-//       return;
-//     }
-//     if (!form.city_id || !form.area_id ||
-//       !cityMatchesHotel(form.city_id) || !areaMatchesHotel(form.area_id)) {
-//       setFormError("City and area must match the registered hotel location.");
-//       return;
-//     }
-//     if (!form.room_type.trim() || !form.original_room_number.trim() || form.original_room_number.trim().length > 50 || form.price_per_night === "" ||
-
-//       !Number.isFinite(price) || price < 0 || price > 9999999999.99 ||
-//       (discountPrice !== null && (!Number.isFinite(discountPrice) || discountPrice < 0 || discountPrice >= price)) ||
-
-//       !Number.isInteger(capacity) || capacity < 1 || capacity > 1000 ||
-
-//       !["Online", "Offline"].includes(form.availability)) {
-
-//       setFormError("Enter the Original Room Number, room type, price, guest capacity and availability.");
-
-//       return;
-
-//     }
-
-//     if ((form.gallery || []).length > 7) { setFormError("Maximum 7 images allowed."); return; }
-//     if ((form.amenities || []).some(a => !a.name.trim() && a.value.trim())) {
-//       setFormError("Enter a name for every amenity value."); return;
-//     }
-//     setSaving(true);
-
-//     setFormError("");
-
-//     try {
-
-//       await roomsRequest(editor.id == null ? "create" : "update", {
-
-//         ...(editor.id == null ? {} : { id: editor.id }),
-
-//         ...form,
-//         hotel_id: selectedHotelId,
-//         gallery: form.gallery || [],
-//         image_url: form.gallery?.[0] || "",
-//         amenities: (form.amenities || []).filter(a => a.name.trim()).map(a => ({ name: a.name.trim(), value: a.value.trim() })),
-//         city_id: String(roomLocation.city_id),
-//         area_id: String(roomLocation.area_id),
-
-//         original_room_number: form.original_room_number.trim(),
-//         room_name: form.room_type.trim(),
-//         room_type: form.room_type.trim(),
-
-//         price_per_night: price,
-//         discounted_price_per_night: discountPrice,
-
-//         capacity,
-
-//         total_rooms: 1,
-//         online_rooms: online,
-//         offline_rooms: offline,
-
-//       });
-
-//       await reload();
-
-//       setEditor(null);
-
-//       setError("");
-
-//     } catch (err) {
-
-//       if (/session expired/i.test(err.message)) navigate("/admin/login", { replace: true });
-
-//       else setFormError(err.message || "Unable to save room.");
-
-//     } finally { setSaving(false); }
-
-//   }
-
-
-
-//   async function deleteRoom(room) {
-
-//     if (deletingId != null || !window.confirm(`Delete ${room.room_name}?`)) return;
-
-//     setDeletingId(room.id);
-
-//     setError("");
-
-//     try {
-
-//       await roomsRequest("delete", { id: room.id, hotel_id: selectedHotelId });
-
-//       await reload();
-
-//     } catch (err) {
-
-//       if (/session expired/i.test(err.message)) navigate("/admin/login", { replace: true });
-
-//       else setError(err.message || "Unable to delete room.");
-
-//     } finally { setDeletingId(null); }
-
-//   }
-
-
-
-//   return (
-
-//     <>
-
-//       <div className="ns-heading">
-
-//         <div>
-
-//           <span>INVENTORY</span>
-
-//           <h1>Room Management</h1>
-
-//           <p>Add each room separately, with an Online or Offline booking channel.</p>
-
-//         </div>
-
-//         <button type="button" className="ns-btn" onClick={openNew} disabled={!hotels.length}>
-
-//           <Plus size={17} /> Add Room
-
-//         </button>
-
-//       </div>
-
-//       <section className="ns-panel">
-//         <div className="ns-room-toolbar">
-
-//           <input aria-label="Search rooms" placeholder="Search room name, number, type or status..."
-
-//             value={search} onChange={(e) => setSearch(e.target.value)} />
-
-//         </div>
-
-//         {error && <p className="ns-room-error" role="alert">{error}</p>}
-
-//         {loading ? <p>Loading rooms...</p> : (
-
-//           <div className="ns-table-wrap" style={{ maxHeight: 390, overflowY: "auto" }}>
-
-//             <table className="ns-table">
-
-//               <thead><tr>
-
-//                 <th>Room Code / Type</th><th>Original Room Number</th><th>Room Type</th><th>Capacity</th><th>Availability</th>
-
-//                 <th>Nightly Price</th><th>Status</th><th>Actions</th>
-
-//               </tr></thead>
-
-//               <tbody>
-
-//                 {visible.map((room) => (
-
-//                   <tr key={room.id}>
-
-//                     <td><div className="ns-room-name">
-
-//                       {room.image_url ? <img src={room.image_url} alt={room.room_name} /> :
-
-//                         <span className="ns-room-image-placeholder"><BedDouble size={22} /></span>}
-
-//                       <div><strong>{room.room_name}</strong><small>{room.room_code || "—"}</small></div>
-
-//                     </div></td>
-
-//                     <td>{room.original_room_number || room.room_number || "—"}</td>
-//                     <td>{room.room_type || "—"}</td>
-
-//                     <td><Users size={14} /> {room.capacity}</td>
-
-//                     <td><span className="ns-status">{Number(room.offline_rooms) > 0 && Number(room.online_rooms) === 0 ? "Offline" : "Online"}</span></td>
-
-//                     <td>{room.discounted_price_per_night != null && Number(room.discounted_price_per_night) < Number(room.price_per_night) ? <><s style={{ color: "#888" }}>{money(room.price_per_night)}</s><br /><strong style={{ color: "#15803d" }}>{money(room.discounted_price_per_night)}</strong></> : money(room.price_per_night)}</td>
-
-//                     <td><span className="ns-status">{room.status}</span></td>
-
-//                     <td><div className="ns-actions">
-
-//                       <button type="button" onClick={() => openEdit(room)} aria-label={`Edit ${room.room_name}`}><Pencil size={17} /></button>
-
-//                       <button type="button" onClick={() => deleteRoom(room)} disabled={deletingId === room.id}
-
-//                         aria-label={`Delete ${room.room_name}`}><Trash2 size={17} /></button>
-
-//                     </div></td>
-
-//                   </tr>
-
-//                 ))}
-
-//               </tbody>
-
-//             </table>
-
-//             {!visible.length && <p className="ns-empty">No room types found. Add a room to get started.</p>}
-
-//           </div>
-
-//         )}
-
-//       </section>
-
-//       <p className="ns-note">Room inventory is loaded from MySQL for your assigned hotel.</p>
-
-//       {editor && (
-
-//         <div className="ns-room-overlay" role="presentation" onMouseDown={(e) => {
-
-//           if (e.target === e.currentTarget && !saving) setEditor(null);
-
-//         }}>
-
-//           <section className="ns-room-dialog" role="dialog" aria-modal="true"
-
-//             aria-label={editor.id == null ? "Add room" : "Edit room"}>
-
-//             <div className="ns-room-dialog-header">
-
-//               <h2>{editor.id == null ? "Add Room" : "Edit Room"}</h2>
-
-//               <button type="button" disabled={saving} onClick={() => setEditor(null)} aria-label="Close"><X size={20} /></button>
-
-//             </div>
-
-//             <form onSubmit={saveRoom} className="ns-room-form">
-
-//               {locationsLoading && <p>Loading cities and areas...</p>}
-//               {locationError && <p role="alert" className="ns-room-error">{locationError}</p>}
-//               <div className="ns-room-fields">
-//                 <label>City
-//                   <select required value={form.city_id}
-//                     onChange={(e) => {
-//                       setForm(prev => ({ ...prev, city_id: e.target.value, area_id: "", hotel_id: "" }));
-//                     }}>
-//                     <option value="">Select City</option>
-//                     {cityOptions.filter(c => String(c.status || "YES").toUpperCase() === "YES" || String(c.id) === String(form.city_id)).map(city => (
-//                       <option key={city.id} value={String(city.id)}>{city.city_name}</option>
-//                     ))}
-//                   </select>
-//                 </label>
-//                 <label>Area
-//                   <select required value={form.area_id} disabled={!form.city_id}
-//                     onChange={(e) => {
-//                       const areaId = e.target.value;
-//                       const candidates = hotels.filter(h => String(h.city_id) === String(form.city_id) && String(h.area_id) === String(areaId));
-//                       const hotelId = candidates.length === 1 ? String(candidates[0].id) : "";
-//                       setForm(prev => ({ ...prev, area_id: areaId, hotel_id: hotelId }));
-//                       if (hotelId) { setSelectedHotelId(hotelId); setRoomLocation(null); setRooms([]); }
-//                     }}>
-//                     <option value="">Select Area</option>
-//                     {filteredAreaOptions.filter(a => String(a.status || "YES").toUpperCase() === "YES" || String(a.id) === String(form.area_id)).map(area => (
-//                       <option key={area.id} value={String(area.id)}>{area.area_name}</option>
-//                     ))}
-//                   </select>
-//                 </label>
-//               </div>
-//               {form.city_id && form.area_id && matchingHotels.length === 0 && (
-//                 <p className="ns-room-error">Is city aur area mein koi registered hotel nahi hai. Pehle Hotel Management mein hotel add karein.</p>
-//               )}
-//               {form.city_id && form.area_id && matchingHotels.length > 1 && (
-//                 <p className="ns-room-error">Is location par multiple hotels hain. Bina hotel select kiye room assign nahi ho sakta; pehle hotel ki location unique karein.</p>
-//               )}
-//               {locationError && <p className="ns-room-error" role="alert">{locationError}</p>}
-//               <div className="ns-room-fields">
-
-//                 <label>Room Type<input required maxLength={100} value={form.room_type} placeholder="e.g. Deluxe"
-
-//                   onChange={(e) => updateField("room_type", e.target.value)} /></label>
-//                 <label>Original Room Number<input required maxLength={50} value={form.original_room_number} placeholder="e.g. 101 or A-201"
-//                   onChange={(e) => updateField("original_room_number", e.target.value)} /></label>
-
-//               </div>
-
-//               <div className="ns-room-fields">
-
-//                 <label>Price / Night (PKR)<input required type="number" min="0" step="0.01"
-
-//                   value={form.price_per_night} onChange={(e) => updateField("price_per_night", e.target.value)} /></label>
-
-//                 <label>Discounted Price / Night (PKR) — optional<input type="number" min="0" step="0.01"
-//                   placeholder="Leave blank for no discount" value={form.discounted_price_per_night}
-//                   onChange={(e) => updateField("discounted_price_per_night", e.target.value)} />
-//                   {form.discounted_price_per_night !== "" && Number(form.price_per_night) > Number(form.discounted_price_per_night) && <small style={{ display: "block", color: "#15803d" }}>
-//                     {Math.round((1 - Number(form.discounted_price_per_night) / Number(form.price_per_night)) * 100)}% OFF · Saves {money(Number(form.price_per_night) - Number(form.discounted_price_per_night))} per night
-//                   </small>}
-//                 </label>
-//                 <label>Guest Capacity<input required type="number" min="1" max="1000" step="1"
-
-//                   value={form.capacity} onChange={(e) => updateField("capacity", e.target.value)} /></label>
-
-//               </div>
-
-//               <div className="ns-room-availability">
-//                 <strong>Room Availability</strong>
-//                 <div style={{ display: "flex", gap: 12, marginTop: 10, marginBottom: 10 }}>
-//                   {["Online", "Offline"].map((option) => (
-//                     <button key={option} type="button"
-//                       aria-pressed={form.availability === option}
-//                       onClick={() => updateField("availability", option)}
-//                       style={{
-//                         flex: 1, padding: "12px 16px", borderRadius: 10,
-//                         border: form.availability === option ? "2px solid #2563eb" : "1px solid #cbd5e1",
-//                         background: form.availability === option ? "#dbeafe" : "transparent",
-//                         color: form.availability === option ? "#1d4ed8" : "inherit",
-//                         fontWeight: 700, cursor: "pointer"
-//                       }}>
-//                       {option}
-//                     </button>
-//                   ))}
-//                 </div>
-//                 <small>{form.availability === "Online" ? "Bookable on customer website" : "Manual hotel bookings only"}</small>
-//               </div>
-//               <label>Status<select value={form.status} onChange={(e) => updateField("status", e.target.value)}>
-
-//                 <option value="YES">YES</option><option value="NO">NO</option><option value="Closed">Closed</option>
-
-//               </select></label>
-
-//               <div className="ns-room-gallery-editor">
-//                 <strong>Room Images ({(form.gallery || []).length}/7)</strong>
-//                 <p className="ns-note">Upload up to 7 images. First image is the cover.</p>
-//                 <label><span><ImagePlus size={16} /> Add images from device</span>
-//                   <input type="file" multiple accept="image/jpeg,image/png,image/webp"
-//                     disabled={uploadingImage || saving || (form.gallery || []).length >= 7}
-//                     onChange={e => { uploadRoomImages(e.target.files); e.target.value = ""; }} />
-//                 </label>
-//                 <label>Or add image URL
-//                   <div className="ns-room-inline">
-//                     <input type="url" placeholder="https://example.com/room.jpg" id="ns-room-url" />
-//                     <button type="button" className="ns-cancel" onClick={() => {
-//                       const input = document.getElementById("ns-room-url");
-//                       const url = input?.value.trim();
-//                       if (!url) return;
-//                       if ((form.gallery || []).length >= 7) { setImageUploadError("Maximum 7 images."); return; }
-//                       setForm(prev => { const gallery = [...new Set([...(prev.gallery || []), url])]; return { ...prev, gallery, image_url: gallery[0] }; });
-//                       input.value = "";
-//                     }}>Add URL</button>
-//                   </div>
-//                 </label>
-//                 {uploadingImage && <p className="ns-note">Uploading images...</p>}
-//                 {imageUploadError && <p className="ns-room-error" role="alert">{imageUploadError}</p>}
-//                 <div className="ns-room-gallery-grid">
-//                   {(form.gallery || []).map((url, i) => <div key={url} className="ns-room-gallery-tile">
-//                     <img src={url} alt={`Room image ${i + 1}`} />
-//                     <span>{i === 0 ? "Cover" : `Photo ${i + 1}`}</span>
-//                     <button type="button" onClick={() => removeGalleryImage(url)} aria-label="Remove image">×</button>
-//                   </div>)}
-//                 </div>
-//               </div>
-//               <div className="ns-room-amenities-editor">
-//                 <div className="ns-room-amenities-head"><strong>Amenities</strong>
-//                   <button type="button" className="ns-cancel" disabled={(form.amenities || []).length >= 60}
-//                     onClick={() => setForm(prev => ({ ...prev, amenities: [...(prev.amenities || []), { name: "", value: "" }] }))}>+ Add Amenity</button>
-//                 </div>
-//                 {(form.amenities || []).map((a, i) => <div className="ns-room-amenity-row" key={i}>
-//                   <input aria-label={`Amenity ${i + 1} name`} placeholder="Amenity name (e.g. WiFi)" maxLength={100} value={a.name}
-//                     onChange={e => updateAmenity(i, "name", e.target.value)} />
-//                   <input aria-label={`Amenity ${i + 1} value`} placeholder="Value (e.g. Free)" maxLength={250} value={a.value}
-//                     onChange={e => updateAmenity(i, "value", e.target.value)} />
-//                   <button type="button" className="ns-cancel" aria-label="Remove amenity"
-//                     onClick={() => setForm(prev => ({ ...prev, amenities: prev.amenities.filter((_, n) => n !== i) }))}>×</button>
-//                 </div>)}
-//               </div>
-
-//               <label>Description<textarea rows={3} maxLength={20000} value={form.description}
-
-//                 onChange={(e) => updateField("description", e.target.value)} /></label>
-
-//               {formError && <p className="ns-room-error" role="alert">{formError}</p>}
-
-//               <div className="ns-room-actions">
-
-//                 <button type="button" className="ns-cancel" disabled={saving} onClick={() => setEditor(null)}>Cancel</button>
-
-//                 <button type="submit" className="ns-btn" disabled={saving || uploadingImage}>{saving ? "Saving..." : "Save Room"}</button>
-
-//               </div>
-
-//             </form>
-
-//           </section>
-
-//         </div>
-
-//       )}
-
-//     </>
-
-//   );
-
-// }
-
-
+// // Room Management is maintained separately in AdminRooms.jsx.
+// export { AdminRooms } from "./AdminRooms";
 
 // const BOOKINGS_API = "https://coreops.pk/Hotel/api/bookings.php"
 
@@ -1639,6 +1111,8 @@
 //   const [tab, setTab] = useState("Online");
 //   const [bookings, setBookings] = useState([]);
 //   const [offlineRooms, setOfflineRooms] = useState([]);
+//   const [offlineAddons, setOfflineAddons] = useState([]);
+//   const [addonQuantities, setAddonQuantities] = useState({});
 //   const [loading, setLoading] = useState(true);
 //   const [saving, setSaving] = useState(false);
 //   const [busyId, setBusyId] = useState(null);
@@ -1653,7 +1127,11 @@
 //   const [notice, setNotice] = useState("");
 //   const [form, setForm] = useState({ room_id: "", guest_name: "", guest_phone: "", guest_email: "", guests: "1", check_in: "", check_out: "" });
 //   const channel = (b) => ["Offline", "Walk-in", "Phone"].includes(b.booking_source) ? "Offline" : "Online";
-//   const displayStatus = (b) => b.checked_in_at && !b.checked_out_at ? "Checked In" : b.status;
+//   const displayStatus = (b) => {
+//     if (b.checked_out_at || ["checked out", "checked_out", "checked-out"].includes(String(b.status || "").toLowerCase())) return "Checked Out";
+//     if (b.checked_in_at && !b.checked_out_at) return "Checked In";
+//     return b.status;
+//   };
 //   const apiCall = async (action, fields = {}) => {
 //     const res = await fetch(BOOKINGS_API, {
 //       method: action === "list" || action === "rooms" ? "GET" : "POST",
@@ -1667,13 +1145,61 @@
 //     }
 //     return json;
 //   };
+
+//   const roomsRequest = async (action, payload = {}, signal) => {
+//     const response = await fetch(
+//       "https://coreops.pk/Hotel/api/rooms.php",
+//       {
+//         method: "POST",
+//         credentials: "include",
+//         cache: "no-store",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           action,
+//           ...payload,
+//         }),
+//         signal,
+//       }
+//     );
+
+//     const data = await response.json().catch(() => ({}));
+
+//     if (response.status === 401) {
+//       navigate("/admin/login", { replace: true });
+//       throw new Error("Session expired");
+//     }
+
+//     if (!response.ok || !data.success) {
+//       throw new Error(data.message || "Could not load rooms");
+//     }
+
+//     return data;
+//   };
 //   const loadOfflineRooms = async (signal) => {
-//     // Use the same authenticated room inventory API as Room Management.
-//     const result = await roomsRequest("list", {}, signal);
-//     const allRooms = Array.isArray(result.rooms) ? result.rooms : [];
-//     return allRooms.filter((room) =>
-//       String(room.status || "").toUpperCase() === "YES" &&
-//       Number(room.offline_rooms) > 0
+//     // rooms.php returns no rooms when the account can access multiple hotels
+//     // and hotel_id is omitted. First fetch authorized hotel options, then
+//     // request inventory for each hotel separately.
+//     const initial = await roomsRequest("list", {}, signal);
+//     const hotels = Array.isArray(initial.hotels) ? initial.hotels : [];
+//     const responses = hotels.length > 0
+//       ? await Promise.all(hotels.map(async (hotel) => {
+//         const data = await roomsRequest("list", { hotel_id: Number(hotel.id) }, signal);
+//         return (Array.isArray(data.rooms) ? data.rooms : []).map((room) => ({
+//           ...room,
+//           hotel_id: Number(room.hotel_id || hotel.id),
+//           hotel_name: hotel.hotel_name || "",
+//           area_name: room.area_name || hotel.area_name || "",
+//           city_name: room.city_name || hotel.city_name || "",
+//         }));
+//       }))
+//       : [Array.isArray(initial.rooms) ? initial.rooms : []];
+//     // Show all active rooms across authorized hotels, even when their
+//     // offline allocation is zero. Booking eligibility is still validated
+//     // by the server when the reservation is submitted.
+//     return responses.flat().filter((room) =>
+//       String(room.status || "").trim().toUpperCase() === "YES"
 //     );
 //   };
 //   const refresh = async () => {
@@ -1711,25 +1237,58 @@
 //     return () => { active = false; controller.abort(); };
 //   }, [navigate]);
 //   const channelBookings = bookings.filter(b => channel(b) === tab);
-//   const statusCounts = {
-//     All: channelBookings.length,
-//     Pending: channelBookings.filter(b => b.status === "Pending").length,
-//     Confirmed: channelBookings.filter(b => b.status === "Confirmed").length,
-//     Cancelled: channelBookings.filter(b => b.status === "Cancelled").length,
-//   };
+//   const bookingStatuses = ["All", "Pending", "Confirmed", "Cancelled", "Checked In", "Checked Out"];
+//   const statusCounts = Object.fromEntries(bookingStatuses.map(status => [
+//     status,
+//     status === "All" ? channelBookings.length : channelBookings.filter(b => displayStatus(b) === status).length,
+//   ]));
 //   const filtered = channelBookings.filter(b =>
-//     (statusFilter === "All" || b.status === statusFilter) &&
+//     (statusFilter === "All" || displayStatus(b) === statusFilter) &&
 //     `${b.booking_reference} ${b.guest_name} ${b.guest_phone || ""} ${b.room_code || ""} ${b.room_name || ""}`.toLowerCase().includes(search.toLowerCase()));
 //   const selectedRoom = offlineRooms.find(r => String(r.id) === String(form.room_id));
+//   useEffect(() => {
+//     setOfflineAddons([]);
+//     setAddonQuantities({});
+//     if (!form.room_id) return;
+//     const room = offlineRooms.find(r => String(r.id) === String(form.room_id));
+//     if (!room?.hotel_id) return;
+//     const controller = new AbortController();
+//     fetch(`https://coreops.pk/Hotel/api/addons.php?hotel_id=${encodeURIComponent(room.hotel_id)}`, {
+//       credentials: "include", cache: "no-store", signal: controller.signal,
+//     }).then(async res => {
+//       const data = await res.json().catch(() => ({}));
+//       if (!res.ok || !data.success) throw new Error(data.message || "Could not load add-ons");
+//       return data;
+//     }).then(data => {
+//       if (!controller.signal.aborted) setOfflineAddons((Array.isArray(data.addons) ? data.addons : []).filter(a => String(a.status).toUpperCase() === "YES"));
+//     }).catch(err => { if (err.name !== "AbortError") setError(`Add-ons: ${err.message}`); });
+//     return () => controller.abort();
+//   }, [form.room_id, offlineRooms]);
+//   const addonNights = form.check_in && form.check_out && form.check_out > form.check_in
+//     ? Math.round((new Date(`${form.check_out}T00:00:00`) - new Date(`${form.check_in}T00:00:00`)) / 86400000) : 0;
+//   const addonItems = offlineAddons.filter(a => Number(addonQuantities[a.id] || 0) > 0).map(a => ({
+//     addon_id: Number(a.id), quantity: Number(addonQuantities[a.id]),
+//     line_total: Number(a.price || 0) * Number(addonQuantities[a.id]) *
+//       (a.charge_type === "per_guest_per_night" ? Number(form.guests || 0) * addonNights : a.charge_type === "per_night" ? addonNights : 1),
+//   }));
+//   const addonTotal = addonItems.reduce((sum, a) => sum + a.line_total, 0);
+
 //   const submit = async e => {
 //     e.preventDefault(); setSaving(true); setError(""); setNotice("");
 //     try {
-//       if (!selectedRoom) throw new Error("Select an active offline room");
+//       if (!selectedRoom) throw new Error("Select an active room");
 //       if (!form.check_in || !form.check_out || form.check_out <= form.check_in) throw new Error("Check-out must be after check-in.");
 //       if (Number(form.guests) > Number(selectedRoom.capacity)) throw new Error("Guests exceed room capacity.");
-//       const result = await apiCall("create_manual", { ...form, hotel_id: Number(selectedRoom.hotel_id), room_id: Number(form.room_id), guests: Number(form.guests), room_count: 1 });
-//       await refresh(); setShowForm(false); setNotice(`Offline booking ${result.booking_reference} created.`);
+//       const result = await apiCall("create_manual", { ...form, hotel_id: Number(selectedRoom.hotel_id), room_id: Number(form.room_id), guests: Number(form.guests), room_count: 1, addons: addonItems.map(({ addon_id, quantity }) => ({ addon_id, quantity })) });
+//       setShowForm(false);
+//       setNotice(`Offline booking ${result.booking_reference} created successfully.`);
 //       setForm({ room_id: "", guest_name: "", guest_phone: "", guest_email: "", guests: "1", check_in: "", check_out: "" });
+//       setAddonQuantities({});
+//       try {
+//         await refresh();
+//       } catch (refreshError) {
+//         setNotice(`Offline booking ${result.booking_reference} was saved, but the list could not refresh. Please reload to see it.`);
+//       }
 //     } catch (e) { setError(e.message); } finally { setSaving(false); }
 //   };
 //   const openConfirmation = (booking) => {
@@ -1767,27 +1326,201 @@
 //     try { await apiCall(action, { id: Number(b.id), ...(status ? { status } : {}) }); await refresh(); setNotice(`Booking ${b.booking_reference} updated.`); }
 //     catch (e) { setError(e.message); } finally { setBusyId(null); }
 //   };
-//   return <>
+//   return <div className="ns-booking-page">
 //     <div className="ns-heading"><div><span>RESERVATIONS</span><h1>Booking Management</h1><p>Online website bookings and Offline staff bookings.</p></div>
 //       {tab === "Offline" && <button className="ns-btn" type="button" onClick={() => setShowForm(v => !v)}><Plus size={17} /> {showForm ? "Close Form" : "Add Offline Booking"}</button>}
 //     </div>
-//     <section className="ns-panel">
+//     <section className="ns-panel ns-booking-panel">
 //       <div style={{ display: "flex", gap: 12, marginBottom: 18, flexWrap: "wrap" }}>
 //         {["Online", "Offline"].map(t => <button key={t} type="button" onClick={() => { setTab(t); setStatusFilter("All"); setShowForm(false); setError(""); }} className={tab === t ? "ns-btn" : "ns-cancel"}>{t} Bookings ({bookings.filter(b => channel(b) === t).length})</button>)}
 //       </div>
-//       {tab === "Offline" && showForm && <form onSubmit={submit} className="ns-room-form" style={{ marginBottom: 24, padding: 18, border: "1px solid #ddd", borderRadius: 12 }}>
+//       {tab === "Offline" && showForm && <form onSubmit={submit} className="ns-room-form ns-offline-booking-form" style={{ marginBottom: 12, padding: 18, border: "1px solid #ddd", borderRadius: 12 }}>
 //         <h3>Add Offline Booking</h3>
-//         <label>Offline Room<select required value={form.room_id} onChange={e => setForm(p => ({ ...p, room_id: e.target.value }))}><option value="">{loading ? "Loading rooms..." : "Select Room"}</option>{offlineRooms.map(r => <option key={r.id} value={r.id}>{r.hotel_name ? `${r.hotel_name} — ` : ""}{r.room_code || `Room ${r.id}`} — {r.room_type || r.room_name} — Room {r.original_room_number || r.room_number || "—"} — {money(r.price_per_night)}</option>)}</select>{!loading && offlineRooms.length === 0 && <small style={{ display: "block", marginTop: 8 }}>No active Offline rooms found. In Room Management, set a room's availability to Offline and save it.</small>}</label>
+//         <label>Offline Room<select required value={form.room_id} onChange={e => setForm(p => ({ ...p, room_id: e.target.value }))}><option value="">{loading ? "Loading rooms..." : "Select Room"}</option>{offlineRooms.map(r => <option key={r.id} value={r.id}>{r.hotel_name ? `${r.hotel_name} — ` : ""}{[r.area_name, r.city_name].filter(Boolean).join(", ")}{r.area_name || r.city_name ? " — " : ""}{r.room_code || `Room ${r.id}`} — {r.room_type || r.room_name} — Room {r.original_room_number || r.room_number || "—"} — {money(r.price_per_night)}</option>)}</select>{!loading && offlineRooms.length === 0 && <small style={{ display: "block", marginTop: 8 }}>No active rooms found for your assigned hotels.</small>}</label>
 //         <div className="ns-room-fields"><label>Guest Name<input required maxLength={150} value={form.guest_name} onChange={e => setForm(p => ({ ...p, guest_name: e.target.value }))} /></label>
 //           <label>Phone<input required maxLength={30} value={form.guest_phone} onChange={e => setForm(p => ({ ...p, guest_phone: e.target.value }))} /></label></div>
 //         <div className="ns-room-fields"><label>Email (optional)<input type="email" maxLength={150} value={form.guest_email} onChange={e => setForm(p => ({ ...p, guest_email: e.target.value }))} /></label>
 //           <label>Guests<input required type="number" min="1" max={selectedRoom?.capacity || 1000} value={form.guests} onChange={e => setForm(p => ({ ...p, guests: e.target.value }))} /></label></div>
 //         <div className="ns-room-fields"><label>Check-In<input required type="date" value={form.check_in} onChange={e => setForm(p => ({ ...p, check_in: e.target.value }))} /></label>
 //           <label>Check-Out<input required type="date" min={form.check_in || undefined} value={form.check_out} onChange={e => setForm(p => ({ ...p, check_out: e.target.value }))} /></label></div>
+//         <div className="ns-full" style={{ marginTop: 12, marginBottom: 14 }}>
+//           <h4 style={{ margin: "0 0 10px" }}>Optional Add-ons</h4>
+//           {!form.room_id ? <small>Select a room to see its add-ons.</small> : !offlineAddons.length ? <small>No active add-ons for this branch.</small> : (
+//             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 10 }}>
+//               {offlineAddons.map(a => <label key={a.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: 10, border: "1px solid #dbe5df", borderRadius: 9 }}>
+//                 <span><strong>{a.addon_name}</strong><small style={{ display: "block" }}>{money(a.price)} · {String(a.charge_type || "per_stay").replaceAll("_", " ")}</small></span>
+//                 <input aria-label={`${a.addon_name} quantity`} type="number" min="0" max="99" step="1" value={addonQuantities[a.id] || 0} onChange={e => setAddonQuantities(p => ({ ...p, [a.id]: Math.max(0, Math.min(99, Math.floor(Number(e.target.value) || 0))) }))} style={{ width: 68, flexShrink: 0 }} />
+//               </label>)}
+//             </div>
+//           )}
+//           {!!addonItems.length && <p style={{ margin: "10px 0 0", fontWeight: 600 }}>Add-ons subtotal: {money(addonTotal)}{!addonNights && addonItems.some(a => offlineAddons.find(x => Number(x.id) === a.addon_id)?.charge_type !== "per_stay") ? " (select dates for nightly charges)" : ""}</p>}
+//         </div>
 //         <div className="ns-room-actions"><button className="ns-btn" type="submit" disabled={saving}>{saving ? "Saving..." : "Save Offline Booking"}</button></div>
 //       </form>}
+//       <style>{`
+//         /* Scroll ONLY the expanded Offline Booking form. */
+//         .ns-booking-page .ns-booking-panel > form.ns-offline-booking-form {
+//           display: block !important;
+//           flex: 0 1 auto !important;
+//           min-height: 0 !important;
+//           max-height: min(64dvh, 620px) !important;
+//           overflow-y: auto !important;
+//           overflow-x: hidden !important;
+//           overscroll-behavior: contain;
+//           scrollbar-width: thin;
+//           scrollbar-color: #9eb7aa #f3f7f4;
+//         }
+//         .ns-booking-page .ns-offline-booking-form::-webkit-scrollbar { width: 7px; }
+//         .ns-booking-page .ns-offline-booking-form::-webkit-scrollbar-thumb { background: #9eb7aa; border-radius: 8px; }
+//         .ns-booking-page .ns-offline-booking-form::-webkit-scrollbar-track { background: #f3f7f4; }
+//         @media (max-height: 750px) {
+//           .ns-booking-page .ns-booking-panel > form.ns-offline-booking-form {
+//             max-height: 48dvh !important;
+//           }
+//         }
+//         /* The count overlays the right edge of the search field, never outside the panel. */
+//         .ns-booking-page .ns-booking-toolbar {
+//           display: block !important;
+//           position: relative !important;
+//           width: 100% !important;
+//           min-width: 0 !important;
+//           max-width: 100% !important;
+//           box-sizing: border-box !important;
+//         }
+//         .ns-booking-page .ns-booking-toolbar > input.ns-search {
+//           display: block !important;
+//           width: 100% !important;
+//           max-width: 100% !important;
+//           min-width: 0 !important;
+//           box-sizing: border-box !important;
+//           padding-right: 150px !important;
+//         }
+//         .ns-booking-page .ns-booking-toolbar > span.ns-booking-result-count {
+//           position: absolute !important;
+//           right: 14px !important;
+//           top: 50% !important;
+//           transform: translateY(-50%) !important;
+//           white-space: nowrap !important;
+//           width: auto !important;
+//           min-width: 0 !important;
+//           margin: 0 !important;
+//         }
+//         /* Compact booking page: remove excessive vertical gaps */
+//         .ns-booking-page > .ns-heading { margin: 0 0 10px !important; padding: 0 !important; gap: 4px !important; }
+//         .ns-booking-page > .ns-heading h1 { margin: 3px 0 4px !important; line-height: 1.15; }
+//         .ns-booking-page > .ns-heading p { margin: 0 !important; }
+//         .ns-booking-page .ns-booking-panel { padding: 14px 18px !important; gap: 0 !important; }
+//         .ns-booking-page .ns-booking-panel > div:first-child { margin-bottom: 10px !important; }
+//         .ns-booking-page .ns-booking-status-filters { margin-bottom: 10px !important; gap: 8px !important; }
+//         .ns-booking-page .ns-booking-filter { padding: 9px 10px !important; min-height: 54px !important; }
+//         .ns-booking-page .ns-booking-toolbar { margin: 0 0 9px !important; gap: 10px !important; }
+//         .ns-booking-page .ns-booking-toolbar .ns-search { padding: 9px 12px !important; min-height: 38px !important; }
+//         .ns-booking-page .ns-room-error, .ns-booking-page .ns-note { margin: 3px 0 8px !important; }
+//         /* Booking Management only: fit screen and scroll booking rows */
+//         .ns-content:has(.ns-booking-page) {
+//           height: 100dvh;
+//           min-height: 0;
+//           overflow: hidden !important;
+//           box-sizing: border-box;
+//         }
+//         .ns-booking-page {
+//           height: 100%;
+//           min-height: 0;
+//           display: flex;
+//           flex-direction: column;
+//           overflow: hidden;
+//         }
+//         .ns-booking-page > .ns-heading { flex: 0 0 auto; }
+//         .ns-booking-page .ns-booking-panel {
+//           flex: 1 1 auto;
+//           min-height: 0;
+//           display: flex;
+//           flex-direction: column;
+//           overflow: hidden;
+//         }
+//         .ns-booking-page .ns-booking-table-scroll {
+//           flex: 0 1 auto;
+//           min-height: 0;
+//           max-height: 464px; /* header + approximately 6 compact rows */
+//           overflow-y: auto !important;
+//           overflow-x: auto !important;
+//           overscroll-behavior: contain;
+//           scrollbar-width: thin;
+//           scrollbar-color: #a8bbb0 #f1f5f2;
+//         }
+//         .ns-booking-page .ns-booking-table-scroll .ns-booking-table {
+//           border-collapse: separate;
+//           border-spacing: 0;
+//           width: 100%;
+//         }
+//         .ns-booking-page .ns-booking-table-scroll .ns-booking-table thead th {
+//           position: sticky;
+//           top: 0;
+//           z-index: 2;
+//           background: #f4f8f5;
+//           padding: 10px 12px !important;
+//           height: 44px;
+//           box-sizing: border-box;
+//         }
+//         .ns-booking-page .ns-booking-table-scroll .ns-booking-table tbody td {
+//           padding: 9px 12px !important;
+//           height: 70px;
+//           box-sizing: border-box;
+//           vertical-align: middle;
+//           font-size: 12px;
+//           line-height: 1.3;
+//         }
+//         .ns-booking-page .ns-booking-table-scroll .ns-booking-table tbody td small {
+//           font-size: 10px;
+//           line-height: 1.25;
+//           margin-top: 3px;
+//         }
+//         .ns-booking-page .ns-booking-table-scroll .ns-booking-table tbody td strong {
+//           font-size: 11px;
+//           line-height: 1.3;
+//         }
+//         .ns-booking-page .ns-booking-table-scroll .ns-booking-action {
+//           padding: 6px 9px;
+//           min-height: 30px;
+//           font-size: 11px;
+//         }
+//         @media (max-height: 750px) {
+//           .ns-booking-page .ns-booking-status-filters { margin-bottom: 12px; }
+//           .ns-booking-page .ns-booking-status-filters .ns-booking-filter { padding: 9px 8px !important; }
+//         }
+
+//         .ns-booking-status-filters {
+//           display: grid !important;
+//           grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+//           gap: 10px !important;
+//           width: 100%;
+//           margin-bottom: 22px;
+//         }
+//         .ns-booking-status-filters .ns-booking-filter {
+//           box-sizing: border-box;
+//           min-width: 0 !important;
+//           width: 100% !important;
+//           padding: 13px 10px !important;
+//           display: flex;
+//           align-items: center;
+//           justify-content: space-between;
+//           gap: 6px;
+//           text-align: left;
+//         }
+//         .ns-booking-status-filters .ns-booking-filter-label {
+//           font-size: clamp(10px, .9vw, 13px);
+//           white-space: nowrap;
+//         }
+//         .ns-booking-status-filters .ns-booking-filter-count {
+//           flex-shrink: 0;
+//           font-size: 13px;
+//         }
+//         @media (max-width: 900px) {
+//           .ns-booking-status-filters { overflow-x: auto; grid-template-columns: repeat(6, minmax(125px, 1fr)) !important; padding-bottom: 6px; }
+//         }
+//       `}</style>
 //       <div className="ns-booking-status-filters" role="group" aria-label="Filter bookings by status">
-//         {["All", "Pending", "Confirmed", "Cancelled"].map(status => (
+//         {bookingStatuses.map(status => (
 //           <button key={status} type="button" className={`ns-booking-filter ${statusFilter === status ? "is-active" : ""}`}
 //             aria-pressed={statusFilter === status} onClick={() => setStatusFilter(status)}>
 //             <span className="ns-booking-filter-label">{status}</span>
@@ -1795,9 +1528,51 @@
 //           </button>
 //         ))}
 //       </div>
-//       <div className="ns-booking-toolbar">
-//         <input className="ns-search" aria-label="Search bookings" placeholder="Search booking reference, guest or room..." value={search} onChange={e => setSearch(e.target.value)} />
-//         <span className="ns-booking-result-count">Showing {filtered.length} booking{filtered.length === 1 ? "" : "s"}</span>
+//       <div className="ns-booking-toolbar" style={{
+//         position: "relative",
+//         display: "block",
+//         width: "100%",
+//         minWidth: 0,
+//         maxWidth: "100%",
+//         boxSizing: "border-box",
+//         paddingRight: 0,
+//         marginBottom: 10
+//       }}>
+//         <input
+//           className="ns-search"
+//           aria-label="Search bookings"
+//           placeholder="Search booking reference, guest or room..."
+//           value={search}
+//           onChange={e => setSearch(e.target.value)}
+//           style={{
+//             display: "block",
+//             width: "100%",
+//             maxWidth: "100%",
+//             minWidth: 0,
+//             paddingRight: 150,
+//             boxSizing: "border-box"
+//           }}
+//         />
+//         <span className="ns-booking-result-count" style={{
+//           position: "absolute",
+//           right: 14,
+//           top: "50%",
+//           transform: "translateY(-50%)",
+//           display: "block",
+//           width: "auto",
+//           maxWidth: "none",
+//           minWidth: 0,
+//           whiteSpace: "nowrap",
+//           margin: 0,
+//           padding: 0,
+//           fontSize: 12,
+//           lineHeight: "18px",
+//           pointerEvents: "none",
+//           zIndex: 1,
+//           background: "#f7faf8"
+//         }}>
+//           Showing {filtered.length} booking{filtered.length === 1 ? "" : "s"}
+//         </span>
 //       </div>
 //       {error && <p className="ns-room-error" role="alert">{error}</p>}{notice && <p className="ns-note" role="status">{notice}</p>}
 //       {loading ? <p>Loading bookings...</p> : <div className="ns-table-wrap ns-booking-table-scroll"><table className="ns-table ns-booking-table"><thead><tr><th>Booking / Guest</th><th>Room</th><th>Dates</th><th>Selected Add-ons</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead><tbody>
@@ -1853,12 +1628,32 @@
 //         </form>
 //       </section>
 //     </div>, document.body)}
-//   </>;
+//   </div>;
 // }
 
 // // Area Management is maintained in its own component.
 // export { default as AdminAreas } from "./AdminAreas";
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { API_BASE, apiFetch, readJson } from "../../api/client";
+import { useHotelSession } from "../../api/session";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -1907,6 +1702,7 @@ import {
 
   Users,
   RefreshCw,
+  KeyRound,
 
 } from "lucide-react";
 
@@ -1923,41 +1719,20 @@ const money = (n) => "PKR " + Number(n || 0).toLocaleString("en-PK");
 export function AdminLayout() {
 
   const [open, setOpen] = useState(false);
-  const [isStaff, setIsStaff] = useState(false);
-  const [brand, setBrand] = useState({ name: "NorthernStays", logo: "" });
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  // Branding comes from the session already verified by HotelSessionProvider,
+  // so the layout no longer makes a second check_session request.
+  const { user } = useHotelSession();
+  const isStaff = user?.hotel_role === "hotel_user";
+  const brand = {
+    name: String(user?.company_name || user?.hotel_name || "NorthernStays"),
+    logo: String(user?.logo_url || "").trim(),
+  };
   const [logoFailed, setLogoFailed] = useState(false);
   const brandLogoUrl = brand.logo
     ? new URL(brand.logo, "https://coreops.pk").href
     : "";
-
-  useEffect(() => {
-    const controller = new AbortController();
-    async function loadSessionBrand() {
-      try {
-        const response = await fetch("https://coreops.pk/Hotel/api/login.php", {
-          method: "POST",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ action: "check_session" }),
-          cache: "no-store",
-          signal: controller.signal,
-        });
-        const data = await response.json();
-        if (!response.ok || !data.success || !data.authenticated) return;
-        const user = data.user || {};
-        setIsStaff(user.hotel_role === "hotel_user");
-        setLogoFailed(false);
-        setBrand({
-          name: String(user.company_name || user.hotel_name || "NorthernStays"),
-          logo: String(user.logo_url || "").trim(),
-        });
-      } catch (error) {
-        if (error.name !== "AbortError") console.error("Unable to load hotel branding:", error);
-      }
-    }
-    loadSessionBrand();
-    return () => controller.abort();
-  }, []);
+  useEffect(() => setLogoFailed(false), [brand.logo]);
   return (
 
     <div className="ns-admin">
@@ -1992,66 +1767,58 @@ export function AdminLayout() {
 
       <aside className={"ns-sidebar " + (open ? "ns-open" : "")}>
 
-        <div className="ns-brand" style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
-          {brandLogoUrl && !logoFailed ? (
-            <img
-              src={brandLogoUrl}
-              alt={`${brand.name} logo`}
-              onError={() => {
-                console.error("Hotel logo could not load:", brandLogoUrl);
-                setLogoFailed(true);
-              }}
-              style={{ width: 60, height: 60, objectFit: "contain", borderRadius: 10, flexShrink: 0, display: "block" }}
-            />
-          ) : (
-            <Hotel style={{ flexShrink: 0 }} />
-          )}
-          <span style={{ minWidth: 0, overflowWrap: "anywhere", lineHeight: 1.25 }}>
-            {brand.name}
-            <small style={{ display: "block", marginTop: 4 }}>{isStaff ? "HOTEL USER" : "HOTEL ADMIN"}</small>
+        <div className="ns-brand">
+          <span className="ns-brand-logo">
+            {brandLogoUrl && !logoFailed ? (
+              <img
+                src={brandLogoUrl}
+                alt={`${brand.name} logo`}
+                onError={() => {
+                  console.error("Hotel logo could not load:", brandLogoUrl);
+                  setLogoFailed(true);
+                }}
+              />
+            ) : (
+              <Hotel size={22} />
+            )}
+          </span>
+          <span className="ns-brand-text">
+            <strong title={brand.name}>{brand.name}</strong>
+            <small>{isStaff ? "HOTEL USER" : "HOTEL ADMIN"}</small>
           </span>
         </div>
 
         <nav>
-
+          <p className="ns-nav-label">Menu</p>
           {[
-
             ["/admin", "Dashboard", LayoutDashboard],
-
-            ["/admin/areas", "Area Management", MapPin],
-
-            ["/admin/cities", "City Management", Map],
-
             ["/admin/hotels", "Hotel Management", Hotel],
-
             ["/admin/rooms", "Room Management", BedDouble],
             ["/admin/addons", "Add-ons Management", PackagePlus],
-
             ["/admin/bookings", "Booking Management", CalendarCheck],
             ["/admin/hotel-users", "Hotel Users Management", Users],
-
           ].filter(([url]) => !isStaff || url === "/admin/bookings").map(([url, label, Icon]) => (
-
             <NavLink
-
               key={url}
-
               to={url}
-
               end={url === "/admin"}
-
-              onClick={() => setOpen(false)}
-
+              className={({ isActive }) => (isActive && !showChangePassword ? "active" : "")}
+              onClick={() => { setOpen(false); setShowChangePassword(false); }}
             >
-
               <Icon size={19} />
-
               {label}
-
             </NavLink>
-
           ))}
 
+          <div className="ns-nav-divider" />
+          <p className="ns-nav-label">Account</p>
+          <button
+            type="button"
+            className={`ns-nav-btn ${showChangePassword ? "is-active" : ""}`}
+            onClick={() => { setShowChangePassword(true); setOpen(false); }}
+          >
+            <KeyRound size={19} /> Change Password
+          </button>
         </nav>
 
         <Link className="ns-return" to="/">
@@ -2064,7 +1831,11 @@ export function AdminLayout() {
 
       <main className="ns-content">
 
-        <Outlet />
+        {showChangePassword ? (
+          <HotelChangePassword onBack={() => setShowChangePassword(false)} />
+        ) : (
+          <Outlet />
+        )}
 
       </main>
 
@@ -2075,6 +1846,108 @@ export function AdminLayout() {
 }
 
 
+
+
+// Shared password screen for Hotel Admin and Hotel User.
+// Requires an authenticated POST endpoint at /Hotel/api/change_password.php.
+function HotelChangePassword({ onBack }) {
+  const navigate = useNavigate();
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [showPasswords, setShowPasswords] = useState(false);
+
+  async function submit(event) {
+    event.preventDefault();
+    if (busy) return;
+    setError("");
+    setSuccess("");
+
+    // Read actual input values, including values inserted by browser autofill.
+    // This avoids comparing stale React state against what the user sees.
+    const form = event.currentTarget;
+    const currentPassword = form.elements.namedItem("current_password")?.value ?? "";
+    const newPassword = form.elements.namedItem("new_password")?.value ?? "";
+    const confirmPassword = form.elements.namedItem("confirm_password")?.value ?? "";
+
+    if (newPassword.length < 6) {
+      setError("New password must be at least 6 characters.");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setError("New passwords do not match. Please re-enter both fields.");
+      return;
+    }
+    if (currentPassword === newPassword) {
+      setError("Choose a different new password.");
+      return;
+    }
+
+    setBusy(true);
+    try {
+      const response = await apiFetch(`${API_BASE}/change_password.php`, {
+        method: "POST",
+        credentials: "include",
+        cache: "no-store",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "change_password",
+          current_password: currentPassword,
+          new_password: newPassword,
+          confirm_password: confirmPassword,
+        }),
+      });
+      const data = await response.json().catch(() => {
+        throw new Error("Password API is unavailable or returned invalid JSON.");
+      });
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Password could not be changed.");
+      }
+      form.reset();
+      setShowPasswords(false);
+      if (data.relogin_required) {
+        navigate("/admin/login", { replace: true, state: { passwordUpdated: true } });
+        return;
+      }
+      setSuccess(data.message || "Password changed successfully.");
+    } catch (err) {
+      setError(err.message || "Unable to change password.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <>
+      <div className="ns-heading">
+        <div><span>ACCOUNT SECURITY</span><h1>Change Password</h1><p>Update your hotel portal login password.</p></div>
+      </div>
+      <section className="ns-panel" style={{ maxWidth: 560 }}>
+        <form className="ns-form" onSubmit={submit} autoComplete="on" onChange={() => { setError(""); setSuccess(""); }}>
+          <label className="ns-full">Current Password
+            <input name="current_password" type={showPasswords ? "text" : "password"} autoComplete="current-password" required />
+          </label>
+          <label className="ns-full">New Password
+            <input name="new_password" type={showPasswords ? "text" : "password"} autoComplete="new-password" minLength={6} maxLength={128} required />
+          </label>
+          <label className="ns-full">Confirm New Password
+            <input name="confirm_password" type={showPasswords ? "text" : "password"} autoComplete="new-password" minLength={6} maxLength={128} required />
+          </label>
+          <div className="ns-full" style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 10 }}>
+            <input id="hotel-show-passwords" type="checkbox" checked={showPasswords} onChange={e => setShowPasswords(e.target.checked)} style={{ width: 18, height: 18, margin: 0, flex: "0 0 18px" }} />
+            <label htmlFor="hotel-show-passwords" style={{ display: "inline", width: "auto", margin: 0, cursor: "pointer" }}>Show passwords</label>
+          </div>
+          {error && <p className="ns-room-error ns-full" role="alert">{error}</p>}
+          {success && <p className="ns-note ns-full" role="status">{success}</p>}
+          <div className="ns-form-actions ns-full">
+            <button type="button" className="ns-cancel" onClick={onBack}>Back</button>
+            <button type="submit" className="ns-btn" disabled={busy}>{busy ? "Updating..." : "Change Password"}</button>
+          </div>
+        </form>
+      </section>
+    </>
+  );
+}
 
 export function AdminDashboard() {
   const navigate = useNavigate();
@@ -2090,12 +1963,12 @@ export function AdminDashboard() {
     setLoading(true); setError("");
     const params = new URLSearchParams({ days: period });
     if (hotelId) params.set("hotel_id", hotelId);
-    fetch(`https://coreops.pk/Hotel/api/dashboard.php?${params}`, {
+    apiFetch(`${API_BASE}/dashboard.php?${params}`, {
       credentials: "include", cache: "no-store", signal: controller.signal
     }).then(async (response) => {
       const result = await response.json().catch(() => ({}));
       if (response.status === 401 || response.status === 403) {
-        navigate("/admin/login", { replace: true }); return null;
+        throw new Error(result.message || "Dashboard access could not be verified. Please check your session.");
       }
       if (!response.ok || !result.success) throw new Error(result.message || "Dashboard could not be loaded.");
       return result;
@@ -2193,42 +2066,38 @@ export function AdminDashboard() {
         </div>)}
         {section("Upcoming arrivals", <div className="nsda-list">{(data.upcoming || []).map(b => <div key={b.id}><div><strong>{b.guest_name}</strong><small>{b.room_name} · {b.booking_reference}</small></div><span>{b.check_in}</span></div>)}{!data.upcoming?.length && <p className="nsda-empty">No upcoming confirmed arrivals</p>}</div>, "Next 7 days")}
       </div>
-      {section("Recent reservations", <div className="ns-table-wrap"><table className="ns-table"><thead><tr><th>Reference</th><th>Guest</th><th>Room</th><th>Check-in</th><th>Check-out</th><th>Amount</th><th>Status</th></tr></thead><tbody>{(data.recent_bookings || []).map(b => <tr key={b.id}><td>{b.booking_reference}</td><td>{b.guest_name}</td><td>{b.room_name || "—"}</td><td>{b.check_in}</td><td>{b.check_out}</td><td>{money(b.total_amount)}</td><td><span className="ns-status">{b.checked_in_at && !b.checked_out_at ? "Checked In" : b.status}</span></td></tr>)}</tbody></table>{!data.recent_bookings?.length && <p className="nsda-empty">No bookings yet</p>}</div>)}
+      {section("Recent reservations", <div className="ns-table-wrap"><table className="ns-table"><thead><tr><th>Reference</th><th>Guest</th><th>Room</th><th>Check-in</th><th>Check-out</th><th>Amount</th><th>Status</th></tr></thead><tbody>{(data.recent_bookings || []).map(b => <tr key={b.id}><td>{b.booking_reference}</td><td>{b.guest_name}</td><td>{b.room_name || "—"}</td><td>{b.check_in}</td><td>{b.check_out}</td><td>{money(b.total_amount)}</td><td><span className="ns-status" data-status={String(b.checked_in_at && !b.checked_out_at ? "Checked In" : b.status).trim().toLowerCase()}>{b.checked_in_at && !b.checked_out_at ? "Checked In" : b.status}</span></td></tr>)}</tbody></table>{!data.recent_bookings?.length && <p className="nsda-empty">No bookings yet</p>}</div>)}
       {section("Recent rooms", <div className="ns-table-wrap"><table className="ns-table"><thead><tr><th>Room</th><th>Type</th><th>Channel</th><th>Nightly price</th><th>Status</th></tr></thead><tbody>{(data.recent_rooms || []).map(r => <tr key={r.id}><td>{r.room_name}</td><td>{r.room_type || "—"}</td><td>{n(r.online_rooms) > 0 ? "Online" : "Offline"}</td><td>{r.discounted_price_per_night != null && n(r.discounted_price_per_night) < n(r.price_per_night) ? <><s>{money(r.price_per_night)}</s> <strong>{money(r.discounted_price_per_night)}</strong></> : money(r.price_per_night)}</td><td>{r.status}</td></tr>)}</tbody></table></div>)}
       <p className="ns-note">Revenue counts completed bookings only; it is not verified cash collection. Occupancy is an estimate based on booked room nights, not actual check-in nights. Selected period uses booking creation dates unless stated otherwise.</p>
     </>}
-    <style>{`
-      .nsda{color:#153c32}.nsda-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.nsda-controls select,.nsda-refresh{padding:11px 13px;border:1px solid #dbe5df;border-radius:10px;background:#fff;color:#153c32;font:inherit}.nsda-refresh{display:flex;gap:7px;align-items:center;cursor:pointer}
-      .nsda-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:20px 0}.nsda-kpi{background:#fff;border:1px solid #e1e8e2;border-radius:14px;padding:20px;min-width:0}.nsda-kpi-top{display:flex;align-items:center;justify-content:space-between;color:#637a71;gap:10px;font-size:13px}.nsda-kpi-top svg{color:#b78b4d}.nsda-kpi strong{display:block;margin:14px 0 8px;font-size:clamp(19px,2vw,28px);overflow-wrap:anywhere}.nsda-kpi small{color:#72867d;font-size:12px}
-      .nsda-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0}.nsda-card{background:#fff;border:1px solid #e1e8e2;border-radius:14px;padding:20px;min-width:0}.nsda-card-title{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:20px}.nsda-card-title h2{font-size:18px;margin:0}.nsda-card-title small{color:#71857b;font-size:12px}.nsda-bars{display:grid;gap:14px}.nsda-bar-row{display:grid;grid-template-columns:minmax(80px,1fr) minmax(60px,2fr) minmax(55px,auto);gap:12px;align-items:center;font-size:12px}.nsda-bar-row>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.nsda-bar-row>b{text-align:right;font-size:12px}.nsda-track{height:11px;background:#eef3ef;border-radius:10px;overflow:hidden}.nsda-track>div{height:100%;border-radius:10px}.nsda-line-wrap svg{width:100%;height:190px;display:block}.nsda-axis{display:flex;justify-content:space-between;color:#82958c;font-size:11px}.nsda-mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.nsda-mini-grid>div{background:#f5f8f5;padding:13px;border-radius:10px;display:flex;justify-content:space-between;gap:10px}.nsda-mini-grid span{color:#667d72;font-size:12px}.nsda-mini-grid b{font-size:17px}.nsda-list>div{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #edf1ed}.nsda-list small{display:block;color:#789085;margin-top:4px}.nsda-list>div>span{white-space:nowrap;font-size:12px}.nsda-empty{color:#788b82;font-size:13px;padding:14px 0}.nsda .ns-table-wrap{overflow-x:auto}
-      @media(max-width:1100px){.nsda-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:760px){.nsda-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.nsda-grid{grid-template-columns:1fr}.nsda-card{padding:15px}}@media(max-width:440px){.nsda-kpis{grid-template-columns:1fr}.nsda-bar-row{grid-template-columns:85px 1fr auto}}
-    `}</style>
   </div>;
 }
 
 // Hotel profile is resolved by the server from the authenticated session.
 
-const HOTEL_PROFILE_API = "https://coreops.pk/Hotel/api/hotel_profile.php";
+const HOTEL_PROFILE_API = `${API_BASE}/hotel_profile.php`;
 
 
 
 async function hotelProfileRequest(action, fields = {}, signal) {
+  const isMultipart = fields instanceof FormData;
+  if (isMultipart) fields.set("action", action);
 
-  const response = await fetch(HOTEL_PROFILE_API, {
+  const response = await apiFetch(HOTEL_PROFILE_API, {
 
     method: "POST",
 
     credentials: "include",
 
-    headers: { "Content-Type": "application/json" },
+    ...(isMultipart ? {} : { headers: { "Content-Type": "application/json" } }),
 
-    body: JSON.stringify({ action, ...fields }),
+    body: isMultipart ? fields : JSON.stringify({ action, ...fields }),
 
     signal,
 
   });
 
-  const result = await response.json();
+  const result = await response.json().catch(() => { throw new Error("Server returned an invalid JSON response."); });
 
   if (!response.ok || !result.success) {
 
@@ -2288,7 +2157,7 @@ export function AdminHotels() {
         </Link>
       </div>
       <section className="ns-panel">
-        <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap", marginBottom: 18 }}>
+        <div className="ns-hotel-toolbar">
           <input
             className="ns-search"
             aria-label="Search hotels"
@@ -2297,7 +2166,7 @@ export function AdminHotels() {
             onChange={(event) => setSearch(event.target.value)}
             style={{ flex: "1 1 280px", minWidth: 0 }}
           />
-          <button type="button" className="ns-cancel" onClick={() => loadHotels()} disabled={loading}>
+          <button type="button" className="ns-hotel-refresh" onClick={() => loadHotels()} disabled={loading}>
             <RefreshCw size={16} /> Refresh
           </button>
         </div>
@@ -2309,11 +2178,13 @@ export function AdminHotels() {
             <table className="ns-table">
               <thead>
                 <tr>
+                  <th>Picture</th>
                   <th>Hotel Code</th>
                   <th>Hotel Name</th>
                   <th>City</th>
                   <th>Area</th>
                   <th>Contact</th>
+                  <th>Contact Person</th>
                   <th>Status</th>
                   {canManage && <th>Actions</th>}
                 </tr>
@@ -2321,6 +2192,7 @@ export function AdminHotels() {
               <tbody>
                 {visibleHotels.map((hotel) => (
                   <tr key={hotel.id}>
+                    <td>{(hotel.picture_url || hotel.picture || hotel.image_url) ? <img className="ns-hotel-thumb" src={String(hotel.picture_url || hotel.picture || hotel.image_url).startsWith("http") ? (hotel.picture_url || hotel.picture || hotel.image_url) : new URL(hotel.picture_url || hotel.picture || hotel.image_url, "https://coreops.pk").href} alt={hotel.hotel_name || "Hotel"} /> : <span className="ns-hotel-no-photo"><ImagePlus size={19} /></span>}</td>
                     <td>{hotel.hotel_code || "—"}</td>
                     <td>
                       <strong>{hotel.hotel_name}</strong>
@@ -2332,7 +2204,8 @@ export function AdminHotels() {
                       {hotel.contact_number || "—"}
                       <small>{hotel.email || "—"}</small>
                     </td>
-                    <td><span className="ns-status">{hotel.status === "YES" ? "Active" : hotel.status === "NO" ? "Inactive" : hotel.status}</span></td>
+                    <td>{hotel.contact_person_name || "—"}</td>
+                    <td><span className="ns-status" data-status={String(hotel.status === "YES" ? "Active" : hotel.status === "NO" ? "Inactive" : hotel.status).trim().toLowerCase()}>{hotel.status === "YES" ? "Active" : hotel.status === "NO" ? "Inactive" : hotel.status}</span></td>
                     {canManage && (
                       <td>
                         <Link className="ns-cancel" to={`/admin/hotels/${hotel.id}/edit`}>
@@ -2360,6 +2233,9 @@ export function AdminHotels() {
 export function AdminHotelForm() {
 
   const navigate = useNavigate();
+  const [picture, setPicture] = useState(null);
+  const [picturePreview, setPicturePreview] = useState("");
+  const [existingPicture, setExistingPicture] = useState("");
 
   const [form, setForm] = useState({
 
@@ -2376,6 +2252,12 @@ export function AdminHotelForm() {
     email: "",
 
     description: "",
+
+    contact_person_name: "",
+
+    latitude: "",
+
+    longitude: "",
 
     status: "YES",
 
@@ -2401,7 +2283,8 @@ export function AdminHotelForm() {
 
       .then((result) => {
 
-        const h = result.hotel;
+        const h = result.hotel || {};
+        setExistingPicture(h.picture_url || h.picture || h.image_url || "");
 
         setHotelCode(h.hotel_code || "");
 
@@ -2420,6 +2303,12 @@ export function AdminHotelForm() {
           email: h.email || "",
 
           description: h.description || "",
+
+          contact_person_name: h.contact_person_name || "",
+
+          latitude: h.latitude ?? "",
+
+          longitude: h.longitude ?? "",
 
           status: h.status || "YES",
 
@@ -2446,6 +2335,13 @@ export function AdminHotelForm() {
     return () => controller.abort();
 
   }, []);
+
+  useEffect(() => {
+    if (!picture) { setPicturePreview(""); return; }
+    const url = URL.createObjectURL(picture);
+    setPicturePreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [picture]);
 
   const visibleAreas = areas.filter((a) => String(a.city_id) === form.city_id);
 
@@ -2479,7 +2375,12 @@ export function AdminHotelForm() {
 
     try {
 
-      await hotelProfileRequest("update", form);
+      if (form.latitude !== "" && (!Number.isFinite(Number(form.latitude)) || Number(form.latitude) < -90 || Number(form.latitude) > 90)) throw new Error("Latitude must be between -90 and 90.");
+      if (form.longitude !== "" && (!Number.isFinite(Number(form.longitude)) || Number(form.longitude) < -180 || Number(form.longitude) > 180)) throw new Error("Longitude must be between -180 and 180.");
+      const payload = new FormData();
+      Object.entries(form).forEach(([key, value]) => payload.append(key, String(value ?? "")));
+      if (picture) payload.append("picture", picture);
+      await hotelProfileRequest("update", payload);
 
       navigate("/admin/hotels", { replace: true });
 
@@ -2656,6 +2557,33 @@ export function AdminHotelForm() {
             </label>
 
             <label>
+              Contact Person Name
+              <input name="contact_person_name" value={form.contact_person_name} onChange={update} maxLength={150} placeholder="Hotel contact person" />
+            </label>
+
+            <label>
+              Latitude
+              <input name="latitude" type="number" step="any" min="-90" max="90" value={form.latitude} onChange={update} placeholder="e.g. 36.3167" />
+            </label>
+
+            <label>
+              Longitude
+              <input name="longitude" type="number" step="any" min="-180" max="180" value={form.longitude} onChange={update} placeholder="e.g. 74.6500" />
+            </label>
+
+            <label className="ns-full">
+              Hotel Picture
+              <input type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => {
+                const file = event.target.files?.[0] || null;
+                if (file && !["image/jpeg", "image/png", "image/webp"].includes(file.type)) { setError("Only JPG, PNG or WebP images are allowed."); event.target.value = ""; return; }
+                if (file && file.size > 5 * 1024 * 1024) { setError("Image must be 5 MB or smaller."); event.target.value = ""; return; }
+                setError(""); setPicture(file);
+              }} />
+              {(picturePreview || existingPicture) && <img className="ns-hotel-preview" src={picturePreview || (existingPicture.startsWith("http") ? existingPicture : new URL(existingPicture, "https://coreops.pk").href)} alt="Hotel preview" />}
+              <small>JPG, PNG or WebP, maximum 5 MB. Leave empty to keep the existing picture.</small>
+            </label>
+
+            <label>
 
               Status
 
@@ -2732,13 +2660,13 @@ export function AdminHotelForm() {
 // Room Management is maintained separately in AdminRooms.jsx.
 export { AdminRooms } from "./AdminRooms";
 
-const BOOKINGS_API = "https://coreops.pk/Hotel/api/bookings.php"
+const BOOKINGS_API = `${API_BASE}/bookings.php`
 
 
 
 async function bookingsRequest(action, fields = {}, signal) {
 
-  const response = await fetch(BOOKINGS_API, {
+  const response = await apiFetch(BOOKINGS_API, {
 
     method: action === "list" ? "GET" : "POST",
 
@@ -2758,9 +2686,7 @@ async function bookingsRequest(action, fields = {}, signal) {
 
   let result;
 
-  try { result = await response.json(); }
-
-  catch { throw new Error("Server returned an invalid response."); }
+  result = await readJson(response);
 
   if (response.status === 401 || response.status === 403) {
 
@@ -2785,6 +2711,8 @@ export function AdminBookings() {
   const [tab, setTab] = useState("Online");
   const [bookings, setBookings] = useState([]);
   const [offlineRooms, setOfflineRooms] = useState([]);
+  const [offlineAddons, setOfflineAddons] = useState([]);
+  const [addonQuantities, setAddonQuantities] = useState({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [busyId, setBusyId] = useState(null);
@@ -2799,27 +2727,80 @@ export function AdminBookings() {
   const [notice, setNotice] = useState("");
   const [form, setForm] = useState({ room_id: "", guest_name: "", guest_phone: "", guest_email: "", guests: "1", check_in: "", check_out: "" });
   const channel = (b) => ["Offline", "Walk-in", "Phone"].includes(b.booking_source) ? "Offline" : "Online";
-  const displayStatus = (b) => b.checked_in_at && !b.checked_out_at ? "Checked In" : b.status;
+  const displayStatus = (b) => {
+    if (b.checked_out_at || ["checked out", "checked_out", "checked-out"].includes(String(b.status || "").toLowerCase())) return "Checked Out";
+    if (b.checked_in_at && !b.checked_out_at) return "Checked In";
+    return b.status;
+  };
   const apiCall = async (action, fields = {}) => {
-    const res = await fetch(BOOKINGS_API, {
+    const res = await apiFetch(BOOKINGS_API, {
       method: action === "list" || action === "rooms" ? "GET" : "POST",
       credentials: "include",
       ...(action === "list" || action === "rooms" ? {} : { headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action, ...fields }) }),
     });
     const json = await res.json().catch(() => ({}));
     if (!res.ok || !json.success) {
-      if (res.status === 401) navigate("/admin/login", { replace: true });
-      throw new Error(json.message || "Request failed");
+      throw new Error(json.message || `Booking request failed (HTTP ${res.status})`);
     }
     return json;
   };
+
+  const roomsRequest = async (action, payload = {}, signal) => {
+    const response = await apiFetch(
+      `${API_BASE}/rooms.php`,
+      {
+        method: "POST",
+        credentials: "include",
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action,
+          ...payload,
+        }),
+        signal,
+      }
+    );
+
+    const data = await response.json().catch(() => ({}));
+
+    if (response.status === 401) {
+      throw new Error(data.message || "Rooms API authentication failed (HTTP 401). Please verify your login session.");
+    }
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Could not load rooms");
+    }
+
+    return data;
+  };
   const loadOfflineRooms = async (signal) => {
-    // Use the same authenticated room inventory API as Room Management.
-    const result = await roomsRequest("list", {}, signal);
-    const allRooms = Array.isArray(result.rooms) ? result.rooms : [];
-    return allRooms.filter((room) =>
-      String(room.status || "").toUpperCase() === "YES" &&
-      Number(room.offline_rooms) > 0
+    // rooms.php returns no rooms when the account can access multiple hotels
+    // and hotel_id is omitted. First fetch authorized hotel options, then
+    // request inventory for each hotel separately.
+    const initial = await roomsRequest("list", {}, signal);
+    const hotels = Array.isArray(initial.hotels) ? initial.hotels : [];
+    const responses = Array.isArray(initial.rooms) && initial.rooms.length > 0
+      ? [initial.rooms]
+      : hotels.length > 0
+        ? await Promise.all(hotels.map(async (hotel) => {
+          const data = await roomsRequest("list", { hotel_id: Number(hotel.id) }, signal);
+          return (Array.isArray(data.rooms) ? data.rooms : []).map((room) => ({
+            ...room,
+            hotel_id: Number(room.hotel_id || hotel.id),
+            hotel_name: hotel.hotel_name || "",
+            area_name: room.area_name || hotel.area_name || "",
+            city_name: room.city_name || hotel.city_name || "",
+          }));
+        }))
+        : [Array.isArray(initial.rooms) ? initial.rooms : []];
+    // Only active rooms allocated to the Offline channel. Online rooms are
+    // sold on the customer website and must not appear in the staff form.
+    // bookings.php enforces the same rule when the booking is saved.
+    return responses.flat().filter((room) =>
+      String(room.status || "").trim().toUpperCase() === "YES" &&
+      Number(room.offline_rooms || 0) > 0
     );
   };
   const refresh = async () => {
@@ -2850,32 +2831,112 @@ export function AdminBookings() {
         errors.push(`Rooms: ${roomResult.reason?.message || "Could not load rooms"}`);
       }
       if (errors.length) setError(errors.join(" | "));
-      if (errors.some((message) => /session expired/i.test(message))) {
-        navigate("/admin/login", { replace: true });
-      }
+      // Show the API error instead of forcing logout from a secondary rooms request.
     }).finally(() => { if (active) setLoading(false); });
     return () => { active = false; controller.abort(); };
   }, [navigate]);
   const channelBookings = bookings.filter(b => channel(b) === tab);
-  const statusCounts = {
-    All: channelBookings.length,
-    Pending: channelBookings.filter(b => b.status === "Pending").length,
-    Confirmed: channelBookings.filter(b => b.status === "Confirmed").length,
-    Cancelled: channelBookings.filter(b => b.status === "Cancelled").length,
-  };
+  const bookingStatuses = ["All", "Pending", "Confirmed", "Cancelled", "Checked In", "Checked Out"];
+  const statusCounts = Object.fromEntries(bookingStatuses.map(status => [
+    status,
+    status === "All" ? channelBookings.length : channelBookings.filter(b => displayStatus(b) === status).length,
+  ]));
   const filtered = channelBookings.filter(b =>
-    (statusFilter === "All" || b.status === statusFilter) &&
+    (statusFilter === "All" || displayStatus(b) === statusFilter) &&
     `${b.booking_reference} ${b.guest_name} ${b.guest_phone || ""} ${b.room_code || ""} ${b.room_name || ""}`.toLowerCase().includes(search.toLowerCase()));
   const selectedRoom = offlineRooms.find(r => String(r.id) === String(form.room_id));
+  // Check date availability as soon as room, dates and guests are chosen,
+  // using the same checkRoomAvailability.php endpoint as the website.
+  // bookings.php re-checks under a row lock when the booking is saved.
+  const [availability, setAvailability] = useState({ status: "idle", message: "" });
+  useEffect(() => {
+    const guests = Number(form.guests);
+    if (!selectedRoom || !form.check_in || !form.check_out || form.check_out <= form.check_in || !(guests >= 1)) {
+      setAvailability({ status: "idle", message: "" });
+      return;
+    }
+    const controller = new AbortController();
+    setAvailability({ status: "checking", message: "Checking availability..." });
+    const timer = setTimeout(() => {
+      fetch(`${API_BASE}/checkRoomAvailability.php`, {
+        method: "POST",
+        credentials: "omit",
+        cache: "no-store",
+        headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
+        body: JSON.stringify({
+          hotel_id: Number(selectedRoom.hotel_id),
+          room_id: Number(selectedRoom.id),
+          room_count: 1,
+          guests,
+          check_in: form.check_in,
+          check_out: form.check_out,
+        }),
+      }).then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (controller.signal.aborted) return;
+        if (res.ok && data.success) {
+          setAvailability(data.available
+            ? { status: "available", message: data.message || "Room available for selected dates" }
+            : { status: "unavailable", message: data.message || "Room is not available for these dates" });
+        } else {
+          setAvailability({ status: "error", message: data.message || `Availability could not be checked (HTTP ${res.status}).` });
+        }
+      }).catch((err) => {
+        if (err.name !== "AbortError") setAvailability({ status: "error", message: "Availability could not be checked." });
+      });
+    }, 300);
+    return () => { clearTimeout(timer); controller.abort(); };
+  }, [selectedRoom?.id, selectedRoom?.hotel_id, form.check_in, form.check_out, form.guests]);
+  const todayLocal = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  useEffect(() => {
+    setOfflineAddons([]);
+    setAddonQuantities({});
+    if (!form.room_id) return;
+    const room = offlineRooms.find(r => String(r.id) === String(form.room_id));
+    if (!room?.hotel_id) return;
+    const controller = new AbortController();
+    apiFetch(`${API_BASE}/addons.php?hotel_id=${encodeURIComponent(room.hotel_id)}`, {
+      credentials: "include", cache: "no-store", signal: controller.signal,
+    }).then(async res => {
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.success) throw new Error(data.message || "Could not load add-ons");
+      return data;
+    }).then(data => {
+      if (!controller.signal.aborted) setOfflineAddons((Array.isArray(data.addons) ? data.addons : []).filter(a => String(a.status).toUpperCase() === "YES"));
+    }).catch(err => { if (err.name !== "AbortError") setError(`Add-ons: ${err.message}`); });
+    return () => controller.abort();
+  }, [form.room_id, offlineRooms]);
+  const addonNights = form.check_in && form.check_out && form.check_out > form.check_in
+    ? Math.round((new Date(`${form.check_out}T00:00:00`) - new Date(`${form.check_in}T00:00:00`)) / 86400000) : 0;
+  const addonItems = offlineAddons.filter(a => Number(addonQuantities[a.id] || 0) > 0).map(a => ({
+    addon_id: Number(a.id), quantity: Number(addonQuantities[a.id]),
+    line_total: Number(a.price || 0) * Number(addonQuantities[a.id]) *
+      (a.charge_type === "per_guest_per_night" ? Number(form.guests || 0) * addonNights : a.charge_type === "per_night" ? addonNights : 1),
+  }));
+  const addonTotal = addonItems.reduce((sum, a) => sum + a.line_total, 0);
+
   const submit = async e => {
     e.preventDefault(); setSaving(true); setError(""); setNotice("");
     try {
-      if (!selectedRoom) throw new Error("Select an active offline room");
+      if (!selectedRoom) throw new Error("Select an active room");
       if (!form.check_in || !form.check_out || form.check_out <= form.check_in) throw new Error("Check-out must be after check-in.");
       if (Number(form.guests) > Number(selectedRoom.capacity)) throw new Error("Guests exceed room capacity.");
-      const result = await apiCall("create_manual", { ...form, hotel_id: Number(selectedRoom.hotel_id), room_id: Number(form.room_id), guests: Number(form.guests), room_count: 1 });
-      await refresh(); setShowForm(false); setNotice(`Offline booking ${result.booking_reference} created.`);
+      if (availability.status === "unavailable") throw new Error(availability.message);
+      if (availability.status === "checking") throw new Error("Please wait until availability has been checked.");
+      const result = await apiCall("create_manual", { ...form, hotel_id: Number(selectedRoom.hotel_id), room_id: Number(form.room_id), guests: Number(form.guests), room_count: 1, addons: addonItems.map(({ addon_id, quantity }) => ({ addon_id, quantity })) });
+      setShowForm(false);
+      const emailNote = !form.guest_email.trim() ? ""
+        : result.email_sent ? ` Confirmation email sent to ${form.guest_email.trim()}.`
+        : ` ${result.email_warning || "The confirmation email could not be sent."}`;
+      setNotice(`Offline booking ${result.booking_reference} created successfully.${emailNote}`);
       setForm({ room_id: "", guest_name: "", guest_phone: "", guest_email: "", guests: "1", check_in: "", check_out: "" });
+      setAddonQuantities({});
+      try {
+        await refresh();
+      } catch (refreshError) {
+        setNotice(`Offline booking ${result.booking_reference} was saved, but the list could not refresh. Please reload to see it.`);
+      }
     } catch (e) { setError(e.message); } finally { setSaving(false); }
   };
   const openConfirmation = (booking) => {
@@ -2913,27 +2974,204 @@ export function AdminBookings() {
     try { await apiCall(action, { id: Number(b.id), ...(status ? { status } : {}) }); await refresh(); setNotice(`Booking ${b.booking_reference} updated.`); }
     catch (e) { setError(e.message); } finally { setBusyId(null); }
   };
-  return <>
+  return <div className="ns-booking-page">
     <div className="ns-heading"><div><span>RESERVATIONS</span><h1>Booking Management</h1><p>Online website bookings and Offline staff bookings.</p></div>
       {tab === "Offline" && <button className="ns-btn" type="button" onClick={() => setShowForm(v => !v)}><Plus size={17} /> {showForm ? "Close Form" : "Add Offline Booking"}</button>}
     </div>
-    <section className="ns-panel">
+    <section className="ns-panel ns-booking-panel">
       <div style={{ display: "flex", gap: 12, marginBottom: 18, flexWrap: "wrap" }}>
         {["Online", "Offline"].map(t => <button key={t} type="button" onClick={() => { setTab(t); setStatusFilter("All"); setShowForm(false); setError(""); }} className={tab === t ? "ns-btn" : "ns-cancel"}>{t} Bookings ({bookings.filter(b => channel(b) === t).length})</button>)}
       </div>
-      {tab === "Offline" && showForm && <form onSubmit={submit} className="ns-room-form" style={{ marginBottom: 24, padding: 18, border: "1px solid #ddd", borderRadius: 12 }}>
+      {tab === "Offline" && showForm && <form onSubmit={submit} className="ns-room-form ns-offline-booking-form" style={{ marginBottom: 12, padding: 18, border: "1px solid #ddd", borderRadius: 12 }}>
         <h3>Add Offline Booking</h3>
-        <label>Offline Room<select required value={form.room_id} onChange={e => setForm(p => ({ ...p, room_id: e.target.value }))}><option value="">{loading ? "Loading rooms..." : "Select Room"}</option>{offlineRooms.map(r => <option key={r.id} value={r.id}>{r.hotel_name ? `${r.hotel_name} — ` : ""}{r.room_code || `Room ${r.id}`} — {r.room_type || r.room_name} — Room {r.original_room_number || r.room_number || "—"} — {money(r.price_per_night)}</option>)}</select>{!loading && offlineRooms.length === 0 && <small style={{ display: "block", marginTop: 8 }}>No active Offline rooms found. In Room Management, set a room's availability to Offline and save it.</small>}</label>
+        <label>Offline Room<select required value={form.room_id} onChange={e => setForm(p => ({ ...p, room_id: e.target.value }))}><option value="">{loading ? "Loading rooms..." : "Select Room"}</option>{offlineRooms.map(r => <option key={r.id} value={r.id}>{r.hotel_name ? `${r.hotel_name} — ` : ""}{[r.area_name, r.city_name].filter(Boolean).join(", ")}{r.area_name || r.city_name ? " — " : ""}{r.room_code || `Room ${r.id}`} — {r.room_type || r.room_name} — Room {r.original_room_number || r.room_number || "—"} — {money(r.price_per_night)}</option>)}</select>{!loading && offlineRooms.length === 0 && <small style={{ display: "block", marginTop: 8 }}>No active offline rooms found for your assigned hotels. Online rooms are booked through the website.</small>}</label>
         <div className="ns-room-fields"><label>Guest Name<input required maxLength={150} value={form.guest_name} onChange={e => setForm(p => ({ ...p, guest_name: e.target.value }))} /></label>
           <label>Phone<input required maxLength={30} value={form.guest_phone} onChange={e => setForm(p => ({ ...p, guest_phone: e.target.value }))} /></label></div>
         <div className="ns-room-fields"><label>Email (optional)<input type="email" maxLength={150} value={form.guest_email} onChange={e => setForm(p => ({ ...p, guest_email: e.target.value }))} /></label>
           <label>Guests<input required type="number" min="1" max={selectedRoom?.capacity || 1000} value={form.guests} onChange={e => setForm(p => ({ ...p, guests: e.target.value }))} /></label></div>
-        <div className="ns-room-fields"><label>Check-In<input required type="date" value={form.check_in} onChange={e => setForm(p => ({ ...p, check_in: e.target.value }))} /></label>
-          <label>Check-Out<input required type="date" min={form.check_in || undefined} value={form.check_out} onChange={e => setForm(p => ({ ...p, check_out: e.target.value }))} /></label></div>
-        <div className="ns-room-actions"><button className="ns-btn" type="submit" disabled={saving}>{saving ? "Saving..." : "Save Offline Booking"}</button></div>
+        <div className="ns-room-fields"><label>Check-In<input required type="date" min={todayLocal} value={form.check_in} onChange={e => setForm(p => ({ ...p, check_in: e.target.value }))} /></label>
+          <label>Check-Out<input required type="date" min={form.check_in || todayLocal} value={form.check_out} onChange={e => setForm(p => ({ ...p, check_out: e.target.value }))} /></label></div>
+        {availability.status !== "idle" && <p role="status" style={{ margin: "4px 0 10px", fontWeight: 600, color: availability.status === "available" ? "#146444" : availability.status === "unavailable" ? "#b42b2b" : "#7a5c12" }}>
+          {availability.status === "available" ? "✓ " : availability.status === "unavailable" ? "✕ " : ""}{availability.message}{availability.status === "error" ? " It will be verified again when you save." : ""}
+        </p>}
+        <div className="ns-full" style={{ marginTop: 12, marginBottom: 14 }}>
+          <h4 style={{ margin: "0 0 10px" }}>Optional Add-ons</h4>
+          {!form.room_id ? <small>Select a room to see its add-ons.</small> : !offlineAddons.length ? <small>No active add-ons for this branch.</small> : (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 10 }}>
+              {offlineAddons.map(a => <label key={a.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: 10, border: "1px solid #dbe5df", borderRadius: 9 }}>
+                <span><strong>{a.addon_name}</strong><small style={{ display: "block" }}>{money(a.price)} · {String(a.charge_type || "per_stay").replaceAll("_", " ")}</small></span>
+                <input aria-label={`${a.addon_name} quantity`} type="number" min="0" max="99" step="1" value={addonQuantities[a.id] || 0} onChange={e => setAddonQuantities(p => ({ ...p, [a.id]: Math.max(0, Math.min(99, Math.floor(Number(e.target.value) || 0))) }))} style={{ width: 68, flexShrink: 0 }} />
+              </label>)}
+            </div>
+          )}
+          {!!addonItems.length && <p style={{ margin: "10px 0 0", fontWeight: 600 }}>Add-ons subtotal: {money(addonTotal)}{!addonNights && addonItems.some(a => offlineAddons.find(x => Number(x.id) === a.addon_id)?.charge_type !== "per_stay") ? " (select dates for nightly charges)" : ""}</p>}
+        </div>
+        <div className="ns-room-actions"><button className="ns-btn" type="submit" disabled={saving || availability.status === "unavailable" || availability.status === "checking"}>{saving ? "Saving..." : "Save Offline Booking"}</button></div>
       </form>}
+      <style>{`
+        /* Scroll ONLY the expanded Offline Booking form. */
+        .ns-booking-page .ns-booking-panel > form.ns-offline-booking-form {
+          display: block !important;
+          flex: 0 1 auto !important;
+          min-height: 0 !important;
+          max-height: min(64dvh, 620px) !important;
+          overflow-y: auto !important;
+          overflow-x: hidden !important;
+          overscroll-behavior: contain;
+          scrollbar-width: thin;
+          scrollbar-color: #9eb7aa #f3f7f4;
+        }
+        .ns-booking-page .ns-offline-booking-form::-webkit-scrollbar { width: 7px; }
+        .ns-booking-page .ns-offline-booking-form::-webkit-scrollbar-thumb { background: #9eb7aa; border-radius: 8px; }
+        .ns-booking-page .ns-offline-booking-form::-webkit-scrollbar-track { background: #f3f7f4; }
+        @media (max-height: 750px) {
+          .ns-booking-page .ns-booking-panel > form.ns-offline-booking-form {
+            max-height: 48dvh !important;
+          }
+        }
+        /* The count overlays the right edge of the search field, never outside the panel. */
+        .ns-booking-page .ns-booking-toolbar {
+          display: block !important;
+          position: relative !important;
+          width: 100% !important;
+          min-width: 0 !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .ns-booking-page .ns-booking-toolbar > input.ns-search {
+          display: block !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          min-width: 0 !important;
+          box-sizing: border-box !important;
+          padding-right: 150px !important;
+        }
+        .ns-booking-page .ns-booking-toolbar > span.ns-booking-result-count {
+          position: absolute !important;
+          right: 14px !important;
+          top: 50% !important;
+          transform: translateY(-50%) !important;
+          white-space: nowrap !important;
+          width: auto !important;
+          min-width: 0 !important;
+          margin: 0 !important;
+        }
+        /* Compact booking page: remove excessive vertical gaps */
+        .ns-booking-page > .ns-heading { margin: 0 0 10px !important; padding: 0 !important; gap: 4px !important; }
+        .ns-booking-page > .ns-heading h1 { margin: 3px 0 4px !important; line-height: 1.15; }
+        .ns-booking-page > .ns-heading p { margin: 0 !important; }
+        .ns-booking-page .ns-booking-panel { padding: 14px 18px !important; gap: 0 !important; }
+        .ns-booking-page .ns-booking-panel > div:first-child { margin-bottom: 10px !important; }
+        .ns-booking-page .ns-booking-status-filters { margin-bottom: 10px !important; gap: 8px !important; }
+        .ns-booking-page .ns-booking-filter { padding: 9px 10px !important; min-height: 54px !important; }
+        .ns-booking-page .ns-booking-toolbar { margin: 0 0 9px !important; gap: 10px !important; }
+        .ns-booking-page .ns-booking-toolbar .ns-search { padding: 9px 12px !important; min-height: 38px !important; }
+        .ns-booking-page .ns-room-error, .ns-booking-page .ns-note { margin: 3px 0 8px !important; }
+        /* Booking Management only: fit screen and scroll booking rows */
+        .ns-content:has(.ns-booking-page) {
+          height: 100dvh;
+          min-height: 0;
+          overflow: hidden !important;
+          box-sizing: border-box;
+        }
+        .ns-booking-page {
+          height: 100%;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+        }
+        .ns-booking-page > .ns-heading { flex: 0 0 auto; }
+        .ns-booking-page .ns-booking-panel {
+          flex: 1 1 auto;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+        }
+        .ns-booking-page .ns-booking-table-scroll {
+          flex: 0 1 auto;
+          min-height: 0;
+          max-height: 464px; /* header + approximately 6 compact rows */
+          overflow-y: auto !important;
+          overflow-x: auto !important;
+          overscroll-behavior: contain;
+          scrollbar-width: thin;
+          scrollbar-color: #a8bbb0 #f1f5f2;
+        }
+        .ns-booking-page .ns-booking-table-scroll .ns-booking-table {
+          border-collapse: separate;
+          border-spacing: 0;
+          width: 100%;
+        }
+        .ns-booking-page .ns-booking-table-scroll .ns-booking-table thead th {
+          position: sticky;
+          top: 0;
+          z-index: 2;
+          background: #f4f8f5;
+          padding: 10px 12px !important;
+          height: 44px;
+          box-sizing: border-box;
+        }
+        .ns-booking-page .ns-booking-table-scroll .ns-booking-table tbody td {
+          padding: 9px 12px !important;
+          height: 70px;
+          box-sizing: border-box;
+          vertical-align: middle;
+          font-size: 12px;
+          line-height: 1.3;
+        }
+        .ns-booking-page .ns-booking-table-scroll .ns-booking-table tbody td small {
+          font-size: 10px;
+          line-height: 1.25;
+          margin-top: 3px;
+        }
+        .ns-booking-page .ns-booking-table-scroll .ns-booking-table tbody td strong {
+          font-size: 11px;
+          line-height: 1.3;
+        }
+        .ns-booking-page .ns-booking-table-scroll .ns-booking-action {
+          padding: 6px 9px;
+          min-height: 30px;
+          font-size: 11px;
+        }
+        @media (max-height: 750px) {
+          .ns-booking-page .ns-booking-status-filters { margin-bottom: 12px; }
+          .ns-booking-page .ns-booking-status-filters .ns-booking-filter { padding: 9px 8px !important; }
+        }
+
+        .ns-booking-status-filters {
+          display: grid !important;
+          grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+          gap: 10px !important;
+          width: 100%;
+          margin-bottom: 22px;
+        }
+        .ns-booking-status-filters .ns-booking-filter {
+          box-sizing: border-box;
+          min-width: 0 !important;
+          width: 100% !important;
+          padding: 13px 10px !important;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 6px;
+          text-align: left;
+        }
+        .ns-booking-status-filters .ns-booking-filter-label {
+          font-size: clamp(10px, .9vw, 13px);
+          white-space: nowrap;
+        }
+        .ns-booking-status-filters .ns-booking-filter-count {
+          flex-shrink: 0;
+          font-size: 13px;
+        }
+        @media (max-width: 900px) {
+          .ns-booking-status-filters { overflow-x: auto; grid-template-columns: repeat(6, minmax(125px, 1fr)) !important; padding-bottom: 6px; }
+        }
+      `}</style>
       <div className="ns-booking-status-filters" role="group" aria-label="Filter bookings by status">
-        {["All", "Pending", "Confirmed", "Cancelled"].map(status => (
+        {bookingStatuses.map(status => (
           <button key={status} type="button" className={`ns-booking-filter ${statusFilter === status ? "is-active" : ""}`}
             aria-pressed={statusFilter === status} onClick={() => setStatusFilter(status)}>
             <span className="ns-booking-filter-label">{status}</span>
@@ -2941,9 +3179,51 @@ export function AdminBookings() {
           </button>
         ))}
       </div>
-      <div className="ns-booking-toolbar">
-        <input className="ns-search" aria-label="Search bookings" placeholder="Search booking reference, guest or room..." value={search} onChange={e => setSearch(e.target.value)} />
-        <span className="ns-booking-result-count">Showing {filtered.length} booking{filtered.length === 1 ? "" : "s"}</span>
+      <div className="ns-booking-toolbar" style={{
+        position: "relative",
+        display: "block",
+        width: "100%",
+        minWidth: 0,
+        maxWidth: "100%",
+        boxSizing: "border-box",
+        paddingRight: 0,
+        marginBottom: 10
+      }}>
+        <input
+          className="ns-search"
+          aria-label="Search bookings"
+          placeholder="Search booking reference, guest or room..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{
+            display: "block",
+            width: "100%",
+            maxWidth: "100%",
+            minWidth: 0,
+            paddingRight: 150,
+            boxSizing: "border-box"
+          }}
+        />
+        <span className="ns-booking-result-count" style={{
+          position: "absolute",
+          right: 14,
+          top: "50%",
+          transform: "translateY(-50%)",
+          display: "block",
+          width: "auto",
+          maxWidth: "none",
+          minWidth: 0,
+          whiteSpace: "nowrap",
+          margin: 0,
+          padding: 0,
+          fontSize: 12,
+          lineHeight: "18px",
+          pointerEvents: "none",
+          zIndex: 1,
+          background: "#f7faf8"
+        }}>
+          Showing {filtered.length} booking{filtered.length === 1 ? "" : "s"}
+        </span>
       </div>
       {error && <p className="ns-room-error" role="alert">{error}</p>}{notice && <p className="ns-note" role="status">{notice}</p>}
       {loading ? <p>Loading bookings...</p> : <div className="ns-table-wrap ns-booking-table-scroll"><table className="ns-table ns-booking-table"><thead><tr><th>Booking / Guest</th><th>Room</th><th>Dates</th><th>Selected Add-ons</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead><tbody>
@@ -2999,7 +3279,7 @@ export function AdminBookings() {
         </form>
       </section>
     </div>, document.body)}
-  </>;
+  </div>;
 }
 
 // Area Management is maintained in its own component.

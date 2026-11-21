@@ -1,121 +1,93 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  Mountain,
-  MapPin,
-  Mail,
-  ArrowUpRight,
-  ArrowUp,
-  Heart,
-  LockKeyhole,
-} from "lucide-react";
+import { Mountain, ArrowRight, ArrowUp, Building2, MapPin } from "lucide-react";
+import { API_BASE } from "../api/client";
 import "../styles/footer.css";
 
-const cities = ["Hunza", "Skardu", "Naran", "Swat", "Murree", "Gilgit"];
+const MAX_FOOTER_CITIES = 6;
+
+// Footer destinations come from the live city list so links never point at empty cities.
+function useFooterCities() {
+  const [cities, setCities] = useState([]);
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${API_BASE}/getCities.php`, { signal: controller.signal, cache: "no-store" })
+      .then((response) => response.json())
+      .then((data) => {
+        if (controller.signal.aborted || !data.success || !Array.isArray(data.cities)) return;
+        const names = data.cities
+          .filter((city) => city.city_name && (city.status == null || city.status === "YES"))
+          .map((city) => city.city_name.trim());
+        setCities([...new Set(names)].slice(0, MAX_FOOTER_CITIES));
+      })
+      .catch(() => { });
+    return () => controller.abort();
+  }, []);
+  return cities;
+}
 
 export default function Footer() {
-  const location = useLocation();
-
+  const cities = useFooterCities();
+  const { pathname } = useLocation();
   const goTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-  const goToDestinations = () => {
-    if (location.pathname === "/") {
-      requestAnimationFrame(() =>
-        document
-          .getElementById("destinations")
-          ?.scrollIntoView({ behavior: "smooth" }),
-      );
-    }
-  };
-
   return (
-    <footer className="ns-footer">
-      <div className="container ns-footer-main">
-        <div className="ns-footer-brand">
-          <Link to="/" className="ns-footer-logo" onClick={goTop}>
-            <Mountain size={29} strokeWidth={1.7} />
-            <span>
-              Northern<strong>Stays</strong>
-            </span>
-          </Link>
-          <p>
-            Discover extraordinary stays across the breathtaking landscapes of
-            Northern Pakistan. Find the perfect room for your next adventure.
-          </p>
-          <div className="ns-footer-tagline">
-            Made for mountain escapes <Heart size={14} />
+    <footer className="nsf">
+      <div className="nsf-container">
+        {pathname !== "/register-hotel" && (
+        <section className="nsf-cta" aria-label="List your hotel">
+          <span className="nsf-cta-icon"><Building2 size={22} /></span>
+          <div>
+            <h2>Own a hotel in the north?</h2>
+            <p>List your property on NorthernStays and reach travellers planning their next mountain escape.</p>
           </div>
-        </div>
+          <Link to="/register-hotel" className="nsf-cta-btn">List your hotel <ArrowRight size={17} /></Link>
+        </section>
+        )}
 
-        <div className="ns-footer-column">
-          <h4>Explore</h4>
-          <Link to="/" onClick={goTop}>
-            Home
-          </Link>
-          <Link to="/hotels" onClick={goTop}>
-            Find Rooms
-          </Link>
-          <Link to="/#destinations" onClick={goToDestinations}>
-            Popular Destinations
-          </Link>
-          <Link to="/login" onClick={goTop}>
-            Login / Sign Up
-          </Link>
-        </div>
-
-        <div className="ns-footer-column">
-          <h4>Destinations</h4>
-          {cities.map((city) => (
-            <Link
-              key={city}
-              to={`/hotels?destination=${encodeURIComponent(city)}`}
-              onClick={goTop}
-            >
-              {city} <ArrowUpRight size={13} />
+        <div className="nsf-main">
+          <div className="nsf-brand">
+            <Link to="/" className="nsf-logo" onClick={goTop} aria-label="NorthernStays home">
+              <Mountain size={26} strokeWidth={1.8} />
+              <span>Northern<span>Stays</span></span>
             </Link>
-          ))}
+            <p>
+              Handpicked rooms across the valleys and mountain towns of Northern Pakistan.
+              Find your stay, check availability and book in minutes.
+            </p>
+            <span className="nsf-location"><MapPin size={15} /> Northern Pakistan</span>
+          </div>
+
+          <nav className="nsf-col" aria-label="Explore">
+            <h3>Explore</h3>
+            <Link to="/" onClick={goTop}>Home</Link>
+            <Link to="/hotels" onClick={goTop}>Find rooms</Link>
+            <Link to="/#destinations">Popular destinations</Link>
+          </nav>
+
+          <nav className="nsf-col" aria-label="Destinations">
+            <h3>Destinations</h3>
+            {cities.length > 0 ? cities.map((city) => (
+              <Link key={city} to={`/destinations/${encodeURIComponent(city)}`} onClick={goTop}>{city}</Link>
+            )) : (
+              <Link to="/hotels" onClick={goTop}>Browse all rooms</Link>
+            )}
+          </nav>
+
+          <nav className="nsf-col" aria-label="For hotels">
+            <h3>For hotels</h3>
+            <Link to="/register-hotel" onClick={goTop}>Register your hotel</Link>
+            <Link to="/admin/login" onClick={goTop}>Hotel admin login</Link>
+            <Link to="/admin/user-login" onClick={goTop}>Hotel staff login</Link>
+          </nav>
         </div>
 
-        <div className="ns-footer-column ns-footer-contact">
-          <h4>Get in Touch</h4>
-          <p>
-            Have questions about your stay? Explore available rooms and discover
-            your next destination.
-          </p>
-          <div className="ns-footer-contact-item">
-            <MapPin size={17} />
-            <span>Pakistan</span>
-          </div>
-          <div className="ns-footer-contact-item">
-            <Mail size={17} />
-            <span>Contact details coming soon</span>
-          </div>
-          <div className="ns-footer-actions">
-            <Link to="/hotels" className="ns-footer-explore" onClick={goTop}>
-              Explore Rooms <ArrowUpRight size={16} />
-            </Link>
-            <Link to="/admin" className="ns-footer-admin-btn" onClick={goTop}>
-              <LockKeyhole size={16} /> Admin Login <ArrowUpRight size={16} />
-            </Link>
-          </div>
+        <div className="nsf-bottom">
+          <p>© {new Date().getFullYear()} NorthernStays. All rights reserved.</p>
+          <button type="button" onClick={goTop} className="nsf-top">
+            Back to top <ArrowUp size={15} />
+          </button>
         </div>
-      </div>
-
-      <div className="container">
-        <div className="ns-footer-divider" />
-      </div>
-      <div className="container ns-footer-bottom">
-        <p>© {new Date().getFullYear()} NorthernStays. All rights reserved.</p>
-        <p>
-          Discover the North <Heart size={13} />
-        </p>
-        <button
-          type="button"
-          onClick={goTop}
-          className="ns-footer-top"
-          aria-label="Back to top"
-        >
-          <ArrowUp size={17} />
-        </button>
       </div>
     </footer>
   );

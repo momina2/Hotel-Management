@@ -861,16 +861,17 @@
 
 
 
+import { API_BASE, apiFetch } from "../../api/client";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Plus, Pencil, Trash2, X, RefreshCw } from "lucide-react";
 import "./admin.css";
 
-const ROOT = "https://coreops.pk/Hotel/api";
+const ROOT = API_BASE;
 const blank = { city_id: "", area_name: "", status: "YES" };
 
 // Existing areas.php endpoint is retained for create, update and delete.
 async function mutateArea(payload) {
-  const response = await fetch(`${ROOT}/areas.php`, {
+  const response = await apiFetch(`${ROOT}/areas.php`, {
     method: "POST",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
@@ -892,7 +893,7 @@ async function mutateArea(payload) {
 
 // getAreas.php returns both cities and areas in one response.
 async function getAreaData(signal) {
-  const response = await fetch(`${ROOT}/getAreas.php?city_id=all`, {
+  const response = await apiFetch(`${ROOT}/getAreas.php?city_id=all`, {
     method: "GET",
     credentials: "include",
     cache: "no-store",
@@ -1093,7 +1094,7 @@ export default function AdminAreas() {
                     <td>{area.id}</td>
                     <td><strong>{area.area_name}</strong></td>
                     <td>{area.city_name}</td>
-                    <td><span className="ns-status">{area.status}</span></td>
+                    <td><span className="ns-status" data-status={String(area.status).trim().toLowerCase()}>{area.status}</span></td>
                     <td>
                       <div className="ns-actions">
                         <button type="button" onClick={() => edit(area)} aria-label={`Edit ${area.area_name}`}>

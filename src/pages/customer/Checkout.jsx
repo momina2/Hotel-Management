@@ -1,3 +1,4 @@
+import { API_BASE } from "../../api/client";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { CalendarDays, Users, ArrowLeft, ShieldCheck } from "lucide-react";
@@ -5,7 +6,6 @@ import { useActiveHotels } from "../../data/hotelStore";
 import "../../styles/hotels.css";
 import "../../styles/booking.css";
 
-const API_BASE = "https://coreops.pk/Hotel/api";
 const PUBLIC_BOOKING_API = `${API_BASE}/createBooking.php`; // Guests do not use admin bookings.php
 const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900";
 
@@ -71,11 +71,19 @@ export default function Checkout() {
     setLoadingRoom(true);
     setRoomError("");
     setRemoteRoom(null);
-    const query = new URLSearchParams({ city, area });
-    fetch(`${API_BASE}/getRoomsByArea.php?${query}`, {
-      method: "GET",
+    const formData = new FormData();
+
+    formData.append("city", city);
+    formData.append("area", area);
+    formData.append("rooms", String(roomCount));
+    formData.append("guests", String(guests));
+
+    fetch(`${API_BASE}/getRoomsByArea.php`, {
+      method: "POST",
+      body: formData,
       cache: "no-store",
       signal: controller.signal,
+      credentials: "omit",
     })
       .then(readJson)
       .then((data) => {
@@ -108,9 +116,27 @@ export default function Checkout() {
   const imageUrl = usingRemote
     ? remoteRoom?.image_url || FALLBACK_IMAGE
     : legacyRoom?.image_url || legacyHotel?.image || FALLBACK_IMAGE;
-  const price = Number(usingRemote ? remoteRoom?.price_per_night : legacyRoom?.price);
+  const regularPrice = Number(
+    usingRemote ? remoteRoom?.price_per_night : legacyRoom?.price
+  );
+
+  const discountedPrice = usingRemote
+    ? remoteRoom?.discounted_price_per_night
+    : null;
+
+  const price =
+    discountedPrice != null &&
+      discountedPrice !== "" &&
+      Number(discountedPrice) >= 0 &&
+      Number(discountedPrice) < regularPrice
+      ? Number(discountedPrice)
+      : regularPrice;
   const capacity = Number(usingRemote ? remoteRoom?.capacity : legacyRoom?.capacity);
-  const inventory = Number(usingRemote ? remoteRoom?.total_rooms : legacyRoom?.available);
+  const inventory = Number(
+    usingRemote
+      ? remoteRoom?.online_rooms ?? 0
+      : legacyRoom?.available ?? 0
+  );
   const roomFound = usingRemote ? Boolean(remoteRoom) : Boolean(legacyHotel && legacyRoom);
 
   const valid =

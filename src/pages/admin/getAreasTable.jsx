@@ -1,6 +1,7 @@
+import { API_BASE, apiFetch } from "../../api/client";
 import { useEffect, useState } from "react";
 
-const API = "https://coreops.pk/Hotel/api/getAreas.php";
+const API = `${API_BASE}/getAreas.php`;
 
 export default function AdminAreasTable() {
     const [cities, setCities] = useState([]);
@@ -15,9 +16,9 @@ export default function AdminAreasTable() {
             setLoading(true);
             setError("");
             try {
-                const url = new URL(API);
+                const url = new URL(API, window.location.origin);
                 if (cityId) url.searchParams.set("city_id", cityId);
-                const response = await fetch(url.toString(), {
+                const response = await apiFetch(url.toString(), {
                     method: "GET",
                     credentials: "include",
                     cache: "no-store",

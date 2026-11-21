@@ -1,9 +1,9 @@
-
+import { API_BASE, apiFetch } from "../../api/client";
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Building2, Save } from "lucide-react";
 
-const API = "https://coreops.pk/Hotel/api/hotel_profile.php";
+const API = `${API_BASE}/hotel_profile.php`;
 
 const initialForm = {
     hotel_name: "",
@@ -11,13 +11,16 @@ const initialForm = {
     area_id: "",
     address: "",
     contact_number: "",
+    contact_person_name: "",
+    latitude: "",
+    longitude: "",
     email: "",
     description: "",
     status: "YES",
 };
 
 async function hotelRequest(action, fields = {}, signal) {
-    const response = await fetch(API, {
+    const response = await apiFetch(API, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -36,12 +39,17 @@ async function hotelRequest(action, fields = {}, signal) {
 
 export default function AddHotel() {
     const navigate = useNavigate();
+    const { id } = useParams();
+    const isEditing = Boolean(id);
+    const [existingPicture, setExistingPicture] = useState("");
 
     const [form, setForm] = useState(initialForm);
     const [cities, setCities] = useState([]);
     const [areas, setAreas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [pictureFile, setPictureFile] = useState(null);
+    const [picturePreview, setPicturePreview] = useState("");
     const [error, setError] = useState("");
 
     useEffect(() => {
@@ -51,13 +59,23 @@ export default function AddHotel() {
             try {
                 const result = await hotelRequest(
                     "get",
-                    {},
+                    isEditing ? { hotel_id: Number(id) } : {},
                     controller.signal
                 );
 
                 if (!controller.signal.aborted) {
                     setCities(result.cities || []);
                     setAreas(result.areas || []);
+                    if (isEditing) {
+                        const hotel = result.hotel;
+                        if (!hotel || String(hotel.id) !== String(id)) {
+                            throw new Error("Selected hotel was not returned by the API.");
+                        }
+                        setForm(Object.fromEntries(Object.keys(initialForm).map(key => [
+                            key, hotel[key] == null ? initialForm[key] : String(hotel[key])
+                        ])));
+                        setExistingPicture(hotel.picture_url || hotel.picture || hotel.image_url || "");
+                    }
                 }
             } catch (err) {
                 if (err.name !== "AbortError") {
@@ -72,7 +90,7 @@ export default function AddHotel() {
 
         loadLocations();
         return () => controller.abort();
-    }, []);
+    }, [id, isEditing]);
 
     const filteredAreas = useMemo(
         () =>
@@ -81,6 +99,25 @@ export default function AddHotel() {
             ),
         [areas, form.city_id]
     );
+
+    useEffect(() => {
+        if (!pictureFile) { setPicturePreview(""); return; }
+        const url = URL.createObjectURL(pictureFile);
+        setPicturePreview(url);
+        return () => URL.revokeObjectURL(url);
+    }, [pictureFile]);
+
+    function handlePictureChange(event) {
+        const file = event.target.files?.[0];
+        if (!file) { setPictureFile(null); return; }
+        if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024) {
+            setError('Picture must be JPG, PNG or WebP and no larger than 5 MB.');
+            event.target.value = '';
+            return;
+        }
+        setError('');
+        setPictureFile(file);
+    }
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -114,20 +151,34 @@ export default function AddHotel() {
             return;
         }
 
+        if (form.latitude !== '' && (!Number.isFinite(Number(form.latitude)) || Number(form.latitude) < -90 || Number(form.latitude) > 90)) {
+            setError('Latitude must be between -90 and 90.'); return;
+        }
+        if (form.longitude !== '' && (!Number.isFinite(Number(form.longitude)) || Number(form.longitude) < -180 || Number(form.longitude) > 180)) {
+            setError('Longitude must be between -180 and 180.'); return;
+        }
         setSaving(true);
 
         try {
-            await hotelRequest("create", {
-                ...form,
-                hotel_name: form.hotel_name.trim(),
-                city_id: Number(form.city_id),
-                area_id: Number(form.area_id),
-                address: form.address.trim(),
-                contact_number: form.contact_number.trim(),
-                email: form.email.trim(),
-                description: form.description.trim(),
+            const payload = new FormData();
+            payload.append('action', isEditing ? 'update' : 'create');
+            if (isEditing) payload.append('hotel_id', String(id));
+            Object.entries(form).forEach(([key, value]) => {
+                payload.append(key, value == null ? '' : String(value).trim());
             });
-
+            if (pictureFile) {
+                payload.append('picture', pictureFile, pictureFile.name);
+                payload.append('picture_expected', '1');
+            }
+            const response = await apiFetch(API, {
+                method: 'POST',
+                credentials: 'include',
+                body: payload, // Browser sets multipart/form-data boundary automatically.
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || 'Unable to save hotel.');
+            }
             navigate("/admin/hotels", {
                 replace: true,
             });
@@ -143,9 +194,9 @@ export default function AddHotel() {
             <div className="ns-heading">
                 <div>
                     <span>PROPERTY MANAGEMENT</span>
-                    <h1>Add New Hotel</h1>
+                    <h1>{isEditing ? "Edit Hotel" : "Add New Hotel"}</h1>
                     <p>
-                        Register a new hotel under your company.
+                        {isEditing ? "Update this hotel’s saved details." : "Register a new hotel under your company."}
                     </p>
                 </div>
 
@@ -234,6 +285,22 @@ export default function AddHotel() {
                         </label>
 
                         <label>
+                            Hotel Latitude
+                            <input name="latitude" type="number" step="any" min="-90" max="90"
+                                value={form.latitude} onChange={handleChange} placeholder="e.g. 35.9208" />
+                        </label>
+                        <label>
+                            Hotel Longitude
+                            <input name="longitude" type="number" step="any" min="-180" max="180"
+                                value={form.longitude} onChange={handleChange} placeholder="e.g. 74.3086" />
+                        </label>
+                        <label className="ns-full">
+                            Contact Person Name
+                            <input name="contact_person_name" value={form.contact_person_name}
+                                onChange={handleChange} placeholder="Enter contact person's full name" maxLength={150} />
+                        </label>
+
+                        <label>
                             Contact Number
                             <input
                                 name="contact_number"
@@ -280,6 +347,20 @@ export default function AddHotel() {
                                 placeholder="Describe your hotel..."
                             />
                         </label>
+
+                        <label className="ns-full">
+                            Hotel Picture (JPG, PNG or WebP, max 5 MB)
+                            <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handlePictureChange} />
+                            {(picturePreview || existingPicture) && (
+                                <img src={picturePreview || (existingPicture.startsWith("http") ? existingPicture : new URL(existingPicture, "https://coreops.pk").href)} alt="Hotel" style={{ display: "block", width: 180, maxHeight: 140, objectFit: "cover", borderRadius: 10, marginTop: 10 }} />
+                            )}
+                        </label>
+                        {picturePreview && (
+                            <div className="ns-full" style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                                <img src={picturePreview} alt="Hotel preview" style={{ width: 180, height: 120, objectFit: 'cover', borderRadius: 10 }} />
+                                <button type="button" onClick={() => setPictureFile(null)}>Remove picture</button>
+                            </div>
+                        )}
 
                         {error && (
                             <p

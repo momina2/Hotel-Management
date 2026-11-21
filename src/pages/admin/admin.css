@@ -1,3 +1,5 @@
+@import "./rooms-management.css";
+
 .ns-admin {
     min-height: 100vh;
     display: flex;
@@ -1330,4 +1332,1731 @@
     .ns-rooms-table {
         min-width: 950px;
     }
+}
+
+.ns-hotel-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 18px
+}
+
+.ns-hotel-toolbar .ns-search {
+    flex: 1 1 280px;
+    min-width: 0
+}
+
+.ns-hotel-refresh {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+    padding: 11px 16px;
+    border: 1px solid #dbe5df;
+    border-radius: 9px;
+    background: #fff;
+    color: #173e33;
+    cursor: pointer;
+    font: inherit
+}
+
+.ns-hotel-refresh:disabled {
+    opacity: .6;
+    cursor: wait
+}
+
+.ns-hotel-thumb,
+.ns-hotel-no-photo {
+    width: 74px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #edf3ef;
+    color: #42675a
+}
+
+.ns-hotel-preview {
+    display: block;
+    width: 200px;
+    height: 135px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 8px 0
+}
+
+.ns-table td {
+    vertical-align: middle
+}
+
+@media(max-width:600px) {
+    .ns-hotel-toolbar {
+        align-items: stretch
+    }
+
+    .ns-hotel-refresh {
+        width: 100%
+    }
+}
+
+
+
+/* =========================================
+   ADD-ONS MANAGEMENT — TABLE & BUTTON FIXES
+   ========================================= */
+
+/* Table: show maximum 7 rows, then scroll */
+.ns-addons-table-scroll {
+    --addon-row-height: 78px;
+    --addon-header-height: 48px;
+
+    width: 100%;
+    max-height: calc(var(--addon-header-height) + 7 * var(--addon-row-height));
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid #e1e8e4;
+    border-radius: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #9bb9ac #f3f7f5;
+}
+
+.ns-addons-table-scroll .ns-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.ns-addons-table-scroll .ns-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    height: var(--addon-header-height);
+    background: #f5f8f6;
+    color: #476b5f;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 12px 16px;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 1px solid #dce7e1;
+}
+
+.ns-addons-table-scroll .ns-table tbody tr {
+    height: var(--addon-row-height);
+}
+
+.ns-addons-table-scroll .ns-table tbody td {
+    height: var(--addon-row-height);
+    padding: 12px 16px;
+    vertical-align: middle;
+    border-bottom: 1px solid #e9eeeb;
+    font-size: 13px;
+    color: #24453a;
+    background: #fff;
+}
+
+.ns-addons-table-scroll .ns-table tbody tr:hover td {
+    background: #f7faf8;
+}
+
+.ns-addons-table-scroll .ns-table td strong {
+    display: block;
+    font-size: 13px;
+    color: #153d30;
+    font-weight: 700;
+}
+
+.ns-addons-table-scroll .ns-table td small {
+    display: block;
+    margin-top: 5px;
+    font-size: 11px;
+    color: #899e94;
+    line-height: 1.4;
+}
+
+/* Status badge */
+.ns-addons-table-scroll .ns-status {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 52px;
+    padding: 6px 12px;
+    border-radius: 30px;
+    background: #e6f5ec;
+    color: #16824b;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* Action buttons */
+.ns-addons-table-scroll td .ns-cancel {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid #d4e4dc;
+    background: #eaf5ef;
+    color: #17624c;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ns-addons-table-scroll td .ns-cancel:hover {
+    background: #17624c;
+    border-color: #17624c;
+    color: #fff;
+}
+
+/* Delete button */
+.ns-addons-table-scroll td .ns-cancel:last-child {
+    background: #fff0ef;
+    border-color: #f4d4d1;
+    color: #c53d36;
+}
+
+.ns-addons-table-scroll td .ns-cancel:last-child:hover {
+    background: #c53d36;
+    color: #fff;
+}
+
+/* Scrollbar */
+.ns-addons-table-scroll::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+.ns-addons-table-scroll::-webkit-scrollbar-track {
+    background: #f3f7f5;
+}
+
+.ns-addons-table-scroll::-webkit-scrollbar-thumb {
+    background: #9bb9ac;
+    border-radius: 10px;
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+    .ns-addons-table-scroll .ns-table {
+        min-width: 850px;
+    }
+}
+
+
+/* Dedicated Add-ons styles. Imported by AdminAddons.jsx after admin.css. */
+.ns-addons-page .ns-addons-toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    margin-bottom: 18px;
+    flex-wrap: wrap
+}
+
+.ns-addons-page .ns-addons-hotel-field {
+    position: relative;
+    flex: 1 1 320px;
+    min-width: 0
+}
+
+.ns-addons-page .ns-addons-hotel-field>label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #24493c
+}
+
+.ns-addons-page .ns-addons-select-trigger {
+    appearance: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 14px;
+    background: #fff;
+    color: #173e31;
+    border: 1px solid #cbdcd3;
+    border-radius: 9px;
+    font: inherit;
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 0 1px 3px #0e3c2510
+}
+
+.ns-addons-page .ns-addons-select-trigger:hover {
+    border-color: #76a48d;
+    background: #f9fcfa
+}
+
+.ns-addons-page .ns-addons-select-trigger:focus-visible {
+    outline: 3px solid #b9dfcc;
+    outline-offset: 2px
+}
+
+.ns-addons-page .ns-addons-select-trigger span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+.ns-addons-page .ns-addons-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    z-index: 100;
+    max-height: 320px;
+    overflow: auto;
+    background: #fff;
+    border: 1px solid #d7e5dd;
+    border-radius: 11px;
+    box-shadow: 0 12px 34px #0c3b2d2b;
+    padding: 6px
+}
+
+.ns-addons-page .ns-addons-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 11px 12px;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    border-radius: 7px;
+    cursor: pointer;
+    color: #173e31;
+    font: inherit
+}
+
+.ns-addons-page .ns-addons-option:hover,
+.ns-addons-page .ns-addons-option.selected {
+    background: #eaf5ee
+}
+
+.ns-addons-page .ns-addons-option-all {
+    background: #f3f8f5;
+    border-bottom: 1px solid #e0ebe4;
+    margin-bottom: 3px
+}
+
+.ns-addons-page .ns-addons-option strong,
+.ns-addons-page .ns-addons-option small {
+    display: block
+}
+
+.ns-addons-page .ns-addons-option strong {
+    font-size: 13px;
+    font-weight: 650
+}
+
+.ns-addons-page .ns-addons-option small {
+    margin-top: 3px;
+    font-size: 11px;
+    color: #708b7d
+}
+
+.ns-addons-page .ns-addons-refresh {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 0 17px;
+    border: 1px solid #bcd9ca;
+    border-radius: 9px;
+    background: #eaf5ee;
+    color: #17624c;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: background .15s, color .15s
+}
+
+.ns-addons-page .ns-addons-refresh:hover:not(:disabled) {
+    background: #17624c;
+    color: white
+}
+
+.ns-addons-page .ns-addons-refresh:disabled {
+    opacity: .5;
+    cursor: not-allowed
+}
+
+.ns-addons-page .ns-addons-hint {
+    margin: 0 0 14px;
+    color: #496f5c;
+    background: #f1f8f4;
+    padding: 10px 12px;
+    border-radius: 7px;
+    font-size: 12px
+}
+
+.ns-addons-page .ns-addons-notice {
+    color: #176143
+}
+
+.ns-addons-page .ns-addons-table-scroll {
+    --addon-row-height: 74px;
+    --addon-header-height: 46px;
+    max-height: calc(var(--addon-header-height) + 7 * var(--addon-row-height) + 2px);
+    overflow: auto;
+    border: 1px solid #e1e8e4;
+    border-radius: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #a3bdaf #f3f7f5
+}
+
+.ns-addons-page .ns-addons-table-scroll .ns-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 760px
+}
+
+.ns-addons-page .ns-addons-table-scroll .ns-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    height: var(--addon-header-height);
+    background: #f4f8f5;
+    color: #456b59;
+    padding: 10px 14px;
+    font-size: 12px;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 1px solid #e0eae4
+}
+
+.ns-addons-page .ns-addons-table-scroll .ns-table tbody tr {
+    height: var(--addon-row-height)
+}
+
+.ns-addons-page .ns-addons-table-scroll .ns-table tbody td {
+    height: var(--addon-row-height);
+    padding: 11px 14px;
+    vertical-align: middle;
+    border-bottom: 1px solid #e8efeb;
+    background: #fff;
+    color: #24453a;
+    font-size: 12px
+}
+
+.ns-addons-page .ns-addons-table-scroll .ns-table tbody tr:hover td {
+    background: #f9fcfa
+}
+
+.ns-addons-page .ns-addons-table-scroll td strong {
+    display: block;
+    font-size: 12px;
+    color: #143e30
+}
+
+.ns-addons-page .ns-addons-table-scroll td small {
+    display: block;
+    margin-top: 4px;
+    color: #809b8d;
+    font-size: 11px;
+    line-height: 1.4
+}
+
+.ns-addons-page .ns-addons-table-scroll .ns-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 52px;
+    border-radius: 20px;
+    padding: 5px 10px;
+    background: #e6f5ec;
+    color: #16824b;
+    font-weight: 700;
+    font-size: 11px
+}
+
+.ns-addons-page .ns-addons-table-scroll .ns-status.ns-addons-inactive {
+    background: #fff0ef;
+    color: #bf3c36
+}
+
+.ns-addons-page .ns-addons-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px
+}
+
+.ns-addons-page .ns-addons-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    padding: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background .15s, color .15s
+}
+
+.ns-addons-page .ns-addons-icon-btn.edit {
+    border: 1px solid #d2e6d9;
+    background: #eaf5ee;
+    color: #17624c
+}
+
+.ns-addons-page .ns-addons-icon-btn.edit:hover {
+    background: #17624c;
+    color: white
+}
+
+.ns-addons-page .ns-addons-icon-btn.delete {
+    border: 1px solid #f4d4d1;
+    background: #fff0ef;
+    color: #c53d36
+}
+
+.ns-addons-page .ns-addons-icon-btn.delete:hover {
+    background: #c53d36;
+    color: white
+}
+
+.ns-addons-page .ns-addons-overlay {
+    position: fixed;
+    inset: 0;
+    background: #0008;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px
+}
+
+.ns-addons-page .ns-addons-modal {
+    width: min(100%, 620px);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #fff
+}
+
+.ns-addons-page .ns-addons-checkbox {
+    display: flex !important;
+    align-items: center;
+    gap: 10px
+}
+
+.ns-addons-page .ns-addons-checkbox input {
+    width: auto !important
+}
+
+@media(max-width:768px) {
+    .ns-addons-page .ns-addons-refresh {
+        width: 100%
+    }
+
+    .ns-addons-page .ns-addons-hotel-field {
+        flex-basis: 100%
+    }
+}
+
+
+
+/* ==========================================
+   BOOKING MANAGEMENT - FIXED PAGE + ROW SCROLL
+========================================== */
+
+/* Only Booking Management table scrolls */
+.ns-booking-table-scroll {
+    --booking-row-height: 66px;
+    --booking-header-height: 46px;
+
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: calc(var(--booking-header-height) + (6 * var(--booking-row-height)));
+
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+
+    border: 1px solid #e0e8e2;
+    border-radius: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #a6b8ad #f1f5f2;
+    overscroll-behavior: contain;
+}
+
+/* Keep table header visible while scrolling */
+.ns-booking-table-scroll .ns-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.ns-booking-table-scroll .ns-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+
+    height: var(--booking-header-height);
+    padding: 10px 12px;
+
+    background: #f4f8f5;
+    color: #61776c;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    border-bottom: 1px solid #e0e8e2;
+}
+
+/* Compact booking rows */
+.ns-booking-table-scroll .ns-table tbody tr {
+    height: var(--booking-row-height);
+}
+
+.ns-booking-table-scroll .ns-table tbody td {
+    height: var(--booking-row-height);
+    padding: 9px 12px !important;
+    vertical-align: middle;
+    border-bottom: 1px solid #edf1ee;
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+/* Booking reference and guest details */
+.ns-booking-table-scroll .ns-table td strong {
+    display: block;
+    font-size: 11px;
+    line-height: 1.3;
+}
+
+.ns-booking-table-scroll .ns-table td small {
+    display: block;
+    margin-top: 3px;
+    font-size: 10px;
+    line-height: 1.25;
+    color: #82968b;
+}
+
+/* Prevent buttons from increasing row height */
+.ns-booking-table-scroll .ns-table td button {
+    min-height: 30px;
+    padding: 6px 10px;
+    font-size: 11px;
+}
+
+/* Scrollbar */
+.ns-booking-table-scroll::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+.ns-booking-table-scroll::-webkit-scrollbar-track {
+    background: #f1f5f2;
+}
+
+.ns-booking-table-scroll::-webkit-scrollbar-thumb {
+    background: #a6b8ad;
+    border-radius: 8px;
+}
+
+.ns-booking-table-scroll::-webkit-scrollbar-thumb:hover {
+    background: #6c9983;
+}
+
+/* Prevent Booking Management page overflow.
+   Add this class to the Booking Management root. */
+.ns-booking-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: calc(100dvh - 48px);
+    overflow: hidden;
+}
+
+.ns-booking-page .ns-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    flex: 1;
+    overflow: hidden;
+}
+
+.ns-booking-page .ns-booking-table-scroll {
+    min-height: 0;
+    flex-shrink: 1;
+}
+
+
+
+/* Booking Search Bar + Showing Count Fix */
+
+.ns-booking-toolbar {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 12px !important;
+    box-sizing: border-box !important;
+}
+
+.ns-booking-toolbar .ns-search {
+    flex: 1 1 0 !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.ns-booking-result-count {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: max-content !important;
+    max-width: none !important;
+    white-space: nowrap !important;
+    margin: 0 !important;
+    font-size: 12px;
+    color: #71877e;
+}
+
+/* =====================================================================
+   NORTHERNSTAYS ADMIN THEME  (appended last so it wins over older rules)
+   Visual layer only: typography, colour, radius, shadows, states.
+   Page layouts above are left intact.
+===================================================================== */
+
+.ns-admin {
+  --ad-green: #173d34;
+  --ad-green-dark: #0f2c25;
+  --ad-side: #10302a;
+  --ad-gold: #b08a4f;
+  --ad-gold-soft: #e4c58d;
+  --ad-text: #1d2b27;
+  --ad-muted: #6b7a72;
+  --ad-soft: #8a958f;
+  --ad-line: #ebe6db;
+  --ad-line-soft: #f1ede4;
+  --ad-field: #d9d3c6;
+  --ad-bg: #f6f5f1;
+  --ad-ring: 0 0 0 4px rgba(23, 61, 52, .1);
+  background: var(--ad-bg);
+  color: var(--ad-text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ns-admin button,
+.ns-admin input,
+.ns-admin select,
+.ns-admin textarea {
+  font-family: inherit;
+  letter-spacing: inherit;
+}
+
+/* ---------- Sidebar ---------- */
+.ns-admin .ns-sidebar {
+  width: 264px;
+  padding: 18px 14px;
+  background: linear-gradient(180deg, #12372f 0%, var(--ad-side) 100%);
+  border-right: 1px solid rgba(255, 255, 255, .04);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.ns-admin .ns-sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.ns-admin .ns-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+  margin-bottom: 22px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, .07);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .04);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.ns-brand-logo {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ad-green);
+}
+
+.ns-brand-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 4px;
+  display: block;
+}
+
+.ns-brand-text {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.ns-brand-text strong {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #fff;
+}
+
+.ns-admin .ns-brand small {
+  justify-self: start;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(228, 197, 141, .14);
+  color: var(--ad-gold-soft);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.ns-nav-label {
+  margin: 4px 12px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .38);
+}
+
+.ns-admin .ns-sidebar nav {
+  gap: 2px;
+}
+
+.ns-admin .ns-sidebar nav a,
+.ns-admin .ns-nav-btn,
+.ns-admin .ns-return {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(255, 255, 255, .7);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .18s, color .18s;
+}
+
+.ns-admin .ns-sidebar nav a svg,
+.ns-admin .ns-nav-btn svg,
+.ns-admin .ns-return svg {
+  flex-shrink: 0;
+  opacity: .85;
+}
+
+.ns-admin .ns-sidebar nav a:hover,
+.ns-admin .ns-nav-btn:hover,
+.ns-admin .ns-return:hover {
+  background: rgba(255, 255, 255, .06);
+  color: #fff;
+}
+
+.ns-admin .ns-sidebar nav a.active,
+.ns-admin .ns-nav-btn.is-active {
+  background: rgba(255, 255, 255, .1);
+  color: #fff;
+  font-weight: 600;
+}
+
+.ns-admin .ns-sidebar nav a.active::before,
+.ns-admin .ns-nav-btn.is-active::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--ad-gold-soft);
+}
+
+.ns-admin .ns-sidebar nav a.active svg,
+.ns-admin .ns-nav-btn.is-active svg {
+  color: var(--ad-gold-soft);
+  opacity: 1;
+}
+
+.ns-nav-divider {
+  height: 1px;
+  margin: 12px 8px;
+  background: rgba(255, 255, 255, .08);
+}
+
+.ns-admin .ns-return {
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 0;
+  padding-top: 16px;
+  font-size: 13.5px;
+}
+
+.ns-admin .ns-return:hover {
+  background: transparent;
+}
+
+/* ---------- Content + headings ---------- */
+.ns-admin .ns-content {
+  max-width: 1440px;
+  padding: 32px clamp(18px, 3.5vw, 48px) 48px;
+}
+
+.ns-admin .ns-heading {
+  margin-bottom: 24px;
+}
+
+.ns-admin .ns-heading span {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  color: var(--ad-gold);
+}
+
+.ns-admin .ns-heading h1 {
+  margin: 6px 0 6px;
+  font-size: clamp(24px, 2.4vw, 30px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--ad-green);
+}
+
+.ns-admin .ns-heading p {
+  font-size: 14.5px;
+  color: var(--ad-muted);
+}
+
+/* ---------- Panels / cards ---------- */
+.ns-admin .ns-panel,
+.ns-admin .ns-stats article {
+  border: 1px solid var(--ad-line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 48, 39, .04);
+}
+
+.ns-admin .ns-panel-head h2,
+.ns-admin .ns-panel h2 {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ad-text);
+}
+
+/* ---------- Buttons ---------- */
+.ns-admin .ns-btn {
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid var(--ad-green);
+  border-radius: 10px;
+  background: var(--ad-green);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background .18s, border-color .18s, opacity .18s, transform .1s;
+}
+
+.ns-admin .ns-btn:hover:not(:disabled) {
+  background: var(--ad-green-dark);
+  border-color: var(--ad-green-dark);
+}
+
+.ns-admin .ns-btn:active:not(:disabled) {
+  transform: scale(.98);
+}
+
+.ns-admin .ns-btn:disabled,
+.ns-admin .ns-cancel:disabled,
+.ns-admin button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.ns-admin .ns-cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid var(--ad-field);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ad-green);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color .18s, background .18s;
+}
+
+.ns-admin .ns-cancel:hover:not(:disabled) {
+  border-color: var(--ad-green);
+  background: #fafaf7;
+}
+
+/* Compact buttons inside tables */
+.ns-admin td .ns-btn,
+.ns-admin td .ns-cancel {
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+.ns-admin .ns-actions {
+  gap: 6px;
+}
+
+.ns-admin .ns-actions a,
+.ns-admin .ns-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 34px;
+  min-height: 34px;
+  padding: 0 8px;
+  border-radius: 8px;
+  color: var(--ad-green);
+  transition: background .18s, color .18s;
+}
+
+.ns-admin .ns-actions a:hover,
+.ns-admin .ns-actions button:hover:not(:disabled) {
+  background: #f2efe7;
+}
+
+/* ---------- Form controls ---------- */
+.ns-admin input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
+.ns-admin select,
+.ns-admin textarea {
+  border: 1px solid var(--ad-field);
+  border-radius: 10px;
+  background-color: #fff;
+  color: var(--ad-text);
+  font-size: 14px;
+  transition: border-color .18s, box-shadow .18s;
+}
+
+.ns-admin input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):hover,
+.ns-admin select:hover,
+.ns-admin textarea:hover {
+  border-color: #c9c2b3;
+}
+
+.ns-admin input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):focus,
+.ns-admin select:focus,
+.ns-admin textarea:focus {
+  outline: none;
+  border-color: var(--ad-green);
+  box-shadow: var(--ad-ring);
+}
+
+.ns-admin input::placeholder,
+.ns-admin textarea::placeholder {
+  color: #a8b0ab;
+}
+
+.ns-admin input:disabled,
+.ns-admin select:disabled,
+.ns-admin textarea:disabled {
+  background-color: #f7f6f2;
+  color: var(--ad-soft);
+}
+
+.ns-admin input[type="checkbox"],
+.ns-admin input[type="radio"] {
+  accent-color: var(--ad-green);
+}
+
+.ns-admin .ns-form input,
+.ns-admin .ns-form select,
+.ns-admin .ns-room-form input,
+.ns-admin .ns-room-form select {
+  min-height: 42px;
+  padding: 0 12px;
+}
+
+.ns-admin .ns-form textarea,
+.ns-admin .ns-room-form textarea {
+  padding: 10px 12px;
+  line-height: 1.5;
+}
+
+.ns-admin .ns-search {
+  padding: 0 14px 0 38px;
+  min-height: 42px;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a958f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E") no-repeat 13px center;
+}
+
+.ns-admin .ns-form label,
+.ns-admin .ns-room-form label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ad-text);
+}
+
+.ns-admin .ns-form-actions,
+.ns-admin .ns-room-actions {
+  gap: 10px;
+}
+
+.ns-admin .ns-room-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fef3f2;
+  color: #b42318;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.ns-admin .ns-room-error:empty {
+  display: none;
+}
+
+.ns-admin .ns-note {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ad-muted);
+}
+
+.ns-admin .ns-note[role="status"] {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #ecf6f0;
+  color: #15803d;
+}
+
+/* ---------- Tables ---------- */
+.ns-admin .ns-table-wrap {
+  border: 1px solid var(--ad-line-soft);
+  border-radius: 12px;
+}
+
+.ns-admin .ns-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.ns-admin .ns-table th {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--ad-line);
+  background: #faf9f6;
+  color: var(--ad-soft);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ns-admin .ns-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--ad-line-soft);
+  color: var(--ad-text);
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.ns-admin .ns-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.ns-admin .ns-table tbody tr {
+  transition: background .15s;
+}
+
+.ns-admin .ns-table tbody tr:hover {
+  background: #fbfaf7;
+}
+
+.ns-admin .ns-table td strong {
+  font-weight: 600;
+}
+
+.ns-admin .ns-table td small {
+  color: var(--ad-soft);
+  font-size: 12.5px;
+}
+
+/* ---------- Status badges (colour by data-status) ---------- */
+.ns-admin .ns-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 8px;
+  border-radius: 999px;
+  background: #e8f4ec;
+  color: #157046;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+
+.ns-admin .ns-status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.ns-admin .ns-status[data-status="inactive"],
+.ns-admin .ns-status[data-status="no"],
+.ns-admin .ns-status[data-status="cancelled"],
+.ns-admin .ns-status[data-status="rejected"],
+.ns-admin .ns-status[data-status="blocked"] {
+  background: #fdeceb;
+  color: #b42318;
+}
+
+.ns-admin .ns-status[data-status="pending"] {
+  background: #fdf3e2;
+  color: #b45309;
+}
+
+.ns-admin .ns-status[data-status="confirmed"],
+.ns-admin .ns-status[data-status="checked in"] {
+  background: #e7f0fb;
+  color: #1d5fa8;
+}
+
+.ns-admin .ns-status[data-status="offline"],
+.ns-admin .ns-status[data-status="checked out"],
+.ns-admin .ns-status[data-status="draft"] {
+  background: #f0eee9;
+  color: #5d6a64;
+}
+
+/* ---------- Empty state ---------- */
+.ns-admin .ns-empty {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 48px 16px;
+  color: var(--ad-muted);
+  font-size: 14px;
+}
+
+/* ---------- Dialogs (also covers rooms-management.css which was not imported) ---------- */
+.ns-admin .ns-room-overlay,
+.ns-admin .ns-addons-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(10, 25, 20, .5);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  animation: ad-fade .18s ease;
+}
+
+.ns-admin .ns-room-dialog,
+.ns-admin .ns-addons-modal {
+  width: min(640px, 100%);
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 24px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .22);
+  animation: ad-rise .22s ease;
+}
+
+.ns-admin .ns-room-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: -4px 0 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--ad-line-soft);
+}
+
+.ns-admin .ns-room-dialog-header h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ad-green);
+}
+
+.ns-admin .ns-room-dialog-header button {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #f2f0ea;
+  color: var(--ad-text);
+  cursor: pointer;
+}
+
+.ns-admin .ns-room-dialog-header button:hover {
+  background: #e9e5dc;
+}
+
+.ns-admin .ns-room-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ns-admin .ns-room-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ns-admin .ns-room-form label span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.ns-admin .ns-room-form input,
+.ns-admin .ns-room-form select,
+.ns-admin .ns-room-form textarea {
+  width: 100%;
+  min-width: 0;
+}
+
+.ns-admin .ns-room-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.ns-admin .ns-room-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 6px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ad-line-soft);
+}
+
+.ns-booking-modal-overlay {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.ns-booking-modal-dialog {
+  border-color: #ebe6db !important;
+  border-radius: 20px !important;
+  color: #1d2b27 !important;
+}
+
+.ns-booking-modal-actions button {
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+}
+
+@keyframes ad-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes ad-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(.98);
+  }
+}
+
+/* ---------- Focus visibility ---------- */
+.ns-admin a:focus-visible,
+.ns-admin button:focus-visible {
+  outline: 3px solid rgba(198, 154, 92, .55);
+  outline-offset: 2px;
+}
+
+/* ---------- Dashboard (moved from inline <style>) ---------- */
+.nsda {
+  color: var(--ad-text);
+}
+
+.nsda-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.nsda-controls select {
+  min-height: 40px;
+  padding: 0 12px;
+}
+
+.nsda-refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--ad-field);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ad-green);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color .18s;
+}
+
+.nsda-refresh:hover {
+  border-color: var(--ad-green);
+}
+
+.nsda-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 4px 0 18px;
+}
+
+.nsda-kpi {
+  min-width: 0;
+  padding: 18px 20px;
+  border: 1px solid var(--ad-line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 48, 39, .04);
+  transition: box-shadow .2s, transform .2s;
+}
+
+.nsda-kpi:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(15, 48, 39, .07);
+}
+
+.nsda-kpi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--ad-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.nsda-kpi-top svg {
+  width: 32px;
+  height: 32px;
+  padding: 7px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: #f5f1e8;
+  color: var(--ad-gold);
+}
+
+.nsda-kpi strong {
+  display: block;
+  margin: 12px 0 4px;
+  font-size: clamp(20px, 1.9vw, 26px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--ad-green);
+  overflow-wrap: anywhere;
+}
+
+.nsda-kpi small {
+  color: var(--ad-soft);
+  font-size: 12.5px;
+}
+
+.nsda-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 14px 0;
+}
+
+.nsda-card {
+  min-width: 0;
+  margin-bottom: 14px;
+  padding: 20px;
+  border: 1px solid var(--ad-line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 48, 39, .04);
+}
+
+.nsda-grid .nsda-card {
+  margin-bottom: 0;
+}
+
+.nsda-card-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.nsda-card-title h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.nsda-card-title small {
+  color: var(--ad-soft);
+  font-size: 12.5px;
+}
+
+.nsda-bars {
+  display: grid;
+  gap: 12px;
+}
+
+.nsda-bar-row {
+  display: grid;
+  grid-template-columns: minmax(80px, 1fr) minmax(60px, 2fr) minmax(55px, auto);
+  gap: 12px;
+  align-items: center;
+  font-size: 13px;
+}
+
+.nsda-bar-row>span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ad-muted);
+  text-transform: capitalize;
+}
+
+.nsda-bar-row>b {
+  text-align: right;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.nsda-track {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #f1eee6;
+}
+
+.nsda-track>div {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.nsda-line-wrap svg {
+  display: block;
+  width: 100%;
+  height: 190px;
+}
+
+.nsda-axis {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ad-soft);
+  font-size: 11.5px;
+}
+
+.nsda-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.nsda-mini-grid>div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #faf9f6;
+}
+
+.nsda-mini-grid span {
+  color: var(--ad-muted);
+  font-size: 13px;
+}
+
+.nsda-mini-grid b {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ad-green);
+}
+
+.nsda-list>div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ad-line-soft);
+}
+
+.nsda-list>div:last-child {
+  border-bottom: 0;
+}
+
+.nsda-list strong {
+  font-weight: 600;
+}
+
+.nsda-list small {
+  display: block;
+  margin-top: 3px;
+  color: var(--ad-soft);
+  font-size: 12.5px;
+}
+
+.nsda-list>div>span {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #f2efe7;
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.nsda-empty {
+  padding: 14px 0;
+  color: var(--ad-soft);
+  font-size: 13.5px;
+}
+
+.nsda .ns-table-wrap {
+  overflow-x: auto;
+}
+
+/* ---------- Hotel users page (hotel-users.css) ---------- */
+.ns-admin .ns-hu-card {
+  border: 1px solid var(--ad-line) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 1px 2px rgba(15, 48, 39, .04) !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .nsda-kpis {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .nsda-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nsda-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nsda-card {
+    padding: 16px;
+  }
+
+  .ns-admin .ns-room-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-admin .ns-room-dialog {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 750px) {
+  .ns-admin .ns-menu {
+    top: 12px;
+    right: 12px;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid var(--ad-line);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--ad-green);
+    box-shadow: 0 6px 18px rgba(15, 48, 39, .1);
+  }
+
+  .ns-admin .ns-backdrop {
+    background: rgba(10, 25, 20, .45);
+  }
+
+  .ns-admin .ns-content {
+    padding: 68px 16px 32px;
+  }
+}
+
+@media (max-width: 440px) {
+  .nsda-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .nsda-bar-row {
+    grid-template-columns: 85px 1fr auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .ns-admin .ns-room-overlay,
+  .ns-admin .ns-room-dialog,
+  .ns-admin .ns-addons-overlay,
+  .ns-admin .ns-addons-modal,
+  .nsda-kpi {
+    animation: none;
+    transition: none;
+  }
 }

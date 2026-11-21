@@ -1,7 +1,8 @@
+import { API_BASE } from "../api/client";
 import { useSyncExternalStore } from "react";
 import { getHotels } from "./hotelStore";
 
-const API_URL = "https://coreops.pk/Hotel/api/public_booking.php";
+const API_URL = `${API_BASE}/public_booking.php`;
 const EVENT = "northernstays:bookings-updated";
 
 let bookingsCache = [];

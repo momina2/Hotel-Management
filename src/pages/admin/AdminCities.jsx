@@ -298,15 +298,16 @@
 
 
 
+import { API_BASE, apiFetch } from "../../api/client";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Plus, Pencil, Trash2, X, RefreshCw } from "lucide-react";
 import "./admin.css";
 
-const API = "https://coreops.pk/Hotel/api/cities.php";
+const API = `${API_BASE}/cities.php`;
 const emptyForm = { city_name: "", status: "YES" };
 
 async function request(method = "GET", payload, signal) {
-  const response = await fetch(API, {
+  const response = await apiFetch(API, {
     method,
     credentials: "include",
     ...(method === "POST" ? { headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) } : {}),
@@ -412,7 +413,7 @@ export default function AdminCities() {
                 {filtered.map((city) => (
                   <tr key={city.id}>
                     <td>{city.id}</td><td><strong>{city.city_name}</strong></td>
-                    <td><span className="ns-status">{city.status}</span></td>
+                    <td><span className="ns-status" data-status={String(city.status).trim().toLowerCase()}>{city.status}</span></td>
                     {canManage && <td><div className="ns-actions">
                       <button type="button" onClick={() => openEdit(city)} aria-label={`Edit ${city.city_name}`}><Pencil size={17} /></button>
                       <button type="button" onClick={() => remove(city)} aria-label={`Delete ${city.city_name}`}><Trash2 size={17} /></button>
